@@ -1,0 +1,1079 @@
+fileFormatVersion: 2
+guid: 15c34372c0fed384ab911de077a25bcb
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -960860903665244214
+    second: Snowy walking_0
+  - first:
+      213: -8905247745360484763
+    second: Snowy walking_1
+  - first:
+      213: -7893533774980509495
+    second: Snowy walking_2
+  - first:
+      213: 4672601136299424465
+    second: Snowy walking_3
+  - first:
+      213: -1809783392174348723
+    second: Snowy walking_4
+  - first:
+      213: 8073036078707728276
+    second: Snowy walking_5
+  - first:
+      213: -1537695113647326866
+    second: Snowy walking_6
+  - first:
+      213: -5046966087226888179
+    second: Snowy walking_7
+  - first:
+      213: 544767275151954005
+    second: Snowy walking_8
+  - first:
+      213: -8359456166495621034
+    second: Snowy walking_9
+  - first:
+      213: -3562718944508868534
+    second: Snowy walking_10
+  - first:
+      213: -3920808499278677659
+    second: Snowy walking_11
+  - first:
+      213: -8136811948323814064
+    second: Snowy walking_12
+  - first:
+      213: -6405064439641825053
+    second: Snowy walking_13
+  - first:
+      213: -2183483414506873812
+    second: Snowy walking_14
+  - first:
+      213: -8993871992988983799
+    second: Snowy walking_15
+  - first:
+      213: 3617936387965372223
+    second: Snowy walking_16
+  - first:
+      213: 3857617724992894451
+    second: Snowy walking_17
+  - first:
+      213: -3183191650730918658
+    second: Snowy walking_18
+  - first:
+      213: -7873883773986287318
+    second: Snowy walking_19
+  - first:
+      213: -8967404464115914771
+    second: Snowy walking_20
+  - first:
+      213: 2993554928928334446
+    second: Snowy walking_21
+  - first:
+      213: 7093409972923368538
+    second: Snowy walking_22
+  - first:
+      213: 8103324850535789252
+    second: Snowy walking_23
+  - first:
+      213: 5421492493428893223
+    second: Snowy walking_24
+  - first:
+      213: 3180305115862657589
+    second: Snowy walking_25
+  - first:
+      213: 5003096401612009313
+    second: Snowy walking_26
+  - first:
+      213: -3811060101494430353
+    second: Snowy walking_27
+  - first:
+      213: -2509872481988282899
+    second: Snowy walking_28
+  - first:
+      213: -7403835105482149559
+    second: Snowy walking_29
+  - first:
+      213: -5889364822714691413
+    second: Snowy walking_30
+  - first:
+      213: 6301473648818107925
+    second: Snowy walking_31
+  - first:
+      213: 7861673011582976845
+    second: Snowy walking_32
+  - first:
+      213: -7713203760610542526
+    second: Snowy walking_33
+  - first:
+      213: 938969847833359729
+    second: Snowy walking_34
+  - first:
+      213: -1663200917542220928
+    second: Snowy walking_35
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Snowy walking_0
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 1220
+        width: 260
+        height: 242
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ac7e87659165aa2f0800000000000000
+      internalID: -960860903665244214
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Snowy walking_1
+      rect:
+        serializedVersion: 2
+        x: 272
+        y: 1221
+        width: 261
+        height: 240
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 566a0fc8b543a6480800000000000000
+      internalID: -8905247745360484763
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Snowy walking_2
+      rect:
+        serializedVersion: 2
+        x: 542
+        y: 1220
+        width: 261
+        height: 242
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9c01db77ad8847290800000000000000
+      internalID: -7893533774980509495
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Snowy walking_3
+      rect:
+        serializedVersion: 2
+        x: 812
+        y: 1220
+        width: 260
+        height: 242
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1dab63a1af968d040800000000000000
+      internalID: 4672601136299424465
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Snowy walking_4
+      rect:
+        serializedVersion: 2
+        x: 1081
+        y: 1219
+        width: 261
+        height: 243
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d46eb0de79b52e6e0800000000000000
+      internalID: -1809783392174348723
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Snowy walking_5
+      rect:
+        serializedVersion: 2
+        x: 1349
+        y: 1219
+        width: 264
+        height: 241
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 49f59427a8f290070800000000000000
+      internalID: 8073036078707728276
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Snowy walking_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 975
+        width: 263
+        height: 240
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e697232f07209aae0800000000000000
+      internalID: -1537695113647326866
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Snowy walking_7
+      rect:
+        serializedVersion: 2
+        x: 269
+        y: 975
+        width: 264
+        height: 240
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d00f569651395f9b0800000000000000
+      internalID: -5046966087226888179
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Snowy walking_8
+      rect:
+        serializedVersion: 2
+        x: 539
+        y: 975
+        width: 264
+        height: 242
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 55090b053f66f8700800000000000000
+      internalID: 544767275151954005
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Snowy walking_9
+      rect:
+        serializedVersion: 2
+        x: 809
+        y: 975
+        width: 264
+        height: 243
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 650749828ee3dfb80800000000000000
+      internalID: -8359456166495621034
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Snowy walking_10
+      rect:
+        serializedVersion: 2
+        x: 1079
+        y: 975
+        width: 263
+        height: 242
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a488efdfefdae8ec0800000000000000
+      internalID: -3562718944508868534
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Snowy walking_11
+      rect:
+        serializedVersion: 2
+        x: 1349
+        y: 975
+        width: 263
+        height: 243
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5697928717d7699c0800000000000000
+      internalID: -3920808499278677659
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Snowy walking_12
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 731
+        width: 262
+        height: 243
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0554108c4ac341f80800000000000000
+      internalID: -8136811948323814064
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Snowy walking_13
+      rect:
+        serializedVersion: 2
+        x: 272
+        y: 731
+        width: 260
+        height: 242
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3e0a9afd3d3ac17a0800000000000000
+      internalID: -6405064439641825053
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Snowy walking_14
+      rect:
+        serializedVersion: 2
+        x: 542
+        y: 731
+        width: 260
+        height: 242
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c2c5c513765b2b1e0800000000000000
+      internalID: -2183483414506873812
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Snowy walking_15
+      rect:
+        serializedVersion: 2
+        x: 812
+        y: 731
+        width: 260
+        height: 243
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 90e9e8ee2195f2380800000000000000
+      internalID: -8993871992988983799
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Snowy walking_16
+      rect:
+        serializedVersion: 2
+        x: 1082
+        y: 731
+        width: 260
+        height: 243
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f37c2a8e9fd753230800000000000000
+      internalID: 3617936387965372223
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Snowy walking_17
+      rect:
+        serializedVersion: 2
+        x: 1352
+        y: 731
+        width: 260
+        height: 242
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3f5b371e1e2098530800000000000000
+      internalID: 3857617724992894451
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Snowy walking_18
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 488
+        width: 260
+        height: 242
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: efcb1361f0803d3d0800000000000000
+      internalID: -3183191650730918658
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Snowy walking_19
+      rect:
+        serializedVersion: 2
+        x: 271
+        y: 487
+        width: 262
+        height: 241
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a21d5d8dc685ab290800000000000000
+      internalID: -7873883773986287318
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Snowy walking_20
+      rect:
+        serializedVersion: 2
+        x: 539
+        y: 487
+        width: 264
+        height: 240
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: de76e17b6216d8380800000000000000
+      internalID: -8967404464115914771
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Snowy walking_21
+      rect:
+        serializedVersion: 2
+        x: 809
+        y: 487
+        width: 264
+        height: 241
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e62a46ae85e3b8920800000000000000
+      internalID: 2993554928928334446
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Snowy walking_22
+      rect:
+        serializedVersion: 2
+        x: 1079
+        y: 487
+        width: 264
+        height: 243
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a548f42b9cad07260800000000000000
+      internalID: 7093409972923368538
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Snowy walking_23
+      rect:
+        serializedVersion: 2
+        x: 1349
+        y: 487
+        width: 263
+        height: 242
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4c2f7cfa40bc47070800000000000000
+      internalID: 8103324850535789252
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Snowy walking_24
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 243
+        width: 262
+        height: 243
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 726a64fc2b20d3b40800000000000000
+      internalID: 5421492493428893223
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Snowy walking_25
+      rect:
+        serializedVersion: 2
+        x: 269
+        y: 243
+        width: 263
+        height: 243
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 53ae95427a6b22c20800000000000000
+      internalID: 3180305115862657589
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Snowy walking_26
+      rect:
+        serializedVersion: 2
+        x: 542
+        y: 243
+        width: 261
+        height: 242
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 16f6e137ba19e6540800000000000000
+      internalID: 5003096401612009313
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Snowy walking_27
+      rect:
+        serializedVersion: 2
+        x: 813
+        y: 243
+        width: 260
+        height: 242
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f65a2c097056c1bc0800000000000000
+      internalID: -3811060101494430353
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Snowy walking_28
+      rect:
+        serializedVersion: 2
+        x: 1083
+        y: 243
+        width: 259
+        height: 242
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: de57f8786442b2dd0800000000000000
+      internalID: -2509872481988282899
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Snowy walking_29
+      rect:
+        serializedVersion: 2
+        x: 1352
+        y: 244
+        width: 260
+        height: 241
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9417b22e23b404990800000000000000
+      internalID: -7403835105482149559
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Snowy walking_30
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 0
+        width: 260
+        height: 241
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ba0d86d95e5c44ea0800000000000000
+      internalID: -5889364822714691413
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Snowy walking_31
+      rect:
+        serializedVersion: 2
+        x: 272
+        y: 0
+        width: 261
+        height: 240
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 516b94f95e4537750800000000000000
+      internalID: 6301473648818107925
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Snowy walking_32
+      rect:
+        serializedVersion: 2
+        x: 542
+        y: 0
+        width: 261
+        height: 239
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d43cdab73f54a1d60800000000000000
+      internalID: 7861673011582976845
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Snowy walking_33
+      rect:
+        serializedVersion: 2
+        x: 810
+        y: 0
+        width: 263
+        height: 239
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 24cf998cb0235f490800000000000000
+      internalID: -7713203760610542526
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Snowy walking_34
+      rect:
+        serializedVersion: 2
+        x: 1079
+        y: 0
+        width: 264
+        height: 241
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 175f8ea0a14e70d00800000000000000
+      internalID: 938969847833359729
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Snowy walking_35
+      rect:
+        serializedVersion: 2
+        x: 1349
+        y: 0
+        width: 263
+        height: 242
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 08bcac7d39f1be8e0800000000000000
+      internalID: -1663200917542220928
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Snowy walking_0: -960860903665244214
+      Snowy walking_1: -8905247745360484763
+      Snowy walking_10: -3562718944508868534
+      Snowy walking_11: -3920808499278677659
+      Snowy walking_12: -8136811948323814064
+      Snowy walking_13: -6405064439641825053
+      Snowy walking_14: -2183483414506873812
+      Snowy walking_15: -8993871992988983799
+      Snowy walking_16: 3617936387965372223
+      Snowy walking_17: 3857617724992894451
+      Snowy walking_18: -3183191650730918658
+      Snowy walking_19: -7873883773986287318
+      Snowy walking_2: -7893533774980509495
+      Snowy walking_20: -8967404464115914771
+      Snowy walking_21: 2993554928928334446
+      Snowy walking_22: 7093409972923368538
+      Snowy walking_23: 8103324850535789252
+      Snowy walking_24: 5421492493428893223
+      Snowy walking_25: 3180305115862657589
+      Snowy walking_26: 5003096401612009313
+      Snowy walking_27: -3811060101494430353
+      Snowy walking_28: -2509872481988282899
+      Snowy walking_29: -7403835105482149559
+      Snowy walking_3: 4672601136299424465
+      Snowy walking_30: -5889364822714691413
+      Snowy walking_31: 6301473648818107925
+      Snowy walking_32: 7861673011582976845
+      Snowy walking_33: -7713203760610542526
+      Snowy walking_34: 938969847833359729
+      Snowy walking_35: -1663200917542220928
+      Snowy walking_4: -1809783392174348723
+      Snowy walking_5: 8073036078707728276
+      Snowy walking_6: -1537695113647326866
+      Snowy walking_7: -5046966087226888179
+      Snowy walking_8: 544767275151954005
+      Snowy walking_9: -8359456166495621034
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

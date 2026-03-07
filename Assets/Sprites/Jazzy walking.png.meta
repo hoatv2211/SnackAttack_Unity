@@ -1,0 +1,1079 @@
+fileFormatVersion: 2
+guid: a3883b5429e1ef448bae50aeb8eac329
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 955501623206707404
+    second: Jazzy walking_0
+  - first:
+      213: 5778089103818941167
+    second: Jazzy walking_1
+  - first:
+      213: -1897193045599102905
+    second: Jazzy walking_2
+  - first:
+      213: 1327630799158565157
+    second: Jazzy walking_3
+  - first:
+      213: -3876342366843238525
+    second: Jazzy walking_4
+  - first:
+      213: 8127778816059960623
+    second: Jazzy walking_5
+  - first:
+      213: -529840890820448156
+    second: Jazzy walking_6
+  - first:
+      213: 2978535674128437505
+    second: Jazzy walking_7
+  - first:
+      213: -1050334467507541376
+    second: Jazzy walking_8
+  - first:
+      213: -3331853392234722111
+    second: Jazzy walking_9
+  - first:
+      213: -7823449906147653258
+    second: Jazzy walking_10
+  - first:
+      213: -7448658273843051379
+    second: Jazzy walking_11
+  - first:
+      213: -488411210452149334
+    second: Jazzy walking_12
+  - first:
+      213: 1455441792390979876
+    second: Jazzy walking_13
+  - first:
+      213: -7448006079627664705
+    second: Jazzy walking_14
+  - first:
+      213: 2541197883101297570
+    second: Jazzy walking_15
+  - first:
+      213: 1121128901926279889
+    second: Jazzy walking_16
+  - first:
+      213: 8357625561062981470
+    second: Jazzy walking_17
+  - first:
+      213: 2311171655792966524
+    second: Jazzy walking_18
+  - first:
+      213: -7112960030756394546
+    second: Jazzy walking_19
+  - first:
+      213: 939343676882595787
+    second: Jazzy walking_20
+  - first:
+      213: 9218180899918554642
+    second: Jazzy walking_21
+  - first:
+      213: -9191661783704246466
+    second: Jazzy walking_22
+  - first:
+      213: 4479543284151654102
+    second: Jazzy walking_23
+  - first:
+      213: 8203668406654566012
+    second: Jazzy walking_24
+  - first:
+      213: -937623344065942510
+    second: Jazzy walking_25
+  - first:
+      213: 6158093879989496669
+    second: Jazzy walking_26
+  - first:
+      213: 5516571997788409408
+    second: Jazzy walking_27
+  - first:
+      213: -488125156203914436
+    second: Jazzy walking_28
+  - first:
+      213: -2282196134283898696
+    second: Jazzy walking_29
+  - first:
+      213: 8847444604612557023
+    second: Jazzy walking_30
+  - first:
+      213: 2588446788930520597
+    second: Jazzy walking_31
+  - first:
+      213: 2934321724758448587
+    second: Jazzy walking_32
+  - first:
+      213: 3596815818302194428
+    second: Jazzy walking_33
+  - first:
+      213: -1786246332676390780
+    second: Jazzy walking_34
+  - first:
+      213: -3986419884368913685
+    second: Jazzy walking_35
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Jazzy walking_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1249
+        width: 260
+        height: 248
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cc08b81f9af924d00800000000000000
+      internalID: 955501623206707404
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Jazzy walking_1
+      rect:
+        serializedVersion: 2
+        x: 269
+        y: 1249
+        width: 260
+        height: 246
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fe2eea12d65ef2050800000000000000
+      internalID: 5778089103818941167
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Jazzy walking_2
+      rect:
+        serializedVersion: 2
+        x: 550
+        y: 1249
+        width: 247
+        height: 246
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 74859be0af0dba5e0800000000000000
+      internalID: -1897193045599102905
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Jazzy walking_3
+      rect:
+        serializedVersion: 2
+        x: 814
+        y: 1249
+        width: 251
+        height: 246
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 529d6b08d21bc6210800000000000000
+      internalID: 1327630799158565157
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Jazzy walking_4
+      rect:
+        serializedVersion: 2
+        x: 1080
+        y: 1249
+        width: 252
+        height: 247
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3870384b727743ac0800000000000000
+      internalID: -3876342366843238525
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Jazzy walking_5
+      rect:
+        serializedVersion: 2
+        x: 1348
+        y: 1250
+        width: 252
+        height: 247
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f2de23835cbabc070800000000000000
+      internalID: 8127778816059960623
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Jazzy walking_6
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 999
+        width: 252
+        height: 249
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 460bb2b5480a5a8f0800000000000000
+      internalID: -529840890820448156
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Jazzy walking_7
+      rect:
+        serializedVersion: 2
+        x: 278
+        y: 999
+        width: 250
+        height: 249
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 10111472a62e55920800000000000000
+      internalID: 2978535674128437505
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Jazzy walking_8
+      rect:
+        serializedVersion: 2
+        x: 548
+        y: 999
+        width: 248
+        height: 249
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 08a2dd0ed567c61f0800000000000000
+      internalID: -1050334467507541376
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Jazzy walking_9
+      rect:
+        serializedVersion: 2
+        x: 817
+        y: 999
+        width: 247
+        height: 249
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1cc4b202ef0e2c1d0800000000000000
+      internalID: -3331853392234722111
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Jazzy walking_10
+      rect:
+        serializedVersion: 2
+        x: 1088
+        y: 999
+        width: 244
+        height: 249
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6798102c2c58d6390800000000000000
+      internalID: -7823449906147653258
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Jazzy walking_11
+      rect:
+        serializedVersion: 2
+        x: 1358
+        y: 999
+        width: 242
+        height: 249
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d848f4eb3cc01a890800000000000000
+      internalID: -7448658273843051379
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Jazzy walking_12
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 749
+        width: 250
+        height: 247
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aab5ea08790d839f0800000000000000
+      internalID: -488411210452149334
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Jazzy walking_13
+      rect:
+        serializedVersion: 2
+        x: 271
+        y: 749
+        width: 257
+        height: 248
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 421e8b25994c23410800000000000000
+      internalID: 1455441792390979876
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Jazzy walking_14
+      rect:
+        serializedVersion: 2
+        x: 535
+        y: 749
+        width: 261
+        height: 247
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fb2e7da8eed53a890800000000000000
+      internalID: -7448006079627664705
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Jazzy walking_15
+      rect:
+        serializedVersion: 2
+        x: 805
+        y: 749
+        width: 260
+        height: 246
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2ab3a36c206244320800000000000000
+      internalID: 2541197883101297570
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Jazzy walking_16
+      rect:
+        serializedVersion: 2
+        x: 1087
+        y: 749
+        width: 246
+        height: 246
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1da5dbadbcc0f8f00800000000000000
+      internalID: 1121128901926279889
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Jazzy walking_17
+      rect:
+        serializedVersion: 2
+        x: 1366
+        y: 749
+        width: 234
+        height: 248
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e5f32ecca204cf370800000000000000
+      internalID: 8357625561062981470
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Jazzy walking_18
+      rect:
+        serializedVersion: 2
+        x: 21
+        y: 499
+        width: 239
+        height: 249
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c7bbd76306ee21020800000000000000
+      internalID: 2311171655792966524
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Jazzy walking_19
+      rect:
+        serializedVersion: 2
+        x: 283
+        y: 499
+        width: 245
+        height: 249
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ec9a631c980b94d90800000000000000
+      internalID: -7112960030756394546
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Jazzy walking_20
+      rect:
+        serializedVersion: 2
+        x: 549
+        y: 499
+        width: 247
+        height: 249
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bcfa896e818390d00800000000000000
+      internalID: 939343676882595787
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Jazzy walking_21
+      rect:
+        serializedVersion: 2
+        x: 816
+        y: 499
+        width: 248
+        height: 249
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 216afee30be8def70800000000000000
+      internalID: 9218180899918554642
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Jazzy walking_22
+      rect:
+        serializedVersion: 2
+        x: 1083
+        y: 499
+        width: 249
+        height: 249
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e3766c6ae48a07080800000000000000
+      internalID: -9191661783704246466
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Jazzy walking_23
+      rect:
+        serializedVersion: 2
+        x: 1352
+        y: 499
+        width: 248
+        height: 249
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6d698df12e88a2e30800000000000000
+      internalID: 4479543284151654102
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Jazzy walking_24
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 249
+        width: 246
+        height: 249
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c7e7db173f849d170800000000000000
+      internalID: 8203668406654566012
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Jazzy walking_25
+      rect:
+        serializedVersion: 2
+        x: 282
+        y: 249
+        width: 246
+        height: 247
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 21ce5db4984ecf2f0800000000000000
+      internalID: -937623344065942510
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Jazzy walking_26
+      rect:
+        serializedVersion: 2
+        x: 535
+        y: 249
+        width: 262
+        height: 246
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d5be742c1c1f57550800000000000000
+      internalID: 6158093879989496669
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Jazzy walking_27
+      rect:
+        serializedVersion: 2
+        x: 803
+        y: 249
+        width: 262
+        height: 246
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 04e8b02010dce8c40800000000000000
+      internalID: 5516571997788409408
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Jazzy walking_28
+      rect:
+        serializedVersion: 2
+        x: 1082
+        y: 249
+        width: 251
+        height: 247
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c3b9882b1c4d939f0800000000000000
+      internalID: -488125156203914436
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Jazzy walking_29
+      rect:
+        serializedVersion: 2
+        x: 1367
+        y: 250
+        width: 233
+        height: 247
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8b01d3c15b20450e0800000000000000
+      internalID: -2282196134283898696
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Jazzy walking_30
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 0
+        width: 236
+        height: 248
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fd8b0ebfdff68ca70800000000000000
+      internalID: 8847444604612557023
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Jazzy walking_31
+      rect:
+        serializedVersion: 2
+        x: 289
+        y: 0
+        width: 239
+        height: 248
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 516443ee3a20ce320800000000000000
+      internalID: 2588446788930520597
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Jazzy walking_32
+      rect:
+        serializedVersion: 2
+        x: 554
+        y: 0
+        width: 242
+        height: 248
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bc950fcdf0ec8b820800000000000000
+      internalID: 2934321724758448587
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Jazzy walking_33
+      rect:
+        serializedVersion: 2
+        x: 819
+        y: 0
+        width: 245
+        height: 248
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cf288641ee47ae130800000000000000
+      internalID: 3596815818302194428
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Jazzy walking_34
+      rect:
+        serializedVersion: 2
+        x: 1085
+        y: 0
+        width: 247
+        height: 248
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 480ca73ac6af537e0800000000000000
+      internalID: -1786246332676390780
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Jazzy walking_35
+      rect:
+        serializedVersion: 2
+        x: 1355
+        y: 0
+        width: 245
+        height: 246
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bea13a27c346da8c0800000000000000
+      internalID: -3986419884368913685
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Jazzy walking_0: 955501623206707404
+      Jazzy walking_1: 5778089103818941167
+      Jazzy walking_10: -7823449906147653258
+      Jazzy walking_11: -7448658273843051379
+      Jazzy walking_12: -488411210452149334
+      Jazzy walking_13: 1455441792390979876
+      Jazzy walking_14: -7448006079627664705
+      Jazzy walking_15: 2541197883101297570
+      Jazzy walking_16: 1121128901926279889
+      Jazzy walking_17: 8357625561062981470
+      Jazzy walking_18: 2311171655792966524
+      Jazzy walking_19: -7112960030756394546
+      Jazzy walking_2: -1897193045599102905
+      Jazzy walking_20: 939343676882595787
+      Jazzy walking_21: 9218180899918554642
+      Jazzy walking_22: -9191661783704246466
+      Jazzy walking_23: 4479543284151654102
+      Jazzy walking_24: 8203668406654566012
+      Jazzy walking_25: -937623344065942510
+      Jazzy walking_26: 6158093879989496669
+      Jazzy walking_27: 5516571997788409408
+      Jazzy walking_28: -488125156203914436
+      Jazzy walking_29: -2282196134283898696
+      Jazzy walking_3: 1327630799158565157
+      Jazzy walking_30: 8847444604612557023
+      Jazzy walking_31: 2588446788930520597
+      Jazzy walking_32: 2934321724758448587
+      Jazzy walking_33: 3596815818302194428
+      Jazzy walking_34: -1786246332676390780
+      Jazzy walking_35: -3986419884368913685
+      Jazzy walking_4: -3876342366843238525
+      Jazzy walking_5: 8127778816059960623
+      Jazzy walking_6: -529840890820448156
+      Jazzy walking_7: 2978535674128437505
+      Jazzy walking_8: -1050334467507541376
+      Jazzy walking_9: -3331853392234722111
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,0 +1,637 @@
+{
+  "version": 1,
+  "defaultFps": 10.0,
+  "characters": [
+    {
+      "name": "Biggie",
+      "controllerPath": "Assets/Animations/Controllers/Biggie.controller",
+      "defaultState": "Idle",
+      "clips": [
+        {
+          "state": "Idle",
+          "clipPath": "Assets/Animations/Clips/Biggie/Biggie_Idle.anim",
+          "texturePath": "Assets/Sprite sheets/Biggie run sprite.png",
+          "fps": 10.0,
+          "loop": true,
+          "frames": [
+            "Biggie run sprite_0"
+          ]
+        },
+        {
+          "state": "Run",
+          "clipPath": "Assets/Animations/Clips/Biggie/Biggie_Run.anim",
+          "texturePath": "Assets/Sprite sheets/Biggie run sprite.png",
+          "fps": 10.0,
+          "loop": true,
+          "frames": [
+            "Biggie run sprite_0",
+            "Biggie run sprite_1",
+            "Biggie run sprite_2"
+          ]
+        },
+        {
+          "state": "Eat",
+          "clipPath": "Assets/Animations/Clips/Biggie/Biggie_Eat.anim",
+          "texturePath": "Assets/Sprite sheets/Biggie eat_attack.png",
+          "fps": 8.3333333,
+          "loop": false,
+          "frames": [
+            "Biggie eat_attack_0",
+            "Biggie eat_attack_1",
+            "Biggie eat_attack_2"
+          ]
+        },
+        {
+          "state": "Fly",
+          "clipPath": "Assets/Animations/Clips/Biggie/Biggie_Fly.anim",
+          "texturePath": "Assets/Sprite sheets/biggie_face_camera_flight.png",
+          "fps": 10.0,
+          "loop": true,
+          "frames": [
+            "biggie_face_camera_flight_0"
+          ]
+        },
+        {
+          "state": "Boost",
+          "clipPath": "Assets/Animations/Clips/Biggie/Biggie_Boost.anim",
+          "texturePath": "Assets/Sprite sheets/biggie_face_camera_flight.png",
+          "fps": 10.0,
+          "loop": true,
+          "frames": [
+            "biggie_face_camera_flight_0"
+          ]
+        },
+        {
+          "state": "Walk",
+          "clipPath": "Assets/Animations/Clips/Biggie/Biggie_Walk.anim",
+          "texturePath": "Assets/Sprite sheets/Biggie walking.png",
+          "fps": 6.6666667,
+          "loop": true,
+          "frames": [
+            "Biggie walking_0",
+            "Biggie walking_1",
+            "Biggie walking_2",
+            "Biggie walking_3",
+            "Biggie walking_4",
+            "Biggie walking_5",
+            "Biggie walking_6",
+            "Biggie walking_7",
+            "Biggie walking_8",
+            "Biggie walking_9",
+            "Biggie walking_10",
+            "Biggie walking_11",
+            "Biggie walking_12",
+            "Biggie walking_13",
+            "Biggie walking_14",
+            "Biggie walking_15",
+            "Biggie walking_16",
+            "Biggie walking_17",
+            "Biggie walking_18",
+            "Biggie walking_19",
+            "Biggie walking_20",
+            "Biggie walking_21",
+            "Biggie walking_22",
+            "Biggie walking_23",
+            "Biggie walking_24",
+            "Biggie walking_25",
+            "Biggie walking_26",
+            "Biggie walking_27",
+            "Biggie walking_28",
+            "Biggie walking_29",
+            "Biggie walking_30",
+            "Biggie walking_31",
+            "Biggie walking_32",
+            "Biggie walking_33",
+            "Biggie walking_34",
+            "Biggie walking_35"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Dash",
+      "controllerPath": "Assets/Animations/Controllers/Dash.controller",
+      "defaultState": "Idle",
+      "clips": [
+        {
+          "state": "Idle",
+          "clipPath": "Assets/Animations/Clips/Dash/Dash_Idle.anim",
+          "texturePath": "Assets/Sprite sheets/Dash run sprite.png",
+          "fps": 10.0,
+          "loop": true,
+          "frames": [
+            "Dash run sprite_0"
+          ]
+        },
+        {
+          "state": "Run",
+          "clipPath": "Assets/Animations/Clips/Dash/Dash_Run.anim",
+          "texturePath": "Assets/Sprite sheets/Dash run sprite.png",
+          "fps": 10.0,
+          "loop": true,
+          "frames": [
+            "Dash run sprite_0",
+            "Dash run sprite_1",
+            "Dash run sprite_2"
+          ]
+        },
+        {
+          "state": "Eat",
+          "clipPath": "Assets/Animations/Clips/Dash/Dash_Eat.anim",
+          "texturePath": "Assets/Sprite sheets/Dash eat_attack sprite.png",
+          "fps": 8.3333333,
+          "loop": false,
+          "frames": [
+            "Dash eat_attack sprite_0",
+            "Dash eat_attack sprite_1",
+            "Dash eat_attack sprite_2"
+          ]
+        },
+        {
+          "state": "Fly",
+          "clipPath": "Assets/Animations/Clips/Dash/Dash_Fly.anim",
+          "texturePath": "Assets/Sprite sheets/dash_face_camera_flight.png",
+          "fps": 10.0,
+          "loop": true,
+          "frames": [
+            "dash_face_camera_flight_0"
+          ]
+        },
+        {
+          "state": "Boost",
+          "clipPath": "Assets/Animations/Clips/Dash/Dash_Boost.anim",
+          "texturePath": "Assets/Sprite sheets/dash_face_camera_flight.png",
+          "fps": 10.0,
+          "loop": true,
+          "frames": [
+            "dash_face_camera_flight_0"
+          ]
+        },
+        {
+          "state": "Walk",
+          "clipPath": "Assets/Animations/Clips/Dash/Dash_Walk.anim",
+          "texturePath": "Assets/Sprite sheets/Dash walking.png",
+          "fps": 6.6666667,
+          "loop": true,
+          "frames": [
+            "Dash walking_0",
+            "Dash walking_1",
+            "Dash walking_2",
+            "Dash walking_3",
+            "Dash walking_4"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Jazzy",
+      "controllerPath": "Assets/Animations/Controllers/Jazzy.controller",
+      "defaultState": "Idle",
+      "clips": [
+        {
+          "state": "Idle",
+          "clipPath": "Assets/Animations/Clips/Jazzy/Jazzy_Idle.anim",
+          "texturePath": "Assets/Sprite sheets/Jazzy run sprite.png",
+          "fps": 10.0,
+          "loop": true,
+          "frames": [
+            "Jazzy run sprite_0"
+          ]
+        },
+        {
+          "state": "Run",
+          "clipPath": "Assets/Animations/Clips/Jazzy/Jazzy_Run.anim",
+          "texturePath": "Assets/Sprite sheets/Jazzy run sprite.png",
+          "fps": 10.0,
+          "loop": true,
+          "frames": [
+            "Jazzy run sprite_0",
+            "Jazzy run sprite_1",
+            "Jazzy run sprite_2"
+          ]
+        },
+        {
+          "state": "Eat",
+          "clipPath": "Assets/Animations/Clips/Jazzy/Jazzy_Eat.anim",
+          "texturePath": "Assets/Sprite sheets/Jazzy eat_attack sprite.png",
+          "fps": 8.3333333,
+          "loop": false,
+          "frames": [
+            "Jazzy eat_attack sprite_0",
+            "Jazzy eat_attack sprite_1",
+            "Jazzy eat_attack sprite_2"
+          ]
+        },
+        {
+          "state": "Chili",
+          "clipPath": "Assets/Animations/Clips/Jazzy/Jazzy_Chili.anim",
+          "texturePath": "Assets/Sprite sheets/Jazzy chili reaction sprite.png",
+          "fps": 8.3333333,
+          "loop": false,
+          "frames": [
+            "Jazzy chili reaction sprite_0",
+            "Jazzy chili reaction sprite_1",
+            "Jazzy chili reaction sprite_2",
+            "Jazzy chili reaction sprite_3",
+            "Jazzy chili reaction sprite_4",
+            "Jazzy chili reaction sprite_5"
+          ]
+        },
+        {
+          "state": "Fly",
+          "clipPath": "Assets/Animations/Clips/Jazzy/Jazzy_Fly.anim",
+          "texturePath": "Assets/Sprite sheets/jazzy_face_camera_flight.png",
+          "fps": 10.0,
+          "loop": true,
+          "frames": [
+            "jazzy_face_camera_flight_0"
+          ]
+        },
+        {
+          "state": "Boost",
+          "clipPath": "Assets/Animations/Clips/Jazzy/Jazzy_Boost.anim",
+          "texturePath": "Assets/Sprite sheets/jazzy_face_camera_flight.png",
+          "fps": 10.0,
+          "loop": true,
+          "frames": [
+            "jazzy_face_camera_flight_0"
+          ]
+        },
+        {
+          "state": "Walk",
+          "clipPath": "Assets/Animations/Clips/Jazzy/Jazzy_Walk.anim",
+          "texturePath": "Assets/Sprite sheets/Jazzy walking.png",
+          "fps": 6.6666667,
+          "loop": true,
+          "frames": [
+            "Jazzy walking_0",
+            "Jazzy walking_1",
+            "Jazzy walking_2",
+            "Jazzy walking_3",
+            "Jazzy walking_4",
+            "Jazzy walking_5",
+            "Jazzy walking_6",
+            "Jazzy walking_7",
+            "Jazzy walking_8",
+            "Jazzy walking_9",
+            "Jazzy walking_10",
+            "Jazzy walking_11",
+            "Jazzy walking_12",
+            "Jazzy walking_13",
+            "Jazzy walking_14",
+            "Jazzy walking_15",
+            "Jazzy walking_16",
+            "Jazzy walking_17",
+            "Jazzy walking_18",
+            "Jazzy walking_19",
+            "Jazzy walking_20",
+            "Jazzy walking_21",
+            "Jazzy walking_22",
+            "Jazzy walking_23",
+            "Jazzy walking_24",
+            "Jazzy walking_25",
+            "Jazzy walking_26",
+            "Jazzy walking_27",
+            "Jazzy walking_28",
+            "Jazzy walking_29",
+            "Jazzy walking_30",
+            "Jazzy walking_31",
+            "Jazzy walking_32",
+            "Jazzy walking_33",
+            "Jazzy walking_34",
+            "Jazzy walking_35"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Lobo",
+      "controllerPath": "Assets/Animations/Controllers/Lobo.controller",
+      "defaultState": "Idle",
+      "clips": [
+        {
+          "state": "Idle",
+          "clipPath": "Assets/Animations/Clips/Lobo/Lobo_Idle.anim",
+          "texturePath": "Assets/Sprite sheets/Lobo run sprite.png",
+          "fps": 10.0,
+          "loop": true,
+          "frames": [
+            "Lobo run sprite_0"
+          ]
+        },
+        {
+          "state": "Run",
+          "clipPath": "Assets/Animations/Clips/Lobo/Lobo_Run.anim",
+          "texturePath": "Assets/Sprite sheets/Lobo run sprite.png",
+          "fps": 10.0,
+          "loop": true,
+          "frames": [
+            "Lobo run sprite_0",
+            "Lobo run sprite_1",
+            "Lobo run sprite_2"
+          ]
+        },
+        {
+          "state": "Eat",
+          "clipPath": "Assets/Animations/Clips/Lobo/Lobo_Eat.anim",
+          "texturePath": "Assets/Sprite sheets/Lobo eat_attack sprite.png",
+          "fps": 8.3333333,
+          "loop": false,
+          "frames": [
+            "Lobo eat_attack sprite_0",
+            "Lobo eat_attack sprite_1",
+            "Lobo eat_attack sprite_2"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Prissy",
+      "controllerPath": "Assets/Animations/Controllers/Prissy.controller",
+      "defaultState": "Idle",
+      "clips": [
+        {
+          "state": "Idle",
+          "clipPath": "Assets/Animations/Clips/Prissy/Prissy_Idle.anim",
+          "texturePath": "Assets/Sprite sheets/Prissy run sprite.png",
+          "fps": 10.0,
+          "loop": true,
+          "frames": [
+            "Prissy run sprite_0"
+          ]
+        },
+        {
+          "state": "Run",
+          "clipPath": "Assets/Animations/Clips/Prissy/Prissy_Run.anim",
+          "texturePath": "Assets/Sprite sheets/Prissy run sprite.png",
+          "fps": 10.0,
+          "loop": true,
+          "frames": [
+            "Prissy run sprite_0",
+            "Prissy run sprite_1",
+            "Prissy run sprite_2"
+          ]
+        },
+        {
+          "state": "Eat",
+          "clipPath": "Assets/Animations/Clips/Prissy/Prissy_Eat.anim",
+          "texturePath": "Assets/Sprite sheets/Prissy eat_attack sprite.png",
+          "fps": 8.3333333,
+          "loop": false,
+          "frames": [
+            "Prissy eat_attack sprite_0",
+            "Prissy eat_attack sprite_1",
+            "Prissy eat_attack sprite_2"
+          ]
+        },
+        {
+          "state": "Fly",
+          "clipPath": "Assets/Animations/Clips/Prissy/Prissy_Fly.anim",
+          "texturePath": "Assets/Sprite sheets/prissy_face_camera_flight.png",
+          "fps": 10.0,
+          "loop": true,
+          "frames": [
+            "prissy_face_camera_flight_0"
+          ]
+        },
+        {
+          "state": "Boost",
+          "clipPath": "Assets/Animations/Clips/Prissy/Prissy_Boost.anim",
+          "texturePath": "Assets/Sprite sheets/prissy_face_camera_flight.png",
+          "fps": 10.0,
+          "loop": true,
+          "frames": [
+            "prissy_face_camera_flight_0"
+          ]
+        },
+        {
+          "state": "Walk",
+          "clipPath": "Assets/Animations/Clips/Prissy/Prissy_Walk.anim",
+          "texturePath": "Assets/Sprite sheets/Prissy walking.png",
+          "fps": 6.6666667,
+          "loop": true,
+          "frames": [
+            "Prissy walking_0",
+            "Prissy walking_1",
+            "Prissy walking_2",
+            "Prissy walking_3",
+            "Prissy walking_4",
+            "Prissy walking_5"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Rex",
+      "controllerPath": "Assets/Animations/Controllers/Rex.controller",
+      "defaultState": "Idle",
+      "clips": [
+        {
+          "state": "Idle",
+          "clipPath": "Assets/Animations/Clips/Rex/Rex_Idle.anim",
+          "texturePath": "Assets/Sprite sheets/Rex run sprite.png",
+          "fps": 10.0,
+          "loop": true,
+          "frames": [
+            "Rex run sprite_0"
+          ]
+        },
+        {
+          "state": "Run",
+          "clipPath": "Assets/Animations/Clips/Rex/Rex_Run.anim",
+          "texturePath": "Assets/Sprite sheets/Rex run sprite.png",
+          "fps": 10.0,
+          "loop": true,
+          "frames": [
+            "Rex run sprite_0",
+            "Rex run sprite_1",
+            "Rex run sprite_2"
+          ]
+        },
+        {
+          "state": "Eat",
+          "clipPath": "Assets/Animations/Clips/Rex/Rex_Eat.anim",
+          "texturePath": "Assets/Sprite sheets/Rex eat_attack sprite.png",
+          "fps": 8.3333333,
+          "loop": false,
+          "frames": [
+            "Rex eat_attack sprite_0",
+            "Rex eat_attack sprite_1",
+            "Rex eat_attack sprite_2"
+          ]
+        },
+        {
+          "state": "Fly",
+          "clipPath": "Assets/Animations/Clips/Rex/Rex_Fly.anim",
+          "texturePath": "Assets/Sprite sheets/rex_face_camera_flight.png",
+          "fps": 10.0,
+          "loop": true,
+          "frames": [
+            "rex_face_camera_flight_0"
+          ]
+        },
+        {
+          "state": "Boost",
+          "clipPath": "Assets/Animations/Clips/Rex/Rex_Boost.anim",
+          "texturePath": "Assets/Sprite sheets/rex_face_camera_flight.png",
+          "fps": 10.0,
+          "loop": true,
+          "frames": [
+            "rex_face_camera_flight_0"
+          ]
+        },
+        {
+          "state": "Walk",
+          "clipPath": "Assets/Animations/Clips/Rex/Rex_Walk.anim",
+          "texturePath": "Assets/Sprite sheets/Rex walking.png",
+          "fps": 6.6666667,
+          "loop": true,
+          "frames": [
+            "Rex walking_0",
+            "Rex walking_1",
+            "Rex walking_2",
+            "Rex walking_3",
+            "Rex walking_4",
+            "Rex walking_5",
+            "Rex walking_6",
+            "Rex walking_7",
+            "Rex walking_8",
+            "Rex walking_9",
+            "Rex walking_10",
+            "Rex walking_11",
+            "Rex walking_12",
+            "Rex walking_13",
+            "Rex walking_14",
+            "Rex walking_15",
+            "Rex walking_16",
+            "Rex walking_17",
+            "Rex walking_18",
+            "Rex walking_19",
+            "Rex walking_20",
+            "Rex walking_21",
+            "Rex walking_22",
+            "Rex walking_23",
+            "Rex walking_24",
+            "Rex walking_25",
+            "Rex walking_26",
+            "Rex walking_27",
+            "Rex walking_28",
+            "Rex walking_29",
+            "Rex walking_30",
+            "Rex walking_31",
+            "Rex walking_32",
+            "Rex walking_33",
+            "Rex walking_34",
+            "Rex walking_35"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Snowy",
+      "controllerPath": "Assets/Animations/Controllers/Snowy.controller",
+      "defaultState": "Idle",
+      "clips": [
+        {
+          "state": "Idle",
+          "clipPath": "Assets/Animations/Clips/Snowy/Snowy_Idle.anim",
+          "texturePath": "Assets/Sprite sheets/Snowy run sprite.png",
+          "fps": 10.0,
+          "loop": true,
+          "frames": [
+            "Snowy run sprite_0"
+          ]
+        },
+        {
+          "state": "Run",
+          "clipPath": "Assets/Animations/Clips/Snowy/Snowy_Run.anim",
+          "texturePath": "Assets/Sprite sheets/Snowy run sprite.png",
+          "fps": 10.0,
+          "loop": true,
+          "frames": [
+            "Snowy run sprite_0",
+            "Snowy run sprite_1",
+            "Snowy run sprite_2"
+          ]
+        },
+        {
+          "state": "Eat",
+          "clipPath": "Assets/Animations/Clips/Snowy/Snowy_Eat.anim",
+          "texturePath": "Assets/Sprite sheets/Snowy eat_attack sprite.png",
+          "fps": 8.3333333,
+          "loop": false,
+          "frames": [
+            "Snowy eat_attack sprite_0",
+            "Snowy eat_attack sprite_1",
+            "Snowy eat_attack sprite_2"
+          ]
+        },
+        {
+          "state": "Fly",
+          "clipPath": "Assets/Animations/Clips/Snowy/Snowy_Fly.anim",
+          "texturePath": "Assets/Sprite sheets/snowy_face_camera_flight.png",
+          "fps": 10.0,
+          "loop": true,
+          "frames": [
+            "snowy_face_camera_flight_0"
+          ]
+        },
+        {
+          "state": "Boost",
+          "clipPath": "Assets/Animations/Clips/Snowy/Snowy_Boost.anim",
+          "texturePath": "Assets/Sprite sheets/snowy_face_camera_flight.png",
+          "fps": 10.0,
+          "loop": true,
+          "frames": [
+            "snowy_face_camera_flight_0"
+          ]
+        },
+        {
+          "state": "Walk",
+          "clipPath": "Assets/Animations/Clips/Snowy/Snowy_Walk.anim",
+          "texturePath": "Assets/Sprite sheets/Snowy walking.png",
+          "fps": 6.6666667,
+          "loop": true,
+          "frames": [
+            "Snowy walking_0",
+            "Snowy walking_1",
+            "Snowy walking_2",
+            "Snowy walking_3",
+            "Snowy walking_4",
+            "Snowy walking_5",
+            "Snowy walking_6",
+            "Snowy walking_7",
+            "Snowy walking_8",
+            "Snowy walking_9",
+            "Snowy walking_10",
+            "Snowy walking_11",
+            "Snowy walking_12",
+            "Snowy walking_13",
+            "Snowy walking_14",
+            "Snowy walking_15",
+            "Snowy walking_16",
+            "Snowy walking_17",
+            "Snowy walking_18",
+            "Snowy walking_19",
+            "Snowy walking_20",
+            "Snowy walking_21",
+            "Snowy walking_22",
+            "Snowy walking_23",
+            "Snowy walking_24",
+            "Snowy walking_25",
+            "Snowy walking_26",
+            "Snowy walking_27",
+            "Snowy walking_28",
+            "Snowy walking_29",
+            "Snowy walking_30",
+            "Snowy walking_31",
+            "Snowy walking_32",
+            "Snowy walking_33",
+            "Snowy walking_34",
+            "Snowy walking_35"
+          ]
+        }
+      ]
+    }
+  ]
+}

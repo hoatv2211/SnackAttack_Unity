@@ -1,0 +1,1079 @@
+fileFormatVersion: 2
+guid: 998d0b0e3e6045f45ae9ee1cc422136e
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -1187114698201459938
+    second: Biggie walking_0
+  - first:
+      213: 3998627149665063847
+    second: Biggie walking_1
+  - first:
+      213: 3668108096573406341
+    second: Biggie walking_2
+  - first:
+      213: 3249124034958539969
+    second: Biggie walking_3
+  - first:
+      213: -3159772800416743405
+    second: Biggie walking_4
+  - first:
+      213: -3483343376314391713
+    second: Biggie walking_5
+  - first:
+      213: 1883677818713462235
+    second: Biggie walking_6
+  - first:
+      213: 1037408246609135191
+    second: Biggie walking_7
+  - first:
+      213: 873644529140625714
+    second: Biggie walking_8
+  - first:
+      213: 897627423111107964
+    second: Biggie walking_9
+  - first:
+      213: 5834413719557577646
+    second: Biggie walking_10
+  - first:
+      213: -3715106531118715124
+    second: Biggie walking_11
+  - first:
+      213: 6963418891559434325
+    second: Biggie walking_12
+  - first:
+      213: 5573455030732917529
+    second: Biggie walking_13
+  - first:
+      213: 8375490612942597231
+    second: Biggie walking_14
+  - first:
+      213: 3523445098163294544
+    second: Biggie walking_15
+  - first:
+      213: -652544718547500297
+    second: Biggie walking_16
+  - first:
+      213: 855012214796454370
+    second: Biggie walking_17
+  - first:
+      213: -1479627112352443749
+    second: Biggie walking_18
+  - first:
+      213: -5386652986272572935
+    second: Biggie walking_19
+  - first:
+      213: -7840859361938671182
+    second: Biggie walking_20
+  - first:
+      213: -8425822164553720956
+    second: Biggie walking_21
+  - first:
+      213: 8832334733686024074
+    second: Biggie walking_22
+  - first:
+      213: -8103676230146138339
+    second: Biggie walking_23
+  - first:
+      213: 2975010438832608321
+    second: Biggie walking_24
+  - first:
+      213: 1428978781598761529
+    second: Biggie walking_25
+  - first:
+      213: -927786777595049150
+    second: Biggie walking_26
+  - first:
+      213: 8830785770133818697
+    second: Biggie walking_27
+  - first:
+      213: -5078400639367293730
+    second: Biggie walking_28
+  - first:
+      213: 765526115135707006
+    second: Biggie walking_29
+  - first:
+      213: 4968110298563548091
+    second: Biggie walking_30
+  - first:
+      213: -1039237416573186684
+    second: Biggie walking_31
+  - first:
+      213: -9160870213719123516
+    second: Biggie walking_32
+  - first:
+      213: 5436605336174850771
+    second: Biggie walking_33
+  - first:
+      213: -1880589169975676820
+    second: Biggie walking_34
+  - first:
+      213: -3274946305030441673
+    second: Biggie walking_35
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Biggie walking_0
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 1249
+        width: 304
+        height: 239
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e139e0ab875868fe0800000000000000
+      internalID: -1187114698201459938
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Biggie walking_1
+      rect:
+        serializedVersion: 2
+        x: 379
+        y: 1249
+        width: 304
+        height: 244
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7a3d40df43afd7730800000000000000
+      internalID: 3998627149665063847
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Biggie walking_2
+      rect:
+        serializedVersion: 2
+        x: 725
+        y: 1249
+        width: 304
+        height: 247
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 58cfdfd11ecb7e230800000000000000
+      internalID: 3668108096573406341
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Biggie walking_3
+      rect:
+        serializedVersion: 2
+        x: 1066
+        y: 1249
+        width: 309
+        height: 248
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1cc33ee5815371d20800000000000000
+      internalID: 3249124034958539969
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Biggie walking_4
+      rect:
+        serializedVersion: 2
+        x: 1402
+        y: 1249
+        width: 319
+        height: 247
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3100834116b3624d0800000000000000
+      internalID: -3159772800416743405
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Biggie walking_5
+      rect:
+        serializedVersion: 2
+        x: 1744
+        y: 1249
+        width: 323
+        height: 248
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f532210a7ada8afc0800000000000000
+      internalID: -3483343376314391713
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Biggie walking_6
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 999
+        width: 322
+        height: 245
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bd5d2b7fefa242a10800000000000000
+      internalID: 1883677818713462235
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Biggie walking_7
+      rect:
+        serializedVersion: 2
+        x: 373
+        y: 999
+        width: 310
+        height: 245
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 756c23acd4d956e00800000000000000
+      internalID: 1037408246609135191
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Biggie walking_8
+      rect:
+        serializedVersion: 2
+        x: 725
+        y: 999
+        width: 304
+        height: 240
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 231f36b021fcf1c00800000000000000
+      internalID: 873644529140625714
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Biggie walking_9
+      rect:
+        serializedVersion: 2
+        x: 1065
+        y: 999
+        width: 310
+        height: 243
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c75df2fa263057c00800000000000000
+      internalID: 897627423111107964
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Biggie walking_10
+      rect:
+        serializedVersion: 2
+        x: 1403
+        y: 999
+        width: 318
+        height: 244
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eab15eaad5008f050800000000000000
+      internalID: 5834413719557577646
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Biggie walking_11
+      rect:
+        serializedVersion: 2
+        x: 1738
+        y: 999
+        width: 329
+        height: 245
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c0f6fed1b4a417cc0800000000000000
+      internalID: -3715106531118715124
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Biggie walking_12
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 749
+        width: 337
+        height: 247
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 558f4ad869803a060800000000000000
+      internalID: 6963418891559434325
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Biggie walking_13
+      rect:
+        serializedVersion: 2
+        x: 344
+        y: 749
+        width: 339
+        height: 247
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 91b037e22d3e85d40800000000000000
+      internalID: 5573455030732917529
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Biggie walking_14
+      rect:
+        serializedVersion: 2
+        x: 719
+        y: 749
+        width: 310
+        height: 240
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f6cef045658bb3470800000000000000
+      internalID: 8375490612942597231
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Biggie walking_15
+      rect:
+        serializedVersion: 2
+        x: 1071
+        y: 750
+        width: 304
+        height: 242
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0515d9516aac5e030800000000000000
+      internalID: 3523445098163294544
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Biggie walking_16
+      rect:
+        serializedVersion: 2
+        x: 1417
+        y: 750
+        width: 304
+        height: 244
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7f24bea2902b1f6f0800000000000000
+      internalID: -652544718547500297
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Biggie walking_17
+      rect:
+        serializedVersion: 2
+        x: 1759
+        y: 750
+        width: 308
+        height: 247
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2e9009d441d9ddb00800000000000000
+      internalID: 855012214796454370
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Biggie walking_18
+      rect:
+        serializedVersion: 2
+        x: 28
+        y: 499
+        width: 309
+        height: 248
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b9212301bfe477be0800000000000000
+      internalID: -1479627112352443749
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Biggie walking_19
+      rect:
+        serializedVersion: 2
+        x: 371
+        y: 499
+        width: 312
+        height: 247
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9f91de016a3ce35b0800000000000000
+      internalID: -5386652986272572935
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Biggie walking_20
+      rect:
+        serializedVersion: 2
+        x: 713
+        y: 499
+        width: 316
+        height: 247
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2b979d5f3fbaf2390800000000000000
+      internalID: -7840859361938671182
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Biggie walking_21
+      rect:
+        serializedVersion: 2
+        x: 1061
+        y: 499
+        width: 314
+        height: 245
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 48b992d1267711b80800000000000000
+      internalID: -8425822164553720956
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Biggie walking_22
+      rect:
+        serializedVersion: 2
+        x: 1413
+        y: 499
+        width: 308
+        height: 240
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a8723b205a1c29a70800000000000000
+      internalID: 8832334733686024074
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Biggie walking_23
+      rect:
+        serializedVersion: 2
+        x: 1750
+        y: 499
+        width: 317
+        height: 241
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d1fdc5f5765f98f80800000000000000
+      internalID: -8103676230146138339
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Biggie walking_24
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 249
+        width: 326
+        height: 244
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 14452b95b3c594920800000000000000
+      internalID: 2975010438832608321
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Biggie walking_25
+      rect:
+        serializedVersion: 2
+        x: 345
+        y: 249
+        width: 338
+        height: 245
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 932c3cc71a0c4d310800000000000000
+      internalID: 1428978781598761529
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Biggie walking_26
+      rect:
+        serializedVersion: 2
+        x: 690
+        y: 249
+        width: 339
+        height: 245
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 24b842667d6df13f0800000000000000
+      internalID: -927786777595049150
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Biggie walking_27
+      rect:
+        serializedVersion: 2
+        x: 1036
+        y: 249
+        width: 339
+        height: 245
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 94d8664ded04d8a70800000000000000
+      internalID: 8830785770133818697
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Biggie walking_28
+      rect:
+        serializedVersion: 2
+        x: 1413
+        y: 249
+        width: 308
+        height: 240
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ed455676685e589b0800000000000000
+      internalID: -5078400639367293730
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Biggie walking_29
+      rect:
+        serializedVersion: 2
+        x: 1763
+        y: 250
+        width: 304
+        height: 240
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e77d2fe12f1bf9a00800000000000000
+      internalID: 765526115135707006
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Biggie walking_30
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 0
+        width: 304
+        height: 243
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bb317de8ef542f440800000000000000
+      internalID: 4968110298563548091
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Biggie walking_31
+      rect:
+        serializedVersion: 2
+        x: 378
+        y: 0
+        width: 305
+        height: 246
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 48d4cd36313e391f0800000000000000
+      internalID: -1039237416573186684
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Biggie walking_32
+      rect:
+        serializedVersion: 2
+        x: 719
+        y: 0
+        width: 310
+        height: 247
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4c990d5b31d0ed080800000000000000
+      internalID: -9160870213719123516
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Biggie walking_33
+      rect:
+        serializedVersion: 2
+        x: 1059
+        y: 0
+        width: 316
+        height: 247
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3d2f1b6bfb3b27b40800000000000000
+      internalID: 5436605336174850771
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Biggie walking_34
+      rect:
+        serializedVersion: 2
+        x: 1405
+        y: 0
+        width: 316
+        height: 247
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c60372b1d1ec6e5e0800000000000000
+      internalID: -1880589169975676820
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Biggie walking_35
+      rect:
+        serializedVersion: 2
+        x: 1757
+        y: 0
+        width: 310
+        height: 240
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 735be2edfad0d82d0800000000000000
+      internalID: -3274946305030441673
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Biggie walking_0: -1187114698201459938
+      Biggie walking_1: 3998627149665063847
+      Biggie walking_10: 5834413719557577646
+      Biggie walking_11: -3715106531118715124
+      Biggie walking_12: 6963418891559434325
+      Biggie walking_13: 5573455030732917529
+      Biggie walking_14: 8375490612942597231
+      Biggie walking_15: 3523445098163294544
+      Biggie walking_16: -652544718547500297
+      Biggie walking_17: 855012214796454370
+      Biggie walking_18: -1479627112352443749
+      Biggie walking_19: -5386652986272572935
+      Biggie walking_2: 3668108096573406341
+      Biggie walking_20: -7840859361938671182
+      Biggie walking_21: -8425822164553720956
+      Biggie walking_22: 8832334733686024074
+      Biggie walking_23: -8103676230146138339
+      Biggie walking_24: 2975010438832608321
+      Biggie walking_25: 1428978781598761529
+      Biggie walking_26: -927786777595049150
+      Biggie walking_27: 8830785770133818697
+      Biggie walking_28: -5078400639367293730
+      Biggie walking_29: 765526115135707006
+      Biggie walking_3: 3249124034958539969
+      Biggie walking_30: 4968110298563548091
+      Biggie walking_31: -1039237416573186684
+      Biggie walking_32: -9160870213719123516
+      Biggie walking_33: 5436605336174850771
+      Biggie walking_34: -1880589169975676820
+      Biggie walking_35: -3274946305030441673
+      Biggie walking_4: -3159772800416743405
+      Biggie walking_5: -3483343376314391713
+      Biggie walking_6: 1883677818713462235
+      Biggie walking_7: 1037408246609135191
+      Biggie walking_8: 873644529140625714
+      Biggie walking_9: 897627423111107964
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

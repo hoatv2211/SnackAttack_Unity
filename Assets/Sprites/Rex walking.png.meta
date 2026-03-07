@@ -1,0 +1,1079 @@
+fileFormatVersion: 2
+guid: 6cc3435007dc9f84a8293a10c893a054
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 1001364999028825215
+    second: Rex walking_0
+  - first:
+      213: -39399408312723839
+    second: Rex walking_1
+  - first:
+      213: -6596552320194784092
+    second: Rex walking_2
+  - first:
+      213: 7166478971771392393
+    second: Rex walking_3
+  - first:
+      213: 3229354010584048382
+    second: Rex walking_4
+  - first:
+      213: 6204246514606028036
+    second: Rex walking_5
+  - first:
+      213: -447090414451490649
+    second: Rex walking_6
+  - first:
+      213: -4175037351545854238
+    second: Rex walking_7
+  - first:
+      213: 7253678604535383555
+    second: Rex walking_8
+  - first:
+      213: -1503319888768918093
+    second: Rex walking_9
+  - first:
+      213: -4170825232188259321
+    second: Rex walking_10
+  - first:
+      213: -2440234015336362724
+    second: Rex walking_11
+  - first:
+      213: -1203246764632885759
+    second: Rex walking_12
+  - first:
+      213: 4876155190776223957
+    second: Rex walking_13
+  - first:
+      213: -2985456746476321340
+    second: Rex walking_14
+  - first:
+      213: -4303742577161733070
+    second: Rex walking_15
+  - first:
+      213: 317338090612605797
+    second: Rex walking_16
+  - first:
+      213: 5572632310562442426
+    second: Rex walking_17
+  - first:
+      213: -2025422987912566381
+    second: Rex walking_18
+  - first:
+      213: -309727763038319990
+    second: Rex walking_19
+  - first:
+      213: -1846540888124945888
+    second: Rex walking_20
+  - first:
+      213: -5903316254171478179
+    second: Rex walking_21
+  - first:
+      213: 7001037985013688317
+    second: Rex walking_22
+  - first:
+      213: -459714680887078703
+    second: Rex walking_23
+  - first:
+      213: -9081431639268857700
+    second: Rex walking_24
+  - first:
+      213: -7093023120430746859
+    second: Rex walking_25
+  - first:
+      213: -435271479589173741
+    second: Rex walking_26
+  - first:
+      213: 1720872956916981550
+    second: Rex walking_27
+  - first:
+      213: 3844903570452131599
+    second: Rex walking_28
+  - first:
+      213: 3483894246666700582
+    second: Rex walking_29
+  - first:
+      213: 6715523025379406433
+    second: Rex walking_30
+  - first:
+      213: -3574937242079182282
+    second: Rex walking_31
+  - first:
+      213: -4170571224145369415
+    second: Rex walking_32
+  - first:
+      213: -2928847452669579069
+    second: Rex walking_33
+  - first:
+      213: 643164892654247287
+    second: Rex walking_34
+  - first:
+      213: -6827987019381026160
+    second: Rex walking_35
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Rex walking_0
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 1054
+        width: 257
+        height: 209
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f7c5f91492095ed00800000000000000
+      internalID: 1001364999028825215
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rex walking_1
+      rect:
+        serializedVersion: 2
+        x: 280
+        y: 1055
+        width: 261
+        height: 207
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 186d8276276047ff0800000000000000
+      internalID: -39399408312723839
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rex walking_2
+      rect:
+        serializedVersion: 2
+        x: 552
+        y: 1054
+        width: 263
+        height: 208
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4a4d2846d965474a0800000000000000
+      internalID: -6596552320194784092
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rex walking_3
+      rect:
+        serializedVersion: 2
+        x: 828
+        y: 1054
+        width: 261
+        height: 208
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9819dbab7a2747360800000000000000
+      internalID: 7166478971771392393
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rex walking_4
+      rect:
+        serializedVersion: 2
+        x: 1103
+        y: 1054
+        width: 260
+        height: 208
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ef268dedc58f0dc20800000000000000
+      internalID: 3229354010584048382
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rex walking_5
+      rect:
+        serializedVersion: 2
+        x: 1377
+        y: 1054
+        width: 260
+        height: 208
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4053c026559e91650800000000000000
+      internalID: 6204246514606028036
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rex walking_6
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 843
+        width: 258
+        height: 208
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7a0032803ad9bc9f0800000000000000
+      internalID: -447090414451490649
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rex walking_7
+      rect:
+        serializedVersion: 2
+        x: 286
+        y: 843
+        width: 254
+        height: 209
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2e62f1926a94f06c0800000000000000
+      internalID: -4175037351545854238
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rex walking_8
+      rect:
+        serializedVersion: 2
+        x: 560
+        y: 843
+        width: 254
+        height: 210
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 306ce2a524e3aa460800000000000000
+      internalID: 7253678604535383555
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rex walking_9
+      rect:
+        serializedVersion: 2
+        x: 831
+        y: 843
+        width: 257
+        height: 210
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3bd162ea682232be0800000000000000
+      internalID: -1503319888768918093
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rex walking_10
+      rect:
+        serializedVersion: 2
+        x: 1097
+        y: 844
+        width: 265
+        height: 208
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 704ce2f9c804e16c0800000000000000
+      internalID: -4170825232188259321
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rex walking_11
+      rect:
+        serializedVersion: 2
+        x: 1369
+        y: 844
+        width: 267
+        height: 209
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c1d0d0b871c822ed0800000000000000
+      internalID: -2440234015336362724
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rex walking_12
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 632
+        width: 266
+        height: 210
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1063be051753d4fe0800000000000000
+      internalID: -1203246764632885759
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rex walking_13
+      rect:
+        serializedVersion: 2
+        x: 274
+        y: 632
+        width: 266
+        height: 210
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5d8d4ef9f459ba340800000000000000
+      internalID: 4876155190776223957
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rex walking_14
+      rect:
+        serializedVersion: 2
+        x: 559
+        y: 632
+        width: 256
+        height: 208
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4c54cfd18e68196d0800000000000000
+      internalID: -2985456746476321340
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rex walking_15
+      rect:
+        serializedVersion: 2
+        x: 832
+        y: 632
+        width: 257
+        height: 208
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 23cfc83ade80644c0800000000000000
+      internalID: -4303742577161733070
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rex walking_16
+      rect:
+        serializedVersion: 2
+        x: 1105
+        y: 632
+        width: 258
+        height: 208
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5634aa4ef49676400800000000000000
+      internalID: 317338090612605797
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rex walking_17
+      rect:
+        serializedVersion: 2
+        x: 1378
+        y: 632
+        width: 259
+        height: 208
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: abc40f6bf87f55d40800000000000000
+      internalID: 5572632310562442426
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rex walking_18
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 421
+        width: 260
+        height: 208
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 399af8d068044e3e0800000000000000
+      internalID: -2025422987912566381
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rex walking_19
+      rect:
+        serializedVersion: 2
+        x: 281
+        y: 421
+        width: 260
+        height: 208
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a8a46039d30a3bbf0800000000000000
+      internalID: -309727763038319990
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rex walking_20
+      rect:
+        serializedVersion: 2
+        x: 555
+        y: 421
+        width: 260
+        height: 208
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 02a041c78d4cf56e0800000000000000
+      internalID: -1846540888124945888
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rex walking_21
+      rect:
+        serializedVersion: 2
+        x: 832
+        y: 421
+        width: 256
+        height: 208
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d57c159d425331ea0800000000000000
+      internalID: -5903316254171478179
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rex walking_22
+      rect:
+        serializedVersion: 2
+        x: 1107
+        y: 421
+        width: 255
+        height: 208
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: df7e1cb44fea82160800000000000000
+      internalID: 7001037985013688317
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rex walking_23
+      rect:
+        serializedVersion: 2
+        x: 1376
+        y: 421
+        width: 260
+        height: 209
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1d091b3fee3ce99f0800000000000000
+      internalID: -459714680887078703
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rex walking_24
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 210
+        width: 266
+        height: 210
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c98e2612a0648f180800000000000000
+      internalID: -9081431639268857700
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rex walking_25
+      rect:
+        serializedVersion: 2
+        x: 273
+        y: 211
+        width: 268
+        height: 209
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 513b71b6d05809d90800000000000000
+      internalID: -7093023120430746859
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rex walking_26
+      rect:
+        serializedVersion: 2
+        x: 547
+        y: 211
+        width: 267
+        height: 208
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3168a3e35ea95f9f0800000000000000
+      internalID: -435271479589173741
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rex walking_27
+      rect:
+        serializedVersion: 2
+        x: 825
+        y: 211
+        width: 263
+        height: 209
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e2fdc9436d4c1e710800000000000000
+      internalID: 1720872956916981550
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rex walking_28
+      rect:
+        serializedVersion: 2
+        x: 1109
+        y: 211
+        width: 253
+        height: 209
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f0f2e681d67db5530800000000000000
+      internalID: 3844903570452131599
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rex walking_29
+      rect:
+        serializedVersion: 2
+        x: 1384
+        y: 210
+        width: 253
+        height: 209
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 627889fdb57495030800000000000000
+      internalID: 3483894246666700582
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rex walking_30
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 0
+        width: 256
+        height: 207
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 16232b87c94523d50800000000000000
+      internalID: 6715523025379406433
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rex walking_31
+      rect:
+        serializedVersion: 2
+        x: 281
+        y: 0
+        width: 260
+        height: 207
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6324e87e485436ec0800000000000000
+      internalID: -3574937242079182282
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rex walking_32
+      rect:
+        serializedVersion: 2
+        x: 551
+        y: 0
+        width: 264
+        height: 207
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9b6695a71972f16c0800000000000000
+      internalID: -4170571224145369415
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rex walking_33
+      rect:
+        serializedVersion: 2
+        x: 827
+        y: 0
+        width: 262
+        height: 207
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3c0725e62c4aa57d0800000000000000
+      internalID: -2928847452669579069
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rex walking_34
+      rect:
+        serializedVersion: 2
+        x: 1103
+        y: 0
+        width: 260
+        height: 207
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 77d98aeef0bfce800800000000000000
+      internalID: 643164892654247287
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rex walking_35
+      rect:
+        serializedVersion: 2
+        x: 1378
+        y: 0
+        width: 259
+        height: 208
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 092d0da6bfd1e31a0800000000000000
+      internalID: -6827987019381026160
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Rex walking_0: 1001364999028825215
+      Rex walking_1: -39399408312723839
+      Rex walking_10: -4170825232188259321
+      Rex walking_11: -2440234015336362724
+      Rex walking_12: -1203246764632885759
+      Rex walking_13: 4876155190776223957
+      Rex walking_14: -2985456746476321340
+      Rex walking_15: -4303742577161733070
+      Rex walking_16: 317338090612605797
+      Rex walking_17: 5572632310562442426
+      Rex walking_18: -2025422987912566381
+      Rex walking_19: -309727763038319990
+      Rex walking_2: -6596552320194784092
+      Rex walking_20: -1846540888124945888
+      Rex walking_21: -5903316254171478179
+      Rex walking_22: 7001037985013688317
+      Rex walking_23: -459714680887078703
+      Rex walking_24: -9081431639268857700
+      Rex walking_25: -7093023120430746859
+      Rex walking_26: -435271479589173741
+      Rex walking_27: 1720872956916981550
+      Rex walking_28: 3844903570452131599
+      Rex walking_29: 3483894246666700582
+      Rex walking_3: 7166478971771392393
+      Rex walking_30: 6715523025379406433
+      Rex walking_31: -3574937242079182282
+      Rex walking_32: -4170571224145369415
+      Rex walking_33: -2928847452669579069
+      Rex walking_34: 643164892654247287
+      Rex walking_35: -6827987019381026160
+      Rex walking_4: 3229354010584048382
+      Rex walking_5: 6204246514606028036
+      Rex walking_6: -447090414451490649
+      Rex walking_7: -4175037351545854238
+      Rex walking_8: 7253678604535383555
+      Rex walking_9: -1503319888768918093
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

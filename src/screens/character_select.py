@@ -1,0 +1,645 @@
+"""Character selection screen."""
+
+import pygame
+import os
+from typing import Dict, Any, List, Optional
+from .base_screen import BaseScreen
+from ..core.state_machine import GameState
+from ..core.event_bus import GameEvent
+
+
+class CharacterCard:
+    """A character selection card."""
+
+    def __init__(self, character_config: Dict[str, Any], x: int, y: int,
+                 width: int = 180, height: int = 200):
+        """Card sized for 960x720 display."""
+        self.config = character_config
+        self.character_id = character_config.get("id", "unknown")
+        self.name = character_config.get("name", "Unknown")
+        self.breed = character_config.get("breed", "")
+        self.color = tuple(character_config.get("color", [200, 200, 200]))
+        self.speed = character_config.get("base_speed", 1.0)
+
+        self.rect = pygame.Rect(x, y, width, height)
+        self.selected_p1 = False
+        self.selected_p2 = False
+        self.hovered = False
+
+
+class CharacterSelectScreen(BaseScreen):
+    """Character selection screen for 1P and 2P modes."""
+
+    def __init__(self, state_machine, config, event_bus):
+        super().__init__(state_machine, config, event_bus)
+
+        self.character_cards: List[CharacterCard] = []
+        self.game_mode = "1p"
+        self.vs_ai = True
+
+        # Selection state
+        self.p1_selection: Optional[int] = 0
+        self.p2_selection: Optional[int] = 1
+        self.active_player = 1  # Which player is currently selecting
+        self.p1_confirmed = False
+        self.p2_confirmed = False
+
+        # Colors - dark blue theme like reference
+        self.bg_color = (20, 30, 60)
+        self.p1_color = (100, 180, 255)
+        self.p2_color = (255, 120, 120)
+        self.text_color = (255, 255, 255)
+        self.highlight_color = (255, 220, 80)
+
+        # Images
+        self.background_image: Optional[pygame.Surface] = None
+        self.title_image: Optional[pygame.Surface] = None
+        self.profile_images: Dict[str, Optional[pygame.Surface]] = {}
+
+        # Back button
+        self.back_font: Optional[pygame.font.Font] = None
+        self.back_button_rect: Optional[pygame.Rect] = None
+        self.back_color = (77, 43, 31)  # #4D2B1F
+        self.back_selected_color = (147, 76, 48)  # #934C30
+        self.back_selected = False
+        self.select_indicator: Optional[pygame.Surface] = None
+
+        # Create Your Dog button
+        self.create_dog_rect: Optional[pygame.Rect] = None
+        self.create_dog_hovered = False
+
+        # Scrolling state for character grid
+        self.scroll_offset = 0          # Pixels scrolled
+        self.max_scroll = 0             # Max scroll value
+        self.scroll_speed = 40          # Pixels per scroll tick
+        self.cards_area_top = 0         # Top of visible cards area
+        self.cards_area_bottom = 0      # Bottom of visible cards area
+        self.scroll_target = 0          # For smooth scrolling
+        self.scroll_velocity = 0.0
+
+    def on_enter(self, data: Dict[str, Any] = None) -> None:
+        """Initialize character select screen."""
+        self.initialize_fonts()
+        self._load_custom_font()
+        self._load_images()
+
+        data = data or {}
+        self.game_mode = data.get("mode", "1p")
+        self.vs_ai = data.get("vs_ai", True)
+
+        # Reset selection state
+        self.p1_selection = 0
+        self.p2_selection = None  # P2 not selected until P1 confirms
+        self.active_player = 1
+        self.p1_confirmed = False
+        self.p2_confirmed = False
+
+        # Create character cards
+        self._create_character_cards()
+
+        # Reset scroll
+        self.scroll_offset = 0
+        self.scroll_target = 0
+        self.scroll_velocity = 0.0
+
+        # Update initial selection visuals
+        self._update_card_selections()
+
+    def _requires_second_selection(self) -> bool:
+        """Return whether this mode needs a second dog selection."""
+        return self.game_mode == "2p"
+
+    def _build_mode_data(self) -> Dict[str, Any]:
+        """Build state payload for screens that need mode context."""
+        return {
+            "mode": self.game_mode,
+            "vs_ai": self.vs_ai,
+        }
+
+    def _create_character_cards(self) -> None:
+        """Create character cards from config with dynamic scrollable layout."""
+        characters = self.config.get_all_characters()
+
+        # Reorder characters: 1st row: jazzy, biggie, dash, 2nd row: snowy, prissy, rex
+        # Custom characters are appended after the built-in ones
+        char_order = ["jazzy", "biggie", "dash", "snowy", "prissy", "rex"]
+        char_dict = {c.get("id"): c for c in characters}
+        ordered_characters = [char_dict[cid] for cid in char_order if cid in char_dict]
+
+        # Append any custom characters not in the default order
+        for c in characters:
+            cid = c.get("id")
+            if cid not in char_order:
+                ordered_characters.append(c)
+
+        # 3 columns layout, unlimited rows (scrollable)
+        cards_per_row = 3
+        card_width = int(self.screen_width * 0.25 * 1.1)
+        card_height = int(self.screen_height * 0.28 * 1.1)
+        padding_x = -25  # Cards closer together horizontally
+        padding_y = -70  # Rows closer together vertically
+
+        total_width = cards_per_row * card_width + (cards_per_row - 1) * padding_x
+        start_x = (self.screen_width - total_width) // 2
+        start_y = int(self.screen_height * 0.32)  # Moved down
+
+        # The visible area for cards (between title and buttons)
+        self.cards_area_top = start_y - 10
+        self.cards_area_bottom = int(self.screen_height * 0.85)
+        visible_height = self.cards_area_bottom - self.cards_area_top
+
+        self.character_cards = []
+        for i, char_config in enumerate(ordered_characters):
+            row = i // cards_per_row
+            col = i % cards_per_row
+
+            x = start_x + col * (card_width + padding_x)
+            y = start_y + row * (card_height + padding_y)
+
+            card = CharacterCard(char_config, x, y, card_width, card_height)
+            self.character_cards.append(card)
+
+        # Calculate max scroll based on total content height
+        if self.character_cards:
+            total_rows = (len(ordered_characters) + cards_per_row - 1) // cards_per_row
+            content_bottom = start_y + total_rows * (card_height + padding_y) - padding_y
+            total_content_height = content_bottom - self.cards_area_top
+            self.max_scroll = max(0, total_content_height - visible_height)
+        else:
+            self.max_scroll = 0
+
+    def _update_card_selections(self) -> None:
+        """Update which cards are selected."""
+        for i, card in enumerate(self.character_cards):
+            card.selected_p1 = (i == self.p1_selection)
+            card.selected_p2 = (i == self.p2_selection) if self._requires_second_selection() else False
+
+    def on_exit(self) -> None:
+        """Clean up when leaving screen."""
+        pass
+
+    def _load_custom_font(self) -> None:
+        """Load custom Daydream font for back button and difficulty screen."""
+        base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+        ui_dir = os.path.join(base_dir, "ui")
+        font_path = os.path.join(ui_dir, "Daydream.ttf")
+
+        if os.path.exists(font_path):
+            self.back_font = pygame.font.Font(font_path, 32)
+            # Override base fonts with Daydream for difficulty screen
+            self.title_font = pygame.font.Font(font_path, 36)
+            self.menu_font = pygame.font.Font(font_path, 28)
+            self.small_font = pygame.font.Font(font_path, 18)
+
+    def _load_images(self) -> None:
+        """Load background and title images."""
+        base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+        ui_dir = os.path.join(base_dir, "ui")
+
+        # Load background image
+        bg_path = os.path.join(ui_dir, "Choose your dog background.png")
+        if os.path.exists(bg_path):
+            self.background_image = pygame.image.load(bg_path).convert()
+            self.background_image = pygame.transform.scale(
+                self.background_image, (self.screen_width, self.screen_height)
+            )
+
+        # Load title image
+        title_path = os.path.join(ui_dir, "Choose your dog ui.png")
+        if os.path.exists(title_path):
+            self.title_image = pygame.image.load(title_path).convert_alpha()
+            # Scale title to fit nicely at top
+            title_max_width = int(self.screen_width * 0.6)
+            title_max_height = int(self.screen_height * 0.12)
+            title_rect = self.title_image.get_rect()
+            scale = min(title_max_width / title_rect.width, title_max_height / title_rect.height)
+            scale *= 1.65  # Make title bigger
+            new_width = int(title_rect.width * scale)
+            new_height = int(title_rect.height * scale)
+            self.title_image = pygame.transform.scale(self.title_image, (new_width, new_height))
+
+        # Load profile images from Profile folder (built-in + custom)
+        profile_dir = os.path.join(base_dir, "Profile")
+        profile_files = {
+            "jazzy": "Jazzy.png",
+            "biggie": "Biggie.png",
+            "prissy": "Prissy.png",
+            "snowy": "Snowy.png",
+            "rex": "Rex.png",
+            "dash": "Dash.png"
+        }
+        for char_id, filename in profile_files.items():
+            profile_path = os.path.join(profile_dir, filename)
+            if os.path.exists(profile_path):
+                self.profile_images[char_id] = pygame.image.load(profile_path).convert_alpha()
+
+        # Also load profiles for any custom characters from config
+        all_characters = self.config.get_all_characters()
+        for char_config in all_characters:
+            cid = char_config.get("id", "")
+            if cid not in profile_files and char_config.get("custom", False):
+                display_name = char_config.get("display_name", cid.capitalize())
+                custom_profile = os.path.join(profile_dir, f"{display_name}.png")
+                if os.path.exists(custom_profile) and cid not in self.profile_images:
+                    self.profile_images[cid] = pygame.image.load(custom_profile).convert_alpha()
+
+        # Load select indicator image (same size as main menu)
+        select_path = os.path.join(ui_dir, "Select.png")
+        if os.path.exists(select_path):
+            self.select_indicator = pygame.image.load(select_path).convert_alpha()
+            # Scale to match main menu button size
+            select_scale = 0.576
+            new_width = int(self.select_indicator.get_width() * select_scale)
+            new_height = int(self.select_indicator.get_height() * select_scale)
+            self.select_indicator = pygame.transform.scale(self.select_indicator, (new_width, new_height))
+
+    def _get_scrolled_card_rect(self, card: 'CharacterCard') -> pygame.Rect:
+        """Get a card's rect adjusted for current scroll offset."""
+        return card.rect.move(0, -self.scroll_offset)
+
+    def _scroll_to_selection(self) -> None:
+        """Auto-scroll so the currently selected card is visible."""
+        current = self.p1_selection if self.active_player == 1 else self.p2_selection
+        if current is None or current >= len(self.character_cards):
+            return
+        card = self.character_cards[current]
+        card_top = card.rect.top - self.scroll_offset
+        card_bottom = card.rect.bottom - self.scroll_offset
+
+        if card_top < self.cards_area_top:
+            self.scroll_offset = max(0, card.rect.top - self.cards_area_top - 10)
+        elif card_bottom > self.cards_area_bottom:
+            self.scroll_offset = min(self.max_scroll,
+                                     card.rect.bottom - self.cards_area_bottom + 10)
+
+    def handle_event(self, event: pygame.event.Event) -> None:
+        """Handle input events."""
+        if event.type == pygame.KEYDOWN:
+            self._handle_selection_input(event.key)
+
+        elif event.type == pygame.MOUSEWHEEL:
+            # Scroll character grid with mouse wheel
+            if self.max_scroll > 0:
+                self.scroll_offset -= event.y * self.scroll_speed
+                self.scroll_offset = max(0, min(self.scroll_offset, self.max_scroll))
+
+        elif event.type == pygame.MOUSEMOTION:
+            # Handle hover on back button
+            if self.back_button_rect and self.back_button_rect.collidepoint(event.pos):
+                self.back_selected = True
+            else:
+                self.back_selected = False
+
+            # Handle hover on Create Your Dog button
+            if self.create_dog_rect and self.create_dog_rect.collidepoint(event.pos):
+                self.create_dog_hovered = True
+            else:
+                self.create_dog_hovered = False
+
+            # Handle hover on character cards (using scrolled positions)
+            mx, my = event.pos
+            if self.cards_area_top <= my <= self.cards_area_bottom:
+                for i, card in enumerate(self.character_cards):
+                    scrolled_rect = self._get_scrolled_card_rect(card)
+                    if scrolled_rect.collidepoint(event.pos):
+                        old_selection = self.p1_selection if self.active_player == 1 else self.p2_selection
+                        if self.active_player == 1:
+                            self.p1_selection = i
+                        else:
+                            self.p2_selection = i
+                        if old_selection != i:
+                            self.event_bus.emit(GameEvent.PLAY_SOUND, {"sound": "select"})
+                        self._update_card_selections()
+                        break
+
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            if event.button == 1:  # Left click
+                if self.back_button_rect and self.back_button_rect.collidepoint(event.pos):
+                    self.state_machine.change_state(GameState.MAIN_MENU)
+
+                # Handle click on Create Your Dog button
+                if self.create_dog_rect and self.create_dog_rect.collidepoint(event.pos):
+                    self.event_bus.emit(GameEvent.PLAY_SOUND, {"sound": "select"})
+                    self.state_machine.change_state(GameState.UPLOAD_AVATAR, self._build_mode_data())
+                    return
+
+                # Handle click on character cards (using scrolled positions)
+                mx, my = event.pos
+                if self.cards_area_top <= my <= self.cards_area_bottom:
+                    for i, card in enumerate(self.character_cards):
+                        scrolled_rect = self._get_scrolled_card_rect(card)
+                        if scrolled_rect.collidepoint(event.pos):
+                            if self.active_player == 1:
+                                self.p1_selection = i
+                            else:
+                                self.p2_selection = i
+                            self._update_card_selections()
+                            self._confirm_selection()
+                            break
+
+            elif event.button == 3:  # Right click — view character showcase
+                mx, my = event.pos
+                if self.cards_area_top <= my <= self.cards_area_bottom:
+                    for i, card in enumerate(self.character_cards):
+                        scrolled_rect = self._get_scrolled_card_rect(card)
+                        if scrolled_rect.collidepoint(event.pos):
+                            self.event_bus.emit(GameEvent.PLAY_SOUND, {"sound": "select"})
+                            self.state_machine.change_state(
+                                GameState.AVATAR_SHOWCASE,
+                                {"character": card.config}
+                            )
+                            return
+
+    def _handle_selection_input(self, key: int) -> None:
+        """Handle character selection input."""
+        cards_per_row = 3  # Match _create_character_cards
+        num_cards = len(self.character_cards)
+
+        # Handle navigation when back button is selected
+        if self.back_selected:
+            if key == pygame.K_UP:
+                # Move from back button to last row, center column
+                self.back_selected = False
+                last_row_start = (num_cards - 1) // cards_per_row * cards_per_row
+                # Pick center of last row, clamped to valid range
+                new_selection = min(last_row_start + cards_per_row // 2, num_cards - 1)
+                if self.active_player == 1:
+                    self.p1_selection = new_selection
+                else:
+                    self.p2_selection = new_selection
+                self.event_bus.emit(GameEvent.PLAY_SOUND, {"sound": "select"})
+                self._update_card_selections()
+                self._scroll_to_selection()
+                return
+            elif key == pygame.K_RETURN:
+                self._go_back()
+                return
+            elif key == pygame.K_ESCAPE:
+                self._go_back()
+                return
+            # LEFT/RIGHT do nothing when on back button
+            return
+
+        # Get current selection based on active player
+        if self.active_player == 1:
+            current = self.p1_selection
+        else:
+            current = self.p2_selection
+
+        new_selection = current
+
+        if key == pygame.K_LEFT:
+            new_selection = max(0, current - 1)
+        elif key == pygame.K_RIGHT:
+            new_selection = min(num_cards - 1, current + 1)
+        elif key == pygame.K_UP:
+            new_selection = max(0, current - cards_per_row)
+        elif key == pygame.K_DOWN:
+            # Check if on bottom row (indices 3, 4, 5)
+            if current >= num_cards - cards_per_row:
+                # Move to back button
+                self.back_selected = True
+                self.event_bus.emit(GameEvent.PLAY_SOUND, {"sound": "select"})
+                self._update_card_selections()
+                return
+            else:
+                new_selection = min(num_cards - 1, current + cards_per_row)
+        elif key == pygame.K_RETURN:
+            self._confirm_selection()
+            return
+        elif key == pygame.K_ESCAPE:
+            self._go_back()
+            return
+
+        # For 2P mode with WASD for P1
+        if self._requires_second_selection() and self.active_player == 1:
+            if key == pygame.K_a:
+                new_selection = max(0, current - 1)
+            elif key == pygame.K_d:
+                new_selection = min(num_cards - 1, current + 1)
+            elif key == pygame.K_w:
+                new_selection = max(0, current - cards_per_row)
+            elif key == pygame.K_s:
+                # Check if on bottom row
+                if current >= num_cards - cards_per_row:
+                    self.back_selected = True
+                    self.event_bus.emit(GameEvent.PLAY_SOUND, {"sound": "select"})
+                    self._update_card_selections()
+                    return
+                else:
+                    new_selection = min(num_cards - 1, current + cards_per_row)
+            elif key == pygame.K_SPACE:
+                self._confirm_selection()
+                return
+
+        # Update selection
+        if self.active_player == 1:
+            if self.p1_selection != new_selection:
+                self.p1_selection = new_selection
+                self.event_bus.emit(GameEvent.PLAY_SOUND, {"sound": "select"})
+        else:
+            if self.p2_selection != new_selection:
+                self.p2_selection = new_selection
+                self.event_bus.emit(GameEvent.PLAY_SOUND, {"sound": "select"})
+
+        self._update_card_selections()
+
+        # Auto-scroll to keep selection visible
+        self._scroll_to_selection()
+
+    def _confirm_selection(self) -> None:
+        """Confirm current player's selection."""
+        if self.active_player == 1:
+            self.p1_confirmed = True
+            if not self._requires_second_selection():
+                # Go directly to game with default difficulty (medium)
+                self._start_game()
+            else:
+                # Switch to P2 selection
+                self.active_player = 2
+                self.p2_selection = 0  # Initialize P2 selection
+                self._update_card_selections()
+        else:
+            self.p2_confirmed = True
+            self._start_game()
+
+    def _go_back(self) -> None:
+        """Go back to previous state or screen."""
+        if self.p1_confirmed and self._requires_second_selection():
+            self.p1_confirmed = False
+            self.active_player = 1
+            self.p2_selection = None  # Reset P2 selection
+            self._update_card_selections()
+        else:
+            self.state_machine.change_state(GameState.MAIN_MENU)
+
+    def _start_game(self) -> None:
+        """Start the game with selected characters."""
+        # Play start sound
+        self.event_bus.emit(GameEvent.PLAY_SOUND, {"sound": "start"})
+
+        p1_char = self.character_cards[self.p1_selection].config
+        p2_char = None
+        difficulty = None
+
+        if self.game_mode == "1p":
+            # AI gets a random character different from P1
+            import random
+            available = [c for i, c in enumerate(self.character_cards)
+                         if i != self.p1_selection]
+            p2_char = random.choice(available).config if available else p1_char
+            difficulty = "medium"  # Default difficulty
+        elif self._requires_second_selection():
+            p2_char = self.character_cards[self.p2_selection].config
+
+        self.state_machine.change_state(GameState.GAMEPLAY, {
+            "mode": self.game_mode,
+            "vs_ai": self.vs_ai,
+            "p1_character": p1_char,
+            "p2_character": p2_char,
+            "difficulty": difficulty
+        })
+
+    def update(self, dt: float) -> None:
+        """Update screen state."""
+        pass
+
+    def render(self, surface: pygame.Surface) -> None:
+        """Render the character select screen with proportional positioning."""
+        # Background
+        if self.background_image:
+            surface.blit(self.background_image, (0, 0))
+        else:
+            surface.fill(self.bg_color)
+
+        # Title image at top
+        if self.title_image:
+            title_rect = self.title_image.get_rect()
+            title_x = (self.screen_width - title_rect.width) // 2
+            title_y = int(self.screen_height * 0.08)  # Moved up
+            surface.blit(self.title_image, (title_x, title_y))
+
+        # Player indicator
+        if self._requires_second_selection() and self.back_font:
+            indicator_y = int(self.screen_height * 0.33)
+            if self.active_player == 1:
+                choose_text = "Player 1 Select"
+                choose_color = self.p1_color
+            else:
+                choose_text = "Player 2 Select"
+                choose_color = self.p2_color
+            self.draw_text(surface, choose_text, self.back_font, choose_color,
+                           (self.screen_width // 2, indicator_y))
+
+        # Draw character cards with scroll clipping
+        clip_rect = pygame.Rect(0, self.cards_area_top, self.screen_width, 
+                                self.cards_area_bottom - self.cards_area_top)
+        surface.set_clip(clip_rect)
+        for card in self.character_cards:
+            self._render_card(surface, card, self.scroll_offset)
+        surface.set_clip(None)
+
+        # Draw scroll indicators if content overflows
+        if self.max_scroll > 0:
+            indicator_color = (200, 170, 60)
+            arrow_x = self.screen_width // 2
+            if self.scroll_offset > 0:
+                # Up arrow
+                y = self.cards_area_top + 2
+                pygame.draw.polygon(surface, indicator_color,
+                                    [(arrow_x, y), (arrow_x - 12, y + 10), (arrow_x + 12, y + 10)])
+            if self.scroll_offset < self.max_scroll:
+                # Down arrow
+                y = self.cards_area_bottom - 2
+                pygame.draw.polygon(surface, indicator_color,
+                                    [(arrow_x, y), (arrow_x - 12, y - 10), (arrow_x + 12, y - 10)])
+
+        # Back button (at same position as settings screen)
+        if self.back_font:
+            # Calculate position similar to settings screen
+            back_y = int(self.screen_height * 0.92) - 40
+            back_text_color = self.back_selected_color if self.back_selected else self.back_color
+            self.back_button_rect = self.draw_text(surface, "Back", self.back_font, back_text_color,
+                                                    (self.screen_width // 2, back_y))
+
+            # Draw select indicator when back is selected
+            if self.back_selected and self.select_indicator and self.back_button_rect:
+                select_rect = self.select_indicator.get_rect()
+                select_x = self.back_button_rect.left - select_rect.width - 6
+                select_y = self.back_button_rect.centery - select_rect.height // 2
+                surface.blit(self.select_indicator, (select_x, select_y))
+
+        # Create Your Dog button
+        if self.back_font:
+            create_y = int(self.screen_height * 0.92) - 80
+            btn_text = "+ Create Your Dog"
+            create_color = (255, 220, 80) if self.create_dog_hovered else (200, 170, 60)
+            self.create_dog_rect = self.draw_text(surface, btn_text, self.small_font, create_color,
+                                                   (self.screen_width // 2, create_y))
+
+        # Instructions at bottom
+        self.draw_text(surface, "Arrow Keys + Enter to Select  |  Right-Click to View Stats",
+                       self.small_font, (147, 76, 48),
+                       (self.screen_width // 2, self.screen_height - 40))
+
+    def _render_card(self, surface: pygame.Surface, card: CharacterCard,
+                      scroll_offset: int = 0) -> None:
+        """Render a character card with profile image, adjusted for scroll."""
+        # Apply scroll offset to card position
+        draw_rect = card.rect.move(0, -scroll_offset)
+
+        # Selection state determines border
+        if card.selected_p1 and card.selected_p2:
+            border_color = (200, 150, 255)  # Purple for both
+            border_width = 4
+        elif card.selected_p1:
+            border_color = self.p1_color
+            border_width = 4
+        elif card.selected_p2:
+            border_color = self.p2_color
+            border_width = 4
+        else:
+            border_color = (60, 70, 100)
+            border_width = 2
+
+        # Get profile image for this character
+        char_id = card.character_id.lower()
+        profile_img = self.profile_images.get(char_id)
+
+        if profile_img:
+            # Scale profile image to fit card (80% of card size)
+            img_width = (draw_rect.width - 10) * 0.8
+            img_height = (draw_rect.height - 10) * 0.8
+
+            # Maintain aspect ratio
+            orig_rect = profile_img.get_rect()
+            scale = min(img_width / orig_rect.width, img_height / orig_rect.height)
+            new_width = int(orig_rect.width * scale)
+            new_height = int(orig_rect.height * scale)
+            scaled_img = pygame.transform.scale(profile_img, (new_width, new_height))
+
+            # Center the image in the card (using scrolled position)
+            img_x = draw_rect.centerx - new_width // 2
+            img_y = draw_rect.centery - new_height // 2
+
+            surface.blit(scaled_img, (img_x, img_y))
+
+            # Draw selection border on top of image
+            if card.selected_p1 or card.selected_p2:
+                border_rect = pygame.Rect(img_x - 2, img_y - 2, new_width + 4, new_height + 4)
+                if card.selected_p1 and card.selected_p2:
+                    selection_color = (200, 150, 255)
+                elif card.selected_p1:
+                    selection_color = self.p1_color
+                else:
+                    selection_color = self.p2_color
+                pygame.draw.rect(surface, selection_color, border_rect, 4, border_radius=20)
+        else:
+            # Fallback: draw card background with name
+            bg_color = (30, 40, 70) if (card.selected_p1 or card.selected_p2) else (25, 35, 60)
+            pygame.draw.rect(surface, bg_color, draw_rect, border_radius=8)
+            pygame.draw.rect(surface, border_color, draw_rect, border_width, border_radius=8)
+
+            name_color = self.highlight_color if (card.selected_p1 or card.selected_p2) else self.text_color
+            self.draw_text(surface, card.name.upper(), self.menu_font, name_color,
+                           (draw_rect.centerx, draw_rect.centery))
