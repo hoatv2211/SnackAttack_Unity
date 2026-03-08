@@ -16,7 +16,7 @@ namespace SnackAttack.Gameplay
         private float rotationSpeed;
         private float spawnX;
 
-        private void Start()
+        private void OnEnable()
         {
             if (spriteRenderer == null) spriteRenderer = GetComponentInChildren<SpriteRenderer>();
 

@@ -6,7 +6,7 @@ Tai lieu nay tong hop logic game chinh da duoc doi chieu tu Python sang Unity, b
 
 ## 1. Scene vs In-Game
 
-- Khi chinh scene (khong Play): chi bat man hinh dang lam (`MainMenu`/`CharacterSelectScreen`/`GameplayHUD`/`GameOverScreen`), tat cac man hinh con lai de tranh chong UI.
+- Khi chinh scene (khong Play): chi bat man hinh dang lam (`MainMenu`/`SettingsScreen`/`CharacterSelectScreen`/`GameplayHUD`/`GameOverScreen`), tat cac man hinh con lai de tranh chong UI.
 - Khi Play: `GameManager` set state som o `Awake/Start`, moi UI an/hien theo `GAME_STATE_CHANGED`.
 
 ## 2. Game States va Flow
@@ -14,6 +14,7 @@ Tai lieu nay tong hop logic game chinh da duoc doi chieu tu Python sang Unity, b
 | Python | Unity |
 |--------|-------|
 | MAIN_MENU | MainMenu |
+| SETTINGS | Settings |
 | CHARACTER_SELECT | CharacterSelect |
 | INTRO (custom in Unity) | StormIntro |
 | GAMEPLAY countdown | Countdown |
@@ -22,8 +23,11 @@ Tai lieu nay tong hop logic game chinh da duoc doi chieu tu Python sang Unity, b
 
 Flow tong quat:
 
+- `MainMenu -> Settings -> MainMenu`
 - `MainMenu -> CharacterSelect -> StormIntro -> Countdown -> Playing -> GameOver`
 - Ket thuc round: het gio -> so diem P1/P2 -> cong round win -> du dieu kien thi `GameOver`, khong thi qua round tiep theo.
+
+Trong `Playing`, he thong co them `Crowd Chaos` theo timeline vote + effect (chi kich hoat 1 lan moi round).
 
 ## 3. Start New Game va Storm Intro
 
@@ -53,6 +57,43 @@ Flow tong quat:
   - So 2: `countdown_2_3`
   - So 1: `countdown_1`
 - Het countdown -> `ChangeState(Playing)`.
+
+## 4.1 Crowd Chaos + Voting
+
+- Trigger sau `crowdChaosTriggerTimeSeconds` (mac dinh 35s elapsed trong round).
+- Phase 1: countdown `CROWD CHAOS IN` (mac dinh 5s) + danger warning.
+- Phase 2: voting `CROWD CHAOS LIVE` (mac dinh 10s).
+- Phase 3: result message (mac dinh 3s) + apply winner effect.
+
+Voting mode luan phien theo round:
+
+- Round 1 -> `Treat`
+- Round 2 -> `Action`
+- Round 3 -> `Trivia`
+- Round >3: lap lai chu ky tren.
+
+Hieu ung winner:
+
+- `Action`
+  - `UNLEASHED`: mo rong movement bounds (co the cross territory trong split arena).
+  - `YANKED`: thu hep movement bounds theo `crowdChaosYankWidthScale` trong thoi gian effect.
+- `Treat`
+  - Spawn burst snack theo winner option qua `SnackSpawner.SpawnSpecificSnack(...)`.
+  - Co scale multiplier cho treat storm (`crowdChaosTreatScaleMultiplier`).
+- `Trivia`
+  - Neu dung dap an: cong diem cho ca P1/P2 (`crowdChaosTriviaCorrectBonusScore`).
+  - Neu sai: tru diem cho ca P1/P2 (`crowdChaosTriviaWrongPenaltyScore`).
+
+Visual parity:
+
+- Battlefield shake qua root offset ngau nhien (`crowdChaosShakeIntensity`, `crowdChaosShakeDuration`).
+- Red tint pulse tren HUD (`crowdChaosTintMaxAlpha`, `crowdChaosTintPulseSpeed`).
+- Danger text: `DANGER: BATTLEFIELD INSTABILITY`.
+
+Debug/local vote:
+
+- Phim `1/2/3/4` map vao option `1..4` trong cua so voting.
+- API runtime cho event ngoai: `GameManager.SubmitCrowdChaosVote(optionId, voterId)`.
 
 ## 5. Mode va Gameplay Roots
 
@@ -105,8 +146,9 @@ Player va AI deu dung logic effect parity (activeEffects, multiplier, invincibil
   - `countdown_2_3` -> `2&3`
   - `countdown_1` -> `1`
 - State-based music:
-  - `MainMenu/CharacterSelect/GameOver` -> `background`
+  - `MainMenu/Settings/CharacterSelect/GameOver` -> `background`
   - `StormIntro/Countdown/Playing` -> `gameplay`
+- Audio settings (`music/sfx/master volume`, `music/sfx enabled`) duoc luu bang `PlayerPrefs` va apply lai luc game khoi dong.
 - Snack collect SFX parity:
   - Luon play `dog_eat`
   - Sau do play snack-special (`broccoli`/`red_bull`/`chilli`) hoac fallback `point_earned`
@@ -119,6 +161,10 @@ Player va AI deu dung logic effect parity (activeEffects, multiplier, invincibil
 - `GameplayHUD`:
   - Hien trong `Countdown` va `Playing`
   - Co nut Back ve `MainMenu`
+- `SettingsScreen`:
+  - Hien khi state = `Settings`
+  - Dieu khien live `Music/SFX` toggle + `Music/SFX/Master` volume slider
+  - Back/Esc quay ve `MainMenu`
 - `GameOverScreen`:
   - Hien winner theo round wins
   - Ho tro ten character + score/rich fallback
@@ -137,5 +183,6 @@ Player va AI deu dung logic effect parity (activeEffects, multiplier, invincibil
 - `Gameplay/AIPlayerController.cs`
 - `Core/AudioManager.cs`
 - `UI/CharacterSelectScreen.cs`
+- `UI/SettingsScreen.cs`
 - `UI/GameplayHUD.cs`
 - `UI/GameOverScreen.cs`

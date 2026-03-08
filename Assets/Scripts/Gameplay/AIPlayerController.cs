@@ -92,6 +92,15 @@ namespace SnackAttack.Gameplay
         private float ringBlinkTimer;
         private Color ringCurrentColor = Color.white;
         private bool controlsFlipped;
+        private bool forceStormIntroRun;
+
+        public void SetStormIntroRunOverride(bool enabled)
+        {
+            forceStormIntroRun = enabled;
+
+            if (!enabled && (GameManager.Instance == null || GameManager.Instance.State != GameState.Playing))
+                UpdateAnimatorLocomotion(false);
+        }
 
         private float GetScoreMultiplier()
         {
@@ -200,7 +209,11 @@ namespace SnackAttack.Gameplay
         {
             if (GameManager.Instance == null || GameManager.Instance.State != GameState.Playing)
             {
-                UpdateAnimatorLocomotion(false);
+                bool shouldRunInStormIntro = forceStormIntroRun &&
+                    GameManager.Instance != null &&
+                    GameManager.Instance.State == GameState.StormIntro;
+
+                UpdateAnimatorLocomotion(shouldRunInStormIntro);
                 UpdateAnimatorFlight(false);
                 UpdateAnimatorAirborne(false);
                 HideEffectSprites();

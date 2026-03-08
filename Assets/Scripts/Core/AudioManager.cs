@@ -21,6 +21,10 @@ namespace SnackAttack.Audio
         public bool musicEnabled = true;
         public bool sfxEnabled = true;
 
+        [Header("Persistence")]
+        [Tooltip("Save audio settings to PlayerPrefs and restore on startup.")]
+        public bool persistSettings = true;
+
         [Header("Audio Clips")]
         [Tooltip("SFX clips keyed by name. Keys are matched loosely (case/space/underscore insensitive).")]
         public List<AudioClipEntry> soundEffects = new List<AudioClipEntry>();
@@ -30,6 +34,12 @@ namespace SnackAttack.Audio
         private readonly Dictionary<string, AudioClip> sfxDictionary = new Dictionary<string, AudioClip>();
         private readonly Dictionary<string, AudioClip> musicDictionary = new Dictionary<string, AudioClip>();
         private string currentMusicKey = string.Empty;
+
+        private const string PrefKeyMasterVolume = "audio.master_volume";
+        private const string PrefKeyMusicVolume = "audio.music_volume";
+        private const string PrefKeySfxVolume = "audio.sfx_volume";
+        private const string PrefKeyMusicEnabled = "audio.music_enabled";
+        private const string PrefKeySfxEnabled = "audio.sfx_enabled";
 
         private static readonly Dictionary<string, string> keyAliases = new Dictionary<string, string>
         {
@@ -64,6 +74,7 @@ namespace SnackAttack.Audio
                 Instance = this;
                 DontDestroyOnLoad(gameObject);
                 InitializeDictionary();
+                LoadPersistedSettings();
                 ApplyVolumeSettings();
             }
             else
@@ -185,6 +196,66 @@ namespace SnackAttack.Audio
                 sfxSource.mute = !sfxEnabled;
         }
 
+        public float MasterVolume => masterVolume;
+        public float MusicVolume => musicVolume;
+        public float SfxVolume => sfxVolume;
+        public bool MusicEnabled => musicEnabled;
+        public bool SfxEnabled => sfxEnabled;
+
+        public void SetMasterVolume(float value, bool save = true)
+        {
+            masterVolume = Mathf.Clamp01(value);
+            ApplyVolumeSettings();
+
+            if (save)
+                SavePersistedSettings();
+        }
+
+        public void SetMusicVolume(float value, bool save = true)
+        {
+            musicVolume = Mathf.Clamp01(value);
+            ApplyVolumeSettings();
+
+            if (save)
+                SavePersistedSettings();
+        }
+
+        public void SetSfxVolume(float value, bool save = true)
+        {
+            sfxVolume = Mathf.Clamp01(value);
+            ApplyVolumeSettings();
+
+            if (save)
+                SavePersistedSettings();
+        }
+
+        public void SetMusicEnabled(bool enabled, bool save = true)
+        {
+            musicEnabled = enabled;
+            ApplyVolumeSettings();
+
+            if (!musicEnabled)
+            {
+                StopMusic();
+            }
+            else if (musicSource != null && !musicSource.isPlaying)
+            {
+                PlayMusicForCurrentState();
+            }
+
+            if (save)
+                SavePersistedSettings();
+        }
+
+        public void SetSfxEnabled(bool enabled, bool save = true)
+        {
+            sfxEnabled = enabled;
+            ApplyVolumeSettings();
+
+            if (save)
+                SavePersistedSettings();
+        }
+
         public void PlayMusic(AudioClip musicClip, bool loop = true)
         {
             if (musicSource == null || musicClip == null)
@@ -296,10 +367,28 @@ namespace SnackAttack.Audio
             if (!(param is GameState state))
                 return;
 
+            PlayMusicForState(state);
+        }
+
+        private void PlayMusicForCurrentState()
+        {
+            GameState state = GameManager.Instance != null
+                ? GameManager.Instance.State
+                : GameState.MainMenu;
+
+            PlayMusicForState(state);
+        }
+
+        private void PlayMusicForState(GameState state)
+        {
+            if (!musicEnabled)
+                return;
+
             switch (state)
             {
                 case GameState.MainMenu:
                 case GameState.CharacterSelect:
+                case GameState.Settings:
                 case GameState.GameOver:
                     PlayMusic("background", true);
                     break;
@@ -310,6 +399,40 @@ namespace SnackAttack.Audio
                     PlayMusic("gameplay", true);
                     break;
             }
+        }
+
+        private void LoadPersistedSettings()
+        {
+            if (!persistSettings)
+                return;
+
+            if (PlayerPrefs.HasKey(PrefKeyMasterVolume))
+                masterVolume = Mathf.Clamp01(PlayerPrefs.GetFloat(PrefKeyMasterVolume, masterVolume));
+
+            if (PlayerPrefs.HasKey(PrefKeyMusicVolume))
+                musicVolume = Mathf.Clamp01(PlayerPrefs.GetFloat(PrefKeyMusicVolume, musicVolume));
+
+            if (PlayerPrefs.HasKey(PrefKeySfxVolume))
+                sfxVolume = Mathf.Clamp01(PlayerPrefs.GetFloat(PrefKeySfxVolume, sfxVolume));
+
+            if (PlayerPrefs.HasKey(PrefKeyMusicEnabled))
+                musicEnabled = PlayerPrefs.GetInt(PrefKeyMusicEnabled, musicEnabled ? 1 : 0) != 0;
+
+            if (PlayerPrefs.HasKey(PrefKeySfxEnabled))
+                sfxEnabled = PlayerPrefs.GetInt(PrefKeySfxEnabled, sfxEnabled ? 1 : 0) != 0;
+        }
+
+        private void SavePersistedSettings()
+        {
+            if (!persistSettings)
+                return;
+
+            PlayerPrefs.SetFloat(PrefKeyMasterVolume, Mathf.Clamp01(masterVolume));
+            PlayerPrefs.SetFloat(PrefKeyMusicVolume, Mathf.Clamp01(musicVolume));
+            PlayerPrefs.SetFloat(PrefKeySfxVolume, Mathf.Clamp01(sfxVolume));
+            PlayerPrefs.SetInt(PrefKeyMusicEnabled, musicEnabled ? 1 : 0);
+            PlayerPrefs.SetInt(PrefKeySfxEnabled, sfxEnabled ? 1 : 0);
+            PlayerPrefs.Save();
         }
     }
 }

@@ -59,6 +59,7 @@ namespace SnackAttack.EditorScripts
 
             // SCREENS — tạo xong chỉ bật MainMenu, tắt hết để scene = in-game (tránh "scene 1 kiểu, in-game 1 kiểu")
             CreateMainMenu(canvasGO);
+            CreateSettingsScreen(canvasGO);
             CreateCharacterSelect(canvasGO);
             CreateGameplayHUD(canvasGO);
             CreateGameOverScreen(canvasGO);
@@ -211,6 +212,241 @@ namespace SnackAttack.EditorScripts
             instructions.text = "ARROW KEYS + ENTER TO SELECT";
             instructions.fontSize = 24;
             instructions.color = new Color32(147, 76, 48, 255);
+        }
+
+        private static void CreateSettingsScreen(GameObject canvas)
+        {
+            GameObject panel = CreatePanel("SettingsScreen", canvas, "Settings background.png");
+            SettingsScreen settingsScript = panel.AddComponent<SettingsScreen>();
+
+            GameObject title = new GameObject("Title");
+            title.transform.SetParent(panel.transform, false);
+            RectTransform titleRT = title.AddComponent<RectTransform>();
+            titleRT.anchoredPosition = new Vector2(0f, 360f);
+            titleRT.sizeDelta = new Vector2(560f, 120f);
+            Image titleImg = title.AddComponent<Image>();
+            titleImg.sprite = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/settings text.png");
+
+            GameObject menuContainer = new GameObject("MenuContainer");
+            menuContainer.transform.SetParent(panel.transform, false);
+            RectTransform menuRT = menuContainer.AddComponent<RectTransform>();
+            menuRT.anchoredPosition = new Vector2(0f, -40f);
+            menuRT.sizeDelta = new Vector2(700f, 620f);
+            Image menuImg = menuContainer.AddComponent<Image>();
+            menuImg.sprite = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/Menu tall.png");
+
+            TextMeshProUGUI labelMusic;
+            TextMeshProUGUI labelSfx;
+            TextMeshProUGUI labelMusicVolume;
+            TextMeshProUGUI labelSfxVolume;
+            TextMeshProUGUI labelMasterVolume;
+
+            settingsScript.musicEnabledToggle = CreateSettingsToggleRow(
+                menuContainer,
+                rowName: "Row_Music",
+                label: "Music",
+                y: 170f,
+                out labelMusic,
+                out settingsScript.musicEnabledValueText);
+
+            settingsScript.sfxEnabledToggle = CreateSettingsToggleRow(
+                menuContainer,
+                rowName: "Row_Sfx",
+                label: "Sound Effects",
+                y: 90f,
+                out labelSfx,
+                out settingsScript.sfxEnabledValueText);
+
+            settingsScript.musicVolumeSlider = CreateSettingsSliderRow(
+                menuContainer,
+                rowName: "Row_MusicVolume",
+                label: "Music Volume",
+                y: 10f,
+                out labelMusicVolume);
+
+            settingsScript.sfxVolumeSlider = CreateSettingsSliderRow(
+                menuContainer,
+                rowName: "Row_SfxVolume",
+                label: "SFX Volume",
+                y: -70f,
+                out labelSfxVolume);
+
+            settingsScript.masterVolumeSlider = CreateSettingsSliderRow(
+                menuContainer,
+                rowName: "Row_MasterVolume",
+                label: "Master Volume",
+                y: -150f,
+                out labelMasterVolume);
+
+            ApplySettingsLabelStyle(labelMusic);
+            ApplySettingsLabelStyle(labelSfx);
+            ApplySettingsLabelStyle(labelMusicVolume);
+            ApplySettingsLabelStyle(labelSfxVolume);
+            ApplySettingsLabelStyle(labelMasterVolume);
+
+            settingsScript.backButton = CreateButton("Btn_Back", panel, new Vector2(0f, -430f), new Vector2(250f, 70f), "");
+            Image backImage = settingsScript.backButton.GetComponent<Image>();
+            if (backImage != null)
+                backImage.color = new Color32(77, 43, 31, 220);
+
+            TextMeshProUGUI backTxt = CreateTMPText("BackTxt", settingsScript.backButton.gameObject, Vector2.zero);
+            backTxt.text = "BACK";
+            backTxt.color = Color.white;
+            backTxt.fontSize = 36;
+
+            TextMeshProUGUI instructions = CreateTMPText("Instructions", panel, new Vector2(0f, -470f));
+            instructions.text = "ESC OR BACK TO RETURN";
+            instructions.fontSize = 24;
+            instructions.color = new Color32(147, 76, 48, 255);
+        }
+
+        private static void ApplySettingsLabelStyle(TextMeshProUGUI label)
+        {
+            if (label == null)
+                return;
+
+            label.fontSize = 36;
+            label.color = new Color32(77, 43, 31, 255);
+            label.alignment = TextAlignmentOptions.Left;
+        }
+
+        private static Toggle CreateSettingsToggleRow(
+            GameObject parent,
+            string rowName,
+            string label,
+            float y,
+            out TextMeshProUGUI labelText,
+            out TextMeshProUGUI valueText)
+        {
+            GameObject row = new GameObject(rowName);
+            row.transform.SetParent(parent.transform, false);
+            RectTransform rowRT = row.AddComponent<RectTransform>();
+            rowRT.anchoredPosition = new Vector2(0f, y);
+            rowRT.sizeDelta = new Vector2(620f, 64f);
+
+            labelText = CreateTMPText("Label", row, new Vector2(-250f, 0f));
+            labelText.text = label;
+
+            Toggle toggle = CreateBasicToggle("Toggle", row, new Vector2(150f, 0f));
+
+            valueText = CreateTMPText("Value", row, new Vector2(250f, 0f));
+            valueText.text = "ON";
+            valueText.fontSize = 32;
+            valueText.color = new Color32(81, 180, 71, 255);
+
+            return toggle;
+        }
+
+        private static Slider CreateSettingsSliderRow(
+            GameObject parent,
+            string rowName,
+            string label,
+            float y,
+            out TextMeshProUGUI labelText)
+        {
+            GameObject row = new GameObject(rowName);
+            row.transform.SetParent(parent.transform, false);
+            RectTransform rowRT = row.AddComponent<RectTransform>();
+            rowRT.anchoredPosition = new Vector2(0f, y);
+            rowRT.sizeDelta = new Vector2(620f, 64f);
+
+            labelText = CreateTMPText("Label", row, new Vector2(-250f, 0f));
+            labelText.text = label;
+
+            Slider slider = CreateBasicSlider("Slider", row, new Vector2(100f, 0f), new Vector2(240f, 28f));
+
+            return slider;
+        }
+
+        private static Toggle CreateBasicToggle(string name, GameObject parent, Vector2 anchoredPos)
+        {
+            GameObject toggleObj = new GameObject(name);
+            toggleObj.transform.SetParent(parent.transform, false);
+
+            RectTransform toggleRT = toggleObj.AddComponent<RectTransform>();
+            toggleRT.anchoredPosition = anchoredPos;
+            toggleRT.sizeDelta = new Vector2(44f, 44f);
+
+            Image background = toggleObj.AddComponent<Image>();
+            background.color = new Color32(77, 43, 31, 220);
+
+            Toggle toggle = toggleObj.AddComponent<Toggle>();
+            toggle.targetGraphic = background;
+
+            GameObject checkmarkObj = new GameObject("Checkmark");
+            checkmarkObj.transform.SetParent(toggleObj.transform, false);
+            RectTransform checkRT = checkmarkObj.AddComponent<RectTransform>();
+            checkRT.anchorMin = new Vector2(0.2f, 0.2f);
+            checkRT.anchorMax = new Vector2(0.8f, 0.8f);
+            checkRT.offsetMin = Vector2.zero;
+            checkRT.offsetMax = Vector2.zero;
+
+            Image checkmarkImage = checkmarkObj.AddComponent<Image>();
+            checkmarkImage.color = new Color32(81, 180, 71, 255);
+
+            toggle.graphic = checkmarkImage;
+            toggle.isOn = true;
+
+            return toggle;
+        }
+
+        private static Slider CreateBasicSlider(string name, GameObject parent, Vector2 anchoredPos, Vector2 size)
+        {
+            GameObject sliderObj = new GameObject(name);
+            sliderObj.transform.SetParent(parent.transform, false);
+
+            RectTransform sliderRT = sliderObj.AddComponent<RectTransform>();
+            sliderRT.anchoredPosition = anchoredPos;
+            sliderRT.sizeDelta = size;
+
+            Image sliderBg = sliderObj.AddComponent<Image>();
+            sliderBg.color = new Color32(255, 255, 255, 120);
+
+            Slider slider = sliderObj.AddComponent<Slider>();
+            slider.minValue = 0f;
+            slider.maxValue = 1f;
+            slider.value = 1f;
+            slider.wholeNumbers = false;
+
+            GameObject fillArea = new GameObject("Fill Area");
+            fillArea.transform.SetParent(sliderObj.transform, false);
+            RectTransform fillAreaRT = fillArea.AddComponent<RectTransform>();
+            fillAreaRT.anchorMin = new Vector2(0f, 0.25f);
+            fillAreaRT.anchorMax = new Vector2(1f, 0.75f);
+            fillAreaRT.offsetMin = new Vector2(10f, 0f);
+            fillAreaRT.offsetMax = new Vector2(-10f, 0f);
+
+            GameObject fill = new GameObject("Fill");
+            fill.transform.SetParent(fillArea.transform, false);
+            RectTransform fillRT = fill.AddComponent<RectTransform>();
+            fillRT.anchorMin = Vector2.zero;
+            fillRT.anchorMax = Vector2.one;
+            fillRT.offsetMin = Vector2.zero;
+            fillRT.offsetMax = Vector2.zero;
+            Image fillImage = fill.AddComponent<Image>();
+            fillImage.color = new Color32(81, 180, 71, 255);
+
+            GameObject handleArea = new GameObject("Handle Slide Area");
+            handleArea.transform.SetParent(sliderObj.transform, false);
+            RectTransform handleAreaRT = handleArea.AddComponent<RectTransform>();
+            handleAreaRT.anchorMin = Vector2.zero;
+            handleAreaRT.anchorMax = Vector2.one;
+            handleAreaRT.offsetMin = new Vector2(10f, 0f);
+            handleAreaRT.offsetMax = new Vector2(-10f, 0f);
+
+            GameObject handle = new GameObject("Handle");
+            handle.transform.SetParent(handleArea.transform, false);
+            RectTransform handleRT = handle.AddComponent<RectTransform>();
+            handleRT.sizeDelta = new Vector2(22f, 38f);
+            Image handleImage = handle.AddComponent<Image>();
+            handleImage.color = new Color32(255, 200, 0, 255);
+
+            slider.fillRect = fillRT;
+            slider.handleRect = handleRT;
+            slider.targetGraphic = handleImage;
+            slider.direction = Slider.Direction.LeftToRight;
+
+            return slider;
         }
 
         private static void CreateCharacterSelect(GameObject canvas)

@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using System;
+using System.Text;
 using SnackAttack.Core;
 using SnackAttack.Config;
 using DamageNumbersPro;
@@ -12,10 +13,18 @@ namespace SnackAttack.Gameplay
     {
         MainMenu,
         CharacterSelect,
+        Settings,
         StormIntro,
         Countdown,
         Playing,
         GameOver
+    }
+
+    public enum CrowdChaosVotingMode
+    {
+        Treat,
+        Action,
+        Trivia
     }
 
     public class GameManager : MonoBehaviour
@@ -27,9 +36,33 @@ namespace SnackAttack.Gameplay
             public GameObject prefab;
         }
 
+        [System.Serializable]
+        public class CrowdChaosVoteOption
+        {
+            public string id;
+            public string label;
+            [NonSerialized] public int votes;
+        }
+
+        [System.Serializable]
+        public class CrowdChaosTriviaPrompt
+        {
+            [TextArea(2, 3)] public string question;
+            public string[] options = new string[4];
+            [Range(0, 3)] public int correctOptionIndex = 0;
+        }
+
         public static GameManager Instance { get; private set; }
 
         public GameState State { get; private set; }
+
+        public bool CrowdChaosOverlayVisible => crowdChaosCountdownActive || crowdChaosVotingActive || crowdChaosResultTimer > 0f;
+        public bool CrowdChaosDangerVisible => crowdChaosCountdownActive || crowdChaosVotingActive;
+        public string CrowdChaosTitle => BuildCrowdChaosTitle();
+        public string CrowdChaosBody => BuildCrowdChaosBody();
+        public string CrowdChaosOptions => crowdChaosVotingActive ? BuildCrowdChaosOptionsText() : string.Empty;
+        public string CrowdChaosDangerText => CrowdChaosDangerVisible ? "DANGER: BATTLEFIELD INSTABILITY" : string.Empty;
+        public float CrowdChaosTintAlpha => ComputeCrowdChaosTintAlpha();
 
         [Header("Match Settings")]
         public float roundDuration = 60f;
@@ -52,6 +85,8 @@ namespace SnackAttack.Gameplay
         [Min(0f)] public float stormIntroDuration = 1.2f;
         [Min(0f)] public float stormIntroPostDelay = 0.1f;
         [Min(0.1f)] public float stormEntryOffset = 2f;
+        public Vector2 stormIntroLeftStartPosition = new Vector2(-10f, -7.5f);
+        public Vector2 stormIntroRightStartPosition = new Vector2(10f, -7.5f);
         public bool stormIntroMoveToArenaCenter = true;
         [Tooltip("Optional. If null, GameManager auto-finds object named UI_storm_intro")]
         public CanvasGroup stormIntroOverlay;
@@ -108,7 +143,58 @@ namespace SnackAttack.Gameplay
         public bool prewarmScorePopupPool = true;
         [Min(1)] public int scorePopupPoolSize = 30;
 
+        [Header("Crowd Chaos")]
+        public bool enableCrowdChaos = true;
+        [Min(0f)] public float crowdChaosTriggerTimeSeconds = 35f;
+        [Min(1f)] public float crowdChaosCountdownSeconds = 5f;
+        [Min(1f)] public float crowdChaosVotingWindowSeconds = 10f;
+        [Min(0f)] public float crowdChaosResultDurationSeconds = 3f;
+        [Min(0f)] public float crowdChaosActionEffectDuration = 7f;
+        [Range(0.2f, 1f)] public float crowdChaosYankWidthScale = 0.45f;
+        [Min(1)] public int crowdChaosTreatBurstCount = 12;
+        [Range(1f, 3f)] public float crowdChaosTreatScaleMultiplier = 1.35f;
+        public bool enableKeyboardDebugVotes = true;
+        public KeyCode voteOption1Key = KeyCode.Alpha1;
+        public KeyCode voteOption2Key = KeyCode.Alpha2;
+        public KeyCode voteOption3Key = KeyCode.Alpha3;
+        public KeyCode voteOption4Key = KeyCode.Alpha4;
+
+        [Header("Crowd Chaos Trivia")]
+        public List<CrowdChaosTriviaPrompt> crowdChaosTriviaPrompts = new List<CrowdChaosTriviaPrompt>();
+        public int crowdChaosTriviaCorrectBonusScore = 250;
+        public int crowdChaosTriviaWrongPenaltyScore = -100;
+
+        [Header("Crowd Chaos Visuals")]
+        [Range(0f, 1f)] public float crowdChaosTintMaxAlpha = 0.35f;
+        [Min(0f)] public float crowdChaosTintPulseSpeed = 5f;
+        [Min(0f)] public float crowdChaosShakeIntensity = 0.12f;
+        [Min(0f)] public float crowdChaosShakeDuration = 0.8f;
+
         private Coroutine stormIntroRoutine;
+        private static readonly int IntroIsMovingHash = Animator.StringToHash("IsMoving");
+        private static readonly string[] CrowdChaosPreferredTreatIds = { "red_bull", "steak", "spicy_pepper", "broccoli", "bone" };
+
+        private readonly List<CrowdChaosVoteOption> crowdChaosVoteOptions = new List<CrowdChaosVoteOption>(4);
+        private readonly Dictionary<string, string> crowdChaosVotesByVoter = new Dictionary<string, string>();
+        private bool crowdChaosTriggeredThisRound;
+        private bool crowdChaosCountdownActive;
+        private float crowdChaosCountdownRemaining;
+        private bool crowdChaosVotingActive;
+        private float crowdChaosVotingRemaining;
+        private CrowdChaosVotingMode crowdChaosVotingMode = CrowdChaosVotingMode.Treat;
+        private string crowdChaosTriviaQuestion = string.Empty;
+        private string crowdChaosTriviaCorrectOptionId = string.Empty;
+        private string crowdChaosResultTitle = string.Empty;
+        private string crowdChaosResultBody = string.Empty;
+        private float crowdChaosResultTimer;
+        private bool crowdChaosActionEffectActive;
+        private bool crowdChaosActionUnleashed;
+        private float crowdChaosActionEffectRemaining;
+
+        private GameObject shakeGameplayRoot;
+        private Vector3 shakeGameplayRootBasePosition;
+        private float shakeTimeRemaining;
+        private float shakeCurrentIntensity;
 
         private struct StormIntroMoveData
         {
@@ -146,6 +232,8 @@ namespace SnackAttack.Gameplay
             timeRemaining = roundDuration;
 
             PrepareScorePopupPool();
+            EnsureDefaultCrowdChaosTriviaPrompts();
+            ResetCrowdChaosForNewRound();
             SetStormIntroOverlayVisible(false);
 
             ChangeState(GameState.MainMenu);
@@ -162,6 +250,8 @@ namespace SnackAttack.Gameplay
                     UpdatePlaying();
                     break;
             }
+
+            UpdateBattlefieldShake(Time.deltaTime);
         }
 
         private void UpdateCountdown()
@@ -192,6 +282,9 @@ namespace SnackAttack.Gameplay
         private void UpdatePlaying()
         {
             timeRemaining -= Time.deltaTime;
+
+            UpdateCrowdChaos(Time.deltaTime);
+
             if (timeRemaining <= 0f)
             {
                 timeRemaining = 0f;
@@ -201,6 +294,8 @@ namespace SnackAttack.Gameplay
 
         private void EndRound()
         {
+            ClearCrowdChaosRuntime(resetMovementBounds: true, resetRoundTrigger: true);
+
             // Determine round winner
             if (player1Score > player2Score)
                 p1RoundWins++;
@@ -226,6 +321,7 @@ namespace SnackAttack.Gameplay
         public void StartCountdown()
         {
             ClearSpawnedSnacksForNewRound();
+            ResetCrowdChaosForNewRound();
 
             countdownValue = 3;
             countdownTimer = 1f;
@@ -261,15 +357,20 @@ namespace SnackAttack.Gameplay
         private System.Collections.IEnumerator RunStormIntroSequence(GameObject gameplayRoot)
         {
             List<StormIntroMoveData> moves = BuildStormIntroMoveData(gameplayRoot);
+            bool hasMoves = moves.Count > 0;
+            if (hasMoves)
+                SetStormIntroRunAnimation(moves, true);
+
             float duration = Mathf.Max(0f, stormIntroDuration);
 
-            if (duration > 0f && moves.Count > 0)
+            if (duration > 0f && hasMoves)
             {
                 float elapsed = 0f;
                 while (elapsed < duration)
                 {
                     if (State != GameState.StormIntro)
                     {
+                        SetStormIntroRunAnimation(moves, false);
                         stormIntroRoutine = null;
                         yield break;
                     }
@@ -297,6 +398,9 @@ namespace SnackAttack.Gameplay
                         move.transform.position = move.targetPosition;
                 }
             }
+
+            if (hasMoves)
+                SetStormIntroRunAnimation(moves, false);
 
             if (stormIntroPostDelay > 0f)
                 yield return new WaitForSeconds(stormIntroPostDelay);
@@ -374,16 +478,11 @@ namespace SnackAttack.Gameplay
                 playerTransform.position = target;
             }
 
-            float offset = Mathf.Max(0.1f, stormEntryOffset);
+            Vector2 configuredStart = fromLeft
+                ? stormIntroLeftStartPosition
+                : stormIntroRightStartPosition;
 
-            float edgeX;
-            if (arena != null)
-                edgeX = fromLeft ? arena.arenaMinX : arena.arenaMaxX;
-            else
-                edgeX = target.x;
-
-            Vector3 start = target;
-            start.x = fromLeft ? edgeX - offset : edgeX + offset;
+            Vector3 start = new Vector3(configuredStart.x, configuredStart.y, target.z);
 
             playerTransform.position = start;
             SetStormIntroFacing(playerTransform, fromLeft);
@@ -420,6 +519,59 @@ namespace SnackAttack.Gameplay
                 return aiController.spriteRenderer;
 
             return playerTransform.GetComponentInChildren<SpriteRenderer>();
+        }
+
+        private void SetStormIntroRunAnimation(List<StormIntroMoveData> moves, bool isRunning)
+        {
+            if (moves == null)
+                return;
+
+            for (int i = 0; i < moves.Count; i++)
+                SetStormIntroRunState(moves[i].transform, isRunning);
+        }
+
+        private void SetStormIntroRunStateForCurrentPlayers(bool isRunning)
+        {
+            GameObject gameplayRoot = GetActiveGameplayRoot();
+            SetStormIntroRunState(ResolveSpawnedPlayerTransform(gameplayRoot, "Player1"), isRunning);
+            SetStormIntroRunState(ResolveSpawnedPlayerTransform(gameplayRoot, "Player2"), isRunning);
+        }
+
+        private static void SetStormIntroRunState(Transform playerTransform, bool isRunning)
+        {
+            if (playerTransform == null)
+                return;
+
+            PlayerController playerController = playerTransform.GetComponent<PlayerController>();
+            if (playerController != null)
+                playerController.SetStormIntroRunOverride(isRunning);
+
+            AIPlayerController aiController = playerTransform.GetComponent<AIPlayerController>();
+            if (aiController != null)
+                aiController.SetStormIntroRunOverride(isRunning);
+
+            Animator animator = playerTransform.GetComponent<Animator>();
+            if (animator == null)
+                animator = playerTransform.GetComponentInChildren<Animator>();
+
+            if (animator != null && AnimatorHasBoolParameter(animator, IntroIsMovingHash))
+                animator.SetBool(IntroIsMovingHash, isRunning);
+        }
+
+        private static bool AnimatorHasBoolParameter(Animator animator, int nameHash)
+        {
+            if (animator == null)
+                return false;
+
+            AnimatorControllerParameter[] parameters = animator.parameters;
+            for (int i = 0; i < parameters.Length; i++)
+            {
+                AnimatorControllerParameter parameter = parameters[i];
+                if (parameter.type == AnimatorControllerParameterType.Bool && parameter.nameHash == nameHash)
+                    return true;
+            }
+
+            return false;
         }
 
         private void AutoResolveStormIntroUiByName()
@@ -484,6 +636,805 @@ namespace SnackAttack.Gameplay
             }
         }
 
+        public bool SubmitCrowdChaosVote(string optionId, string voterId = null)
+        {
+            return RegisterCrowdChaosVote(optionId, voterId);
+        }
+
+        private void UpdateCrowdChaos(float dt)
+        {
+            if (crowdChaosResultTimer > 0f)
+                crowdChaosResultTimer = Mathf.Max(0f, crowdChaosResultTimer - dt);
+
+            UpdateCrowdChaosActionEffect(dt);
+
+            if (!enableCrowdChaos)
+                return;
+
+            if (crowdChaosVotingActive)
+            {
+                crowdChaosVotingRemaining -= dt;
+                HandleKeyboardDebugVotes();
+
+                if (crowdChaosVotingRemaining <= 0f)
+                    FinalizeCrowdChaosVote();
+
+                return;
+            }
+
+            if (crowdChaosCountdownActive)
+            {
+                crowdChaosCountdownRemaining -= dt;
+                if (crowdChaosCountdownRemaining <= 0f)
+                    ActivateCrowdChaosVoting();
+
+                return;
+            }
+
+            if (crowdChaosTriggeredThisRound)
+                return;
+
+            float elapsedRoundTime = Mathf.Max(0f, roundDuration - timeRemaining);
+            float minTimeRequired = crowdChaosCountdownSeconds + 1f;
+            if (elapsedRoundTime >= crowdChaosTriggerTimeSeconds && timeRemaining > minTimeRequired)
+                StartCrowdChaosCountdown();
+        }
+
+        private void StartCrowdChaosCountdown()
+        {
+            crowdChaosTriggeredThisRound = true;
+            crowdChaosCountdownActive = true;
+            crowdChaosCountdownRemaining = Mathf.Max(1f, crowdChaosCountdownSeconds);
+            crowdChaosResultTimer = 0f;
+            crowdChaosResultTitle = string.Empty;
+            crowdChaosResultBody = string.Empty;
+
+            StartBattlefieldShake(crowdChaosShakeIntensity * 0.75f, Mathf.Max(0.25f, crowdChaosShakeDuration));
+            EventManager.TriggerEvent("PLAY_SOUND", "countdown_1");
+        }
+
+        private void ActivateCrowdChaosVoting()
+        {
+            crowdChaosCountdownActive = false;
+            crowdChaosVotingActive = true;
+            crowdChaosVotingRemaining = Mathf.Max(1f, crowdChaosVotingWindowSeconds);
+            crowdChaosVotingMode = ResolveCrowdChaosVotingModeForRound(currentRound);
+            crowdChaosVotesByVoter.Clear();
+
+            BuildCrowdChaosVoteOptions();
+            StartBattlefieldShake(crowdChaosShakeIntensity, Mathf.Max(crowdChaosVotingWindowSeconds, crowdChaosShakeDuration));
+        }
+
+        private CrowdChaosVotingMode ResolveCrowdChaosVotingModeForRound(int roundNumber)
+        {
+            int cycleIndex = Mathf.Abs(roundNumber - 1) % 3;
+            switch (cycleIndex)
+            {
+                case 0:
+                    return CrowdChaosVotingMode.Treat;
+                case 1:
+                    return CrowdChaosVotingMode.Action;
+                default:
+                    return CrowdChaosVotingMode.Trivia;
+            }
+        }
+
+        private void BuildCrowdChaosVoteOptions()
+        {
+            crowdChaosVoteOptions.Clear();
+            crowdChaosTriviaQuestion = string.Empty;
+            crowdChaosTriviaCorrectOptionId = string.Empty;
+
+            switch (crowdChaosVotingMode)
+            {
+                case CrowdChaosVotingMode.Action:
+                    AddCrowdChaosVoteOption("unleashed", "UNLEASHED");
+                    AddCrowdChaosVoteOption("yanked", "YANKED");
+                    break;
+                case CrowdChaosVotingMode.Treat:
+                    List<string> treatIds = BuildTreatVoteOptionIds();
+                    for (int i = 0; i < treatIds.Count; i++)
+                    {
+                        if (TryGetSnackDataById(treatIds[i], out SnackData snackData))
+                            AddCrowdChaosVoteOption(treatIds[i], snackData.snackName.ToUpperInvariant());
+                    }
+                    break;
+                case CrowdChaosVotingMode.Trivia:
+                    BuildTriviaVoteOptions();
+                    break;
+            }
+
+            if (crowdChaosVoteOptions.Count == 0)
+            {
+                AddCrowdChaosVoteOption("unleashed", "UNLEASHED");
+                AddCrowdChaosVoteOption("yanked", "YANKED");
+                crowdChaosVotingMode = CrowdChaosVotingMode.Action;
+            }
+        }
+
+        private void AddCrowdChaosVoteOption(string id, string label)
+        {
+            string normalizedId = NormalizeVoteValue(id);
+            if (string.IsNullOrEmpty(normalizedId))
+                return;
+
+            crowdChaosVoteOptions.Add(new CrowdChaosVoteOption
+            {
+                id = normalizedId,
+                label = string.IsNullOrWhiteSpace(label) ? normalizedId.ToUpperInvariant() : label,
+                votes = 0,
+            });
+        }
+
+        private List<string> BuildTreatVoteOptionIds()
+        {
+            List<string> selected = new List<string>(4);
+            HashSet<string> seen = new HashSet<string>();
+
+            for (int i = 0; i < CrowdChaosPreferredTreatIds.Length; i++)
+            {
+                string candidate = NormalizeVoteValue(CrowdChaosPreferredTreatIds[i]);
+                if (string.IsNullOrEmpty(candidate) || seen.Contains(candidate))
+                    continue;
+
+                if (!TryGetSnackDataById(candidate, out SnackData _))
+                    continue;
+
+                seen.Add(candidate);
+                selected.Add(candidate);
+                if (selected.Count >= 4)
+                    return selected;
+            }
+
+            LevelConfigData levelConfig = ConfigManager.Instance != null
+                ? ConfigManager.Instance.GetLevelConfigForRound(currentRound)
+                : null;
+
+            if (levelConfig != null && levelConfig.snack_pool != null)
+            {
+                for (int i = 0; i < levelConfig.snack_pool.Length; i++)
+                {
+                    string candidate = NormalizeVoteValue(levelConfig.snack_pool[i]);
+                    if (string.IsNullOrEmpty(candidate) || seen.Contains(candidate))
+                        continue;
+
+                    if (!TryGetSnackDataById(candidate, out SnackData _))
+                        continue;
+
+                    seen.Add(candidate);
+                    selected.Add(candidate);
+                    if (selected.Count >= 4)
+                        return selected;
+                }
+            }
+
+            if (ConfigManager.Instance != null && ConfigManager.Instance.snackConfig != null && ConfigManager.Instance.snackConfig.snacks != null)
+            {
+                List<SnackData> snacks = ConfigManager.Instance.snackConfig.snacks;
+                for (int i = 0; i < snacks.Count; i++)
+                {
+                    SnackData snack = snacks[i];
+                    if (snack == null)
+                        continue;
+
+                    string candidate = NormalizeVoteValue(snack.snackId);
+                    if (string.IsNullOrEmpty(candidate) || seen.Contains(candidate))
+                        continue;
+
+                    seen.Add(candidate);
+                    selected.Add(candidate);
+                    if (selected.Count >= 4)
+                        return selected;
+                }
+            }
+
+            return selected;
+        }
+
+        private void BuildTriviaVoteOptions()
+        {
+            EnsureDefaultCrowdChaosTriviaPrompts();
+            if (crowdChaosTriviaPrompts == null || crowdChaosTriviaPrompts.Count == 0)
+                return;
+
+            int index = UnityEngine.Random.Range(0, crowdChaosTriviaPrompts.Count);
+            CrowdChaosTriviaPrompt prompt = crowdChaosTriviaPrompts[index];
+            if (prompt == null || prompt.options == null || prompt.options.Length < 4)
+                return;
+
+            crowdChaosTriviaQuestion = string.IsNullOrWhiteSpace(prompt.question)
+                ? "TRIVIA: PICK THE CORRECT ANSWER"
+                : prompt.question.Trim();
+
+            const string optionPrefix = "ABCD";
+            int safeCorrectIndex = Mathf.Clamp(prompt.correctOptionIndex, 0, 3);
+
+            for (int i = 0; i < 4; i++)
+            {
+                char key = optionPrefix[i];
+                string optionLabel = string.IsNullOrWhiteSpace(prompt.options[i])
+                    ? "..."
+                    : prompt.options[i].Trim();
+
+                string optionId = key.ToString().ToLowerInvariant();
+                AddCrowdChaosVoteOption(optionId, $"{key}. {optionLabel}");
+
+                if (i == safeCorrectIndex)
+                    crowdChaosTriviaCorrectOptionId = optionId;
+            }
+        }
+
+        private bool RegisterCrowdChaosVote(string optionId, string voterId)
+        {
+            if (!crowdChaosVotingActive)
+                return false;
+
+            if (!TryResolveCrowdChaosOptionId(optionId, out string resolvedOptionId))
+                return false;
+
+            if (!string.IsNullOrWhiteSpace(voterId))
+            {
+                string voterKey = NormalizeVoteValue(voterId);
+                if (!string.IsNullOrEmpty(voterKey) && crowdChaosVotesByVoter.TryGetValue(voterKey, out string previousChoice))
+                {
+                    if (previousChoice == resolvedOptionId)
+                        return true;
+
+                    AdjustCrowdChaosVoteCount(previousChoice, -1);
+                }
+
+                if (!string.IsNullOrEmpty(voterKey))
+                    crowdChaosVotesByVoter[voterKey] = resolvedOptionId;
+            }
+
+            AdjustCrowdChaosVoteCount(resolvedOptionId, 1);
+            return true;
+        }
+
+        private bool TryResolveCrowdChaosOptionId(string rawOption, out string resolvedOptionId)
+        {
+            resolvedOptionId = string.Empty;
+            string normalized = NormalizeVoteValue(rawOption);
+            if (string.IsNullOrEmpty(normalized) || crowdChaosVoteOptions.Count == 0)
+                return false;
+
+            if (int.TryParse(normalized, out int oneBasedIndex))
+            {
+                int idx = oneBasedIndex - 1;
+                if (idx >= 0 && idx < crowdChaosVoteOptions.Count)
+                {
+                    resolvedOptionId = crowdChaosVoteOptions[idx].id;
+                    return true;
+                }
+            }
+
+            for (int i = 0; i < crowdChaosVoteOptions.Count; i++)
+            {
+                CrowdChaosVoteOption option = crowdChaosVoteOptions[i];
+                if (option == null)
+                    continue;
+
+                if (option.id == normalized || NormalizeVoteValue(option.label) == normalized)
+                {
+                    resolvedOptionId = option.id;
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private void AdjustCrowdChaosVoteCount(string optionId, int delta)
+        {
+            if (delta == 0)
+                return;
+
+            for (int i = 0; i < crowdChaosVoteOptions.Count; i++)
+            {
+                CrowdChaosVoteOption option = crowdChaosVoteOptions[i];
+                if (option == null || option.id != optionId)
+                    continue;
+
+                option.votes = Mathf.Max(0, option.votes + delta);
+                return;
+            }
+        }
+
+        private void HandleKeyboardDebugVotes()
+        {
+            if (!enableKeyboardDebugVotes || !crowdChaosVotingActive)
+                return;
+
+            if (Input.GetKeyDown(voteOption1Key))
+                RegisterCrowdChaosVoteByIndex(0);
+
+            if (Input.GetKeyDown(voteOption2Key))
+                RegisterCrowdChaosVoteByIndex(1);
+
+            if (Input.GetKeyDown(voteOption3Key))
+                RegisterCrowdChaosVoteByIndex(2);
+
+            if (Input.GetKeyDown(voteOption4Key))
+                RegisterCrowdChaosVoteByIndex(3);
+        }
+
+        private void RegisterCrowdChaosVoteByIndex(int index)
+        {
+            if (index < 0 || index >= crowdChaosVoteOptions.Count)
+                return;
+
+            CrowdChaosVoteOption option = crowdChaosVoteOptions[index];
+            if (option == null)
+                return;
+
+            RegisterCrowdChaosVote(option.id, null);
+        }
+
+        private void FinalizeCrowdChaosVote()
+        {
+            crowdChaosVotingActive = false;
+            crowdChaosVotingRemaining = 0f;
+
+            CrowdChaosVoteOption winner = ResolveCrowdChaosVoteWinner();
+            if (winner == null)
+            {
+                crowdChaosResultTitle = "CROWD CHAOS";
+                crowdChaosResultBody = "No votes were registered.";
+                crowdChaosResultTimer = crowdChaosResultDurationSeconds;
+                crowdChaosVoteOptions.Clear();
+                crowdChaosVotesByVoter.Clear();
+                return;
+            }
+
+            crowdChaosResultTitle = $"{crowdChaosVotingMode.ToString().ToUpperInvariant()} WINNER: {winner.label}";
+            crowdChaosResultBody = BuildCrowdChaosResultMessage(winner);
+            crowdChaosResultTimer = crowdChaosResultDurationSeconds;
+
+            crowdChaosVoteOptions.Clear();
+            crowdChaosVotesByVoter.Clear();
+
+            StartBattlefieldShake(crowdChaosShakeIntensity * 1.2f, Mathf.Max(0.2f, crowdChaosShakeDuration));
+        }
+
+        private CrowdChaosVoteOption ResolveCrowdChaosVoteWinner()
+        {
+            if (crowdChaosVoteOptions.Count == 0)
+                return null;
+
+            int bestVotes = int.MinValue;
+            List<CrowdChaosVoteOption> leaders = new List<CrowdChaosVoteOption>();
+
+            for (int i = 0; i < crowdChaosVoteOptions.Count; i++)
+            {
+                CrowdChaosVoteOption option = crowdChaosVoteOptions[i];
+                if (option == null)
+                    continue;
+
+                if (option.votes > bestVotes)
+                {
+                    bestVotes = option.votes;
+                    leaders.Clear();
+                    leaders.Add(option);
+                }
+                else if (option.votes == bestVotes)
+                {
+                    leaders.Add(option);
+                }
+            }
+
+            if (leaders.Count == 0)
+                return crowdChaosVoteOptions[UnityEngine.Random.Range(0, crowdChaosVoteOptions.Count)];
+
+            if (bestVotes <= 0)
+                return crowdChaosVoteOptions[UnityEngine.Random.Range(0, crowdChaosVoteOptions.Count)];
+
+            return leaders[UnityEngine.Random.Range(0, leaders.Count)];
+        }
+
+        private string BuildCrowdChaosResultMessage(CrowdChaosVoteOption winner)
+        {
+            if (winner == null)
+                return "No crowd effect was applied.";
+
+            switch (crowdChaosVotingMode)
+            {
+                case CrowdChaosVotingMode.Action:
+                {
+                    bool unleashed = winner.id == "unleashed";
+                    StartCrowdChaosActionEffect(unleashed);
+                    return unleashed
+                        ? "UNLEASHED: Players can cross both sides for a short time."
+                        : "YANKED: Movement is restricted in each battlefield.";
+                }
+                case CrowdChaosVotingMode.Treat:
+                {
+                    SpawnCrowdChaosTreatBurst(winner.id);
+                    return $"{winner.label} storm incoming.";
+                }
+                case CrowdChaosVotingMode.Trivia:
+                {
+                    bool answeredCorrectly = !string.IsNullOrEmpty(crowdChaosTriviaCorrectOptionId) && winner.id == crowdChaosTriviaCorrectOptionId;
+                    int scoreDelta = answeredCorrectly ? crowdChaosTriviaCorrectBonusScore : crowdChaosTriviaWrongPenaltyScore;
+                    if (scoreDelta != 0)
+                    {
+                        AddScore(1, scoreDelta);
+                        if (!IsSingleMode())
+                            AddScore(2, scoreDelta);
+                    }
+
+                    return answeredCorrectly
+                        ? (IsSingleMode()
+                            ? $"Correct answer. +{crowdChaosTriviaCorrectBonusScore} points."
+                            : $"Correct answer. Both players receive {crowdChaosTriviaCorrectBonusScore} points.")
+                        : (IsSingleMode()
+                            ? $"Wrong answer. {crowdChaosTriviaWrongPenaltyScore} points."
+                            : $"Wrong answer. Both players receive {crowdChaosTriviaWrongPenaltyScore} points.");
+                }
+                default:
+                    return winner.label;
+            }
+        }
+
+        private void StartCrowdChaosActionEffect(bool unleashed)
+        {
+            crowdChaosActionEffectActive = true;
+            crowdChaosActionUnleashed = unleashed;
+            crowdChaosActionEffectRemaining = Mathf.Max(0f, crowdChaosActionEffectDuration);
+
+            ApplyCrowdChaosActionBounds();
+            StartBattlefieldShake(crowdChaosShakeIntensity * 1.1f, Mathf.Max(crowdChaosShakeDuration, 0.25f));
+        }
+
+        private void UpdateCrowdChaosActionEffect(float dt)
+        {
+            if (!crowdChaosActionEffectActive)
+                return;
+
+            crowdChaosActionEffectRemaining -= dt;
+            if (crowdChaosActionEffectRemaining <= 0f)
+                StopCrowdChaosActionEffect(resetMovementBounds: true);
+        }
+
+        private void StopCrowdChaosActionEffect(bool resetMovementBounds)
+        {
+            bool wasActive = crowdChaosActionEffectActive;
+
+            crowdChaosActionEffectActive = false;
+            crowdChaosActionUnleashed = false;
+            crowdChaosActionEffectRemaining = 0f;
+
+            if (resetMovementBounds && wasActive)
+                ReapplyDefaultMovementBoundsForCurrentPlayers();
+        }
+
+        private void ApplyCrowdChaosActionBounds()
+        {
+            if (!crowdChaosActionEffectActive)
+                return;
+
+            GameObject gameplayRoot = GetActiveGameplayRoot();
+            if (gameplayRoot == null)
+                return;
+
+            Transform player1 = ResolveSpawnedPlayerTransform(gameplayRoot, "Player1");
+            Transform player2 = ResolveSpawnedPlayerTransform(gameplayRoot, "Player2");
+
+            BattleFieldArena arenaP1 = ResolveArenaForPlayer(gameplayRoot, 1);
+            BattleFieldArena arenaP2 = ResolveArenaForPlayer(gameplayRoot, 2);
+
+            if (crowdChaosActionUnleashed)
+            {
+                if (!IsSingleMode() && arenaP1 != null && arenaP2 != null && arenaP1 != arenaP2)
+                {
+                    float minX = Mathf.Min(arenaP1.arenaMinX, arenaP2.arenaMinX);
+                    float maxX = Mathf.Max(arenaP1.arenaMaxX, arenaP2.arenaMaxX);
+                    float ground = Mathf.Min(arenaP1.groundY, arenaP2.groundY);
+                    float top = Mathf.Max(arenaP1.arenaTopY, arenaP2.arenaTopY);
+
+                    ApplyBoundsToPlayer(player1, minX, maxX, ground, top);
+                    ApplyBoundsToPlayer(player2, minX, maxX, ground, top);
+                    return;
+                }
+
+                ReapplyDefaultMovementBoundsForCurrentPlayers();
+                return;
+            }
+
+            ApplyYankedBounds(player1, arenaP1);
+            if (!IsSingleMode())
+                ApplyYankedBounds(player2, arenaP2);
+        }
+
+        private void ApplyYankedBounds(Transform playerTransform, BattleFieldArena arena)
+        {
+            if (playerTransform == null || arena == null)
+                return;
+
+            float width = Mathf.Max(0.35f, Mathf.Abs(arena.arenaMaxX - arena.arenaMinX) * Mathf.Clamp(crowdChaosYankWidthScale, 0.2f, 1f));
+            float center = (arena.arenaMinX + arena.arenaMaxX) * 0.5f;
+            float halfWidth = width * 0.5f;
+
+            ApplyBoundsToPlayer(playerTransform, center - halfWidth, center + halfWidth, arena.groundY, arena.arenaTopY);
+        }
+
+        private void ReapplyDefaultMovementBoundsForCurrentPlayers()
+        {
+            GameObject gameplayRoot = GetActiveGameplayRoot();
+            if (gameplayRoot == null)
+                return;
+
+            Transform player1 = ResolveSpawnedPlayerTransform(gameplayRoot, "Player1");
+            Transform player2 = ResolveSpawnedPlayerTransform(gameplayRoot, "Player2");
+
+            BattleFieldArena arenaP1 = ResolveArenaForPlayer(gameplayRoot, 1);
+            BattleFieldArena arenaP2 = ResolveArenaForPlayer(gameplayRoot, 2);
+
+            if (arenaP1 != null)
+                ApplyBoundsToPlayer(player1, arenaP1.arenaMinX, arenaP1.arenaMaxX, arenaP1.groundY, arenaP1.arenaTopY);
+
+            if (!IsSingleMode() && arenaP2 != null)
+                ApplyBoundsToPlayer(player2, arenaP2.arenaMinX, arenaP2.arenaMaxX, arenaP2.groundY, arenaP2.arenaTopY);
+        }
+
+        private static void ApplyBoundsToPlayer(Transform playerTransform, float minX, float maxX, float groundY, float topY)
+        {
+            if (playerTransform == null)
+                return;
+
+            PlayerController playerController = playerTransform.GetComponent<PlayerController>();
+            if (playerController != null)
+                playerController.ApplyArenaBounds(minX, maxX, groundY, topY);
+
+            AIPlayerController aiController = playerTransform.GetComponent<AIPlayerController>();
+            if (aiController != null)
+                aiController.ApplyArenaBounds(minX, maxX, groundY, topY);
+        }
+
+        private void SpawnCrowdChaosTreatBurst(string snackId)
+        {
+            GameObject gameplayRoot = GetActiveGameplayRoot();
+            SnackSpawner[] spawners = gameplayRoot != null
+                ? gameplayRoot.GetComponentsInChildren<SnackSpawner>(true)
+                : FindObjectsOfType<SnackSpawner>(true);
+
+            if (spawners == null || spawners.Length == 0)
+                return;
+
+            int targetBurst = Mathf.Max(1, crowdChaosTreatBurstCount);
+            int perSpawner = Mathf.Max(1, Mathf.CeilToInt((float)targetBurst / spawners.Length));
+
+            for (int i = 0; i < spawners.Length; i++)
+            {
+                SnackSpawner spawner = spawners[i];
+                if (spawner == null)
+                    continue;
+
+                spawner.SpawnSpecificSnack(snackId, perSpawner, crowdChaosTreatScaleMultiplier);
+            }
+        }
+
+        private string BuildCrowdChaosTitle()
+        {
+            if (crowdChaosCountdownActive)
+                return $"CROWD CHAOS IN {Mathf.CeilToInt(crowdChaosCountdownRemaining)}";
+
+            if (crowdChaosVotingActive)
+                return "CROWD CHAOS LIVE";
+
+            if (crowdChaosResultTimer > 0f)
+                return crowdChaosResultTitle;
+
+            return string.Empty;
+        }
+
+        private string BuildCrowdChaosBody()
+        {
+            if (crowdChaosCountdownActive)
+                return "Prepare for battlefield instability.";
+
+            if (crowdChaosVotingActive)
+            {
+                switch (crowdChaosVotingMode)
+                {
+                    case CrowdChaosVotingMode.Action:
+                        return "Vote the action effect now.";
+                    case CrowdChaosVotingMode.Treat:
+                        return "Vote the snack storm type.";
+                    case CrowdChaosVotingMode.Trivia:
+                        return string.IsNullOrWhiteSpace(crowdChaosTriviaQuestion)
+                            ? "TRIVIA: Pick the correct answer."
+                            : crowdChaosTriviaQuestion;
+                }
+            }
+
+            if (crowdChaosResultTimer > 0f)
+                return crowdChaosResultBody;
+
+            return string.Empty;
+        }
+
+        private string BuildCrowdChaosOptionsText()
+        {
+            if (crowdChaosVoteOptions.Count == 0)
+                return string.Empty;
+
+            StringBuilder builder = new StringBuilder(96);
+            for (int i = 0; i < crowdChaosVoteOptions.Count; i++)
+            {
+                CrowdChaosVoteOption option = crowdChaosVoteOptions[i];
+                if (option == null)
+                    continue;
+
+                if (builder.Length > 0)
+                    builder.Append('\n');
+
+                builder.Append(i + 1);
+                builder.Append(") ");
+                builder.Append(option.label);
+                builder.Append(" [");
+                builder.Append(option.votes);
+                builder.Append(']');
+            }
+
+            return builder.ToString();
+        }
+
+        private float ComputeCrowdChaosTintAlpha()
+        {
+            if (!CrowdChaosDangerVisible)
+                return 0f;
+
+            float pulse = 0.5f + 0.5f * Mathf.Sin(Time.time * Mathf.Max(0.1f, crowdChaosTintPulseSpeed));
+            return Mathf.Clamp01(crowdChaosTintMaxAlpha * pulse);
+        }
+
+        private void StartBattlefieldShake(float intensity, float duration)
+        {
+            if (duration <= 0f || intensity <= 0f)
+                return;
+
+            GameObject activeRoot = GetActiveGameplayRoot();
+            if (activeRoot == null)
+                return;
+
+            if (shakeGameplayRoot != activeRoot)
+            {
+                ResetBattlefieldShake();
+                shakeGameplayRoot = activeRoot;
+                shakeGameplayRootBasePosition = activeRoot.transform.localPosition;
+            }
+            else if (shakeTimeRemaining <= 0f)
+            {
+                shakeGameplayRootBasePosition = activeRoot.transform.localPosition;
+            }
+
+            shakeCurrentIntensity = Mathf.Max(shakeCurrentIntensity, intensity);
+            shakeTimeRemaining = Mathf.Max(shakeTimeRemaining, duration);
+        }
+
+        private void UpdateBattlefieldShake(float dt)
+        {
+            if (shakeGameplayRoot == null)
+            {
+                shakeTimeRemaining = 0f;
+                shakeCurrentIntensity = 0f;
+                return;
+            }
+
+            if (shakeTimeRemaining <= 0f)
+            {
+                ResetBattlefieldShake();
+                return;
+            }
+
+            shakeTimeRemaining -= dt;
+
+            Vector2 randomOffset = UnityEngine.Random.insideUnitCircle * shakeCurrentIntensity;
+            shakeGameplayRoot.transform.localPosition = shakeGameplayRootBasePosition + new Vector3(randomOffset.x, randomOffset.y, 0f);
+
+            if (shakeTimeRemaining <= 0f)
+                ResetBattlefieldShake();
+        }
+
+        private void ResetBattlefieldShake()
+        {
+            if (shakeGameplayRoot != null)
+                shakeGameplayRoot.transform.localPosition = shakeGameplayRootBasePosition;
+
+            shakeGameplayRoot = null;
+            shakeCurrentIntensity = 0f;
+            shakeTimeRemaining = 0f;
+        }
+
+        private void ResetCrowdChaosForNewRound()
+        {
+            ClearCrowdChaosRuntime(resetMovementBounds: true, resetRoundTrigger: true);
+        }
+
+        private void ClearCrowdChaosRuntime(bool resetMovementBounds, bool resetRoundTrigger)
+        {
+            crowdChaosCountdownActive = false;
+            crowdChaosCountdownRemaining = 0f;
+            crowdChaosVotingActive = false;
+            crowdChaosVotingRemaining = 0f;
+            crowdChaosVoteOptions.Clear();
+            crowdChaosVotesByVoter.Clear();
+            crowdChaosResultTitle = string.Empty;
+            crowdChaosResultBody = string.Empty;
+            crowdChaosResultTimer = 0f;
+            crowdChaosTriviaQuestion = string.Empty;
+            crowdChaosTriviaCorrectOptionId = string.Empty;
+
+            StopCrowdChaosActionEffect(resetMovementBounds);
+            ResetBattlefieldShake();
+
+            if (resetRoundTrigger)
+                crowdChaosTriggeredThisRound = false;
+        }
+
+        private static string NormalizeVoteValue(string value)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+                return string.Empty;
+
+            return value.Trim().ToLowerInvariant();
+        }
+
+        private bool TryGetSnackDataById(string snackId, out SnackData snackData)
+        {
+            snackData = null;
+            if (ConfigManager.Instance == null || ConfigManager.Instance.snackConfig == null || ConfigManager.Instance.snackConfig.snacks == null)
+                return false;
+
+            string normalized = NormalizeVoteValue(snackId);
+            if (string.IsNullOrEmpty(normalized))
+                return false;
+
+            List<SnackData> snacks = ConfigManager.Instance.snackConfig.snacks;
+            for (int i = 0; i < snacks.Count; i++)
+            {
+                SnackData candidate = snacks[i];
+                if (candidate == null)
+                    continue;
+
+                if (NormalizeVoteValue(candidate.snackId) != normalized)
+                    continue;
+
+                snackData = candidate;
+                return true;
+            }
+
+            return false;
+        }
+
+        private void EnsureDefaultCrowdChaosTriviaPrompts()
+        {
+            if (crowdChaosTriviaPrompts != null && crowdChaosTriviaPrompts.Count > 0)
+                return;
+
+            crowdChaosTriviaPrompts = new List<CrowdChaosTriviaPrompt>
+            {
+                new CrowdChaosTriviaPrompt
+                {
+                    question = "TRIVIA: Which snack grants invincibility?",
+                    options = new[] { "Bone", "Steak", "Broccoli", "Spicy Pepper" },
+                    correctOptionIndex = 1,
+                },
+                new CrowdChaosTriviaPrompt
+                {
+                    question = "TRIVIA: Which effect flips controls?",
+                    options = new[] { "Chaos", "Boost", "Slow", "Invincibility" },
+                    correctOptionIndex = 0,
+                },
+                new CrowdChaosTriviaPrompt
+                {
+                    question = "TRIVIA: Which snack usually has a negative score?",
+                    options = new[] { "Red Bull", "Steak", "Broccoli", "Bone" },
+                    correctOptionIndex = 2,
+                },
+            };
+        }
+
         public void ChangeState(GameState newState)
         {
             if (newState != GameState.StormIntro && stormIntroRoutine != null)
@@ -491,6 +1442,12 @@ namespace SnackAttack.Gameplay
                 StopCoroutine(stormIntroRoutine);
                 stormIntroRoutine = null;
             }
+
+            if (newState != GameState.StormIntro)
+                SetStormIntroRunStateForCurrentPlayers(false);
+
+            if (newState != GameState.Playing)
+                ClearCrowdChaosRuntime(resetMovementBounds: true, resetRoundTrigger: true);
 
             State = newState;
             EventManager.TriggerEvent("GAME_STATE_CHANGED", State);
@@ -585,6 +1542,7 @@ namespace SnackAttack.Gameplay
             p2RoundWins = 0;
             player1Score = 0;
             player2Score = 0;
+            ResetCrowdChaosForNewRound();
             LoadRuntimeConfigDefaults();
             ApplyLevelConfigForCurrentRound();
             timeRemaining = roundDuration;

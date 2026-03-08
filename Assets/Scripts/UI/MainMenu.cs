@@ -19,6 +19,7 @@ namespace SnackAttack.UI
             if (play1PButton != null) play1PButton.onClick.AddListener(OnPlay1PClicked);
             if (playVsAIButton != null) playVsAIButton.onClick.AddListener(OnPlayVsAIClicked);
             if (play2PButton != null) play2PButton.onClick.AddListener(OnPlay2PClicked);
+            if (settingsButton != null) settingsButton.onClick.AddListener(OnSettingsClicked);
             if (quitButton != null)   quitButton.onClick.AddListener(OnQuitClicked);
 
             Core.EventManager.StartListening("GAME_STATE_CHANGED", OnGameStateChanged);
@@ -31,6 +32,7 @@ namespace SnackAttack.UI
             if (play1PButton != null) play1PButton.onClick.RemoveListener(OnPlay1PClicked);
             if (playVsAIButton != null) playVsAIButton.onClick.RemoveListener(OnPlayVsAIClicked);
             if (play2PButton != null) play2PButton.onClick.RemoveListener(OnPlay2PClicked);
+            if (settingsButton != null) settingsButton.onClick.RemoveListener(OnSettingsClicked);
             if (quitButton != null)   quitButton.onClick.RemoveListener(OnQuitClicked);
         }
 
@@ -50,6 +52,7 @@ namespace SnackAttack.UI
             Core.EventManager.TriggerEvent("PLAY_SOUND", "select");
             GameManager.Instance.gameMode = "single";
             GameManager.Instance.vsAI = false;
+            EnsureScreenActive("CharacterSelectScreen");
             GameManager.Instance.ChangeState(GameState.CharacterSelect);
         }
 
@@ -58,6 +61,7 @@ namespace SnackAttack.UI
             Core.EventManager.TriggerEvent("PLAY_SOUND", "select");
             GameManager.Instance.gameMode = "vsai";
             GameManager.Instance.vsAI = true;
+            EnsureScreenActive("CharacterSelectScreen");
             GameManager.Instance.ChangeState(GameState.CharacterSelect);
         }
 
@@ -66,7 +70,15 @@ namespace SnackAttack.UI
             Core.EventManager.TriggerEvent("PLAY_SOUND", "select");
             GameManager.Instance.gameMode = "2p";
             GameManager.Instance.vsAI = false;
+            EnsureScreenActive("CharacterSelectScreen");
             GameManager.Instance.ChangeState(GameState.CharacterSelect);
+        }
+
+        private void OnSettingsClicked()
+        {
+            Core.EventManager.TriggerEvent("PLAY_SOUND", "select");
+            EnsureScreenActive("SettingsScreen");
+            GameManager.Instance.ChangeState(GameState.Settings);
         }
 
         private void OnQuitClicked()
@@ -100,6 +112,16 @@ namespace SnackAttack.UI
                 target = transform.Find(buttonName);
 
             return target != null ? target.GetComponent<Button>() : null;
+        }
+
+        private static void EnsureScreenActive(string screenObjectName)
+        {
+            if (string.IsNullOrWhiteSpace(screenObjectName))
+                return;
+
+            GameObject target = GameObject.Find(screenObjectName);
+            if (target != null && !target.activeSelf)
+                target.SetActive(true);
         }
     }
 }

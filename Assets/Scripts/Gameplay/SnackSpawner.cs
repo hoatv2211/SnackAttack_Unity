@@ -133,10 +133,31 @@ namespace SnackAttack.Gameplay
             }
         }
 
+        public bool SpawnSpecificSnack(string snackId, int count = 1, float scaleMultiplier = 1f)
+        {
+            if (count <= 0)
+                return false;
+
+            if (!TryGetSnackDataById(snackId, out SnackData selected))
+                return false;
+
+            int spawnedCount = 0;
+            for (int i = 0; i < count; i++)
+            {
+                if (GetActiveSnackCount() >= maxSnacks)
+                    break;
+
+                SpawnSnackInstance(selected, scaleMultiplier);
+                spawnedCount++;
+            }
+
+            return spawnedCount > 0;
+        }
+
         private void SpawnSnack()
         {
             if (snackPrefab == null) return;
-            if (transform.childCount >= maxSnacks) return;
+            if (GetActiveSnackCount() >= maxSnacks) return;
 
             if (ConfigManager.Instance == null || ConfigManager.Instance.snackConfig == null) return;
             var snacks = ConfigManager.Instance.snackConfig.snacks;
@@ -162,28 +183,87 @@ namespace SnackAttack.Gameplay
 
             // Weighted random selection (matching Python)
             float totalWeight = 0f;
-            foreach (var s in candidates) totalWeight += s.spawnWeight;
+            foreach (var s in candidates) totalWeight += Mathf.Max(0f, s.spawnWeight);
+
+            if (totalWeight <= 0f)
+                totalWeight = Mathf.Max(1f, candidates.Count);
 
             float r = UnityEngine.Random.Range(0f, totalWeight);
             float cumulative = 0f;
             SnackData selected = candidates[0];
             foreach (var s in candidates)
             {
-                cumulative += s.spawnWeight;
+                cumulative += Mathf.Max(0f, s.spawnWeight);
                 if (r <= cumulative) { selected = s; break; }
             }
+
+            SpawnSnackInstance(selected, 1f);
+        }
+
+        private void SpawnSnackInstance(SnackData selected, float scaleMultiplier)
+        {
+            if (selected == null || snackPrefab == null)
+                return;
 
             // Spawn position within arena bounds
             float x = UnityEngine.Random.Range(arenaMinX, arenaMaxX);
             Vector3 spawnPos = new Vector3(x, spawnY, 0f);
 
             GameObject snackGO = SimplePool.Spawn(snackPrefab, spawnPos, Quaternion.identity, transform);
+            Vector3 baseScale = snackPrefab.transform.localScale;
+            float safeScale = Mathf.Max(0.05f, scaleMultiplier);
+            snackGO.transform.localScale = new Vector3(baseScale.x * safeScale, baseScale.y * safeScale, baseScale.z);
+
             Snack snackComp = snackGO.GetComponent<Snack>();
             if (snackComp != null)
             {
                 snackComp.snackData = selected;
                 snackComp.groundY = groundY;
             }
+        }
+
+        private bool TryGetSnackDataById(string snackId, out SnackData snackData)
+        {
+            snackData = null;
+            if (ConfigManager.Instance == null || ConfigManager.Instance.snackConfig == null || ConfigManager.Instance.snackConfig.snacks == null)
+                return false;
+
+            string normalized = RuntimeConfigUtil.Normalize(snackId);
+            if (string.IsNullOrEmpty(normalized))
+                return false;
+
+            List<SnackData> snacks = ConfigManager.Instance.snackConfig.snacks;
+            for (int i = 0; i < snacks.Count; i++)
+            {
+                SnackData candidate = snacks[i];
+                if (candidate == null || string.IsNullOrWhiteSpace(candidate.snackId))
+                    continue;
+
+                if (RuntimeConfigUtil.Normalize(candidate.snackId) != normalized)
+                    continue;
+
+                snackData = candidate;
+                return true;
+            }
+
+            return false;
+        }
+
+        private int GetActiveSnackCount()
+        {
+            Snack[] snacks = GetComponentsInChildren<Snack>(true);
+            if (snacks == null || snacks.Length == 0)
+                return 0;
+
+            int activeCount = 0;
+            for (int i = 0; i < snacks.Length; i++)
+            {
+                Snack snack = snacks[i];
+                if (snack != null && snack.gameObject != null && snack.gameObject.activeSelf)
+                    activeCount++;
+            }
+
+            return activeCount;
         }
     }
 }

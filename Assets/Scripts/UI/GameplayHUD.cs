@@ -15,6 +15,14 @@ namespace SnackAttack.UI
         public TextMeshProUGUI roundText;
         public Button backButton;
 
+        [Header("Crowd Chaos UI")]
+        public GameObject crowdChaosPanel;
+        public TextMeshProUGUI crowdChaosHeaderText;
+        public TextMeshProUGUI crowdChaosBodyText;
+        public TextMeshProUGUI crowdChaosOptionsText;
+        public TextMeshProUGUI crowdChaosDangerText;
+        public Image crowdChaosTintOverlay;
+
         private int lastDisplayedTime = -1;
         private string player1DisplayName = "P1";
         private string player2DisplayName = "P2";
@@ -22,6 +30,7 @@ namespace SnackAttack.UI
         private void Start()
         {
             AutoWireBackButtonIfMissing();
+            AutoWireCrowdChaosUi();
 
             Core.EventManager.StartListening("GAME_STATE_CHANGED", OnGameStateChanged);
             Core.EventManager.StartListening("SCORE_UPDATED", OnScoreUpdated);
@@ -67,6 +76,14 @@ namespace SnackAttack.UI
                     countdownText.text = GameManager.Instance.countdownValue.ToString() + "s";
                 }
             }
+
+            UpdateCrowdChaosOverlay(state);
+
+            if (!gameObject.activeInHierarchy)
+                return;
+
+            if (Input.GetKeyDown(KeyCode.Escape))
+                OnBackClicked();
         }
 
         private void OnGameStateChanged(object stateObj)
@@ -81,6 +98,8 @@ namespace SnackAttack.UI
                     UpdateRoundText();
                     lastDisplayedTime = -1;
                 }
+
+                UpdateCrowdChaosOverlay(state);
             }
         }
 
@@ -172,6 +191,166 @@ namespace SnackAttack.UI
         private void UpdateVisibility(GameState state)
         {
             gameObject.SetActive(state == GameState.Playing || state == GameState.Countdown);
+        }
+
+        private void UpdateCrowdChaosOverlay(GameState state)
+        {
+            if (GameManager.Instance == null)
+            {
+                SetCrowdChaosUiVisible(false);
+                return;
+            }
+
+            bool gameplayState = state == GameState.Playing || state == GameState.Countdown;
+            bool visible = gameplayState && GameManager.Instance.CrowdChaosOverlayVisible;
+            SetCrowdChaosUiVisible(visible);
+            if (!visible)
+                return;
+
+            if (crowdChaosHeaderText != null)
+                crowdChaosHeaderText.text = GameManager.Instance.CrowdChaosTitle;
+
+            if (crowdChaosBodyText != null)
+                crowdChaosBodyText.text = GameManager.Instance.CrowdChaosBody;
+
+            if (crowdChaosOptionsText != null)
+                crowdChaosOptionsText.text = GameManager.Instance.CrowdChaosOptions;
+
+            if (crowdChaosDangerText != null)
+                crowdChaosDangerText.text = GameManager.Instance.CrowdChaosDangerText;
+
+            if (crowdChaosTintOverlay != null)
+            {
+                float alpha = Mathf.Clamp01(GameManager.Instance.CrowdChaosTintAlpha);
+                Color tint = crowdChaosTintOverlay.color;
+                tint.r = 0.9f;
+                tint.g = 0.2f;
+                tint.b = 0.2f;
+                tint.a = alpha;
+                crowdChaosTintOverlay.color = tint;
+                crowdChaosTintOverlay.gameObject.SetActive(alpha > 0.001f);
+            }
+        }
+
+        private void SetCrowdChaosUiVisible(bool visible)
+        {
+            if (crowdChaosPanel != null)
+                crowdChaosPanel.SetActive(visible);
+
+            if (crowdChaosHeaderText != null)
+                crowdChaosHeaderText.gameObject.SetActive(visible);
+
+            if (crowdChaosBodyText != null)
+                crowdChaosBodyText.gameObject.SetActive(visible);
+
+            if (crowdChaosOptionsText != null)
+                crowdChaosOptionsText.gameObject.SetActive(visible);
+
+            if (crowdChaosDangerText != null)
+                crowdChaosDangerText.gameObject.SetActive(visible);
+
+            if (!visible && crowdChaosTintOverlay != null)
+                crowdChaosTintOverlay.gameObject.SetActive(false);
+        }
+
+        private void AutoWireCrowdChaosUi()
+        {
+            if (crowdChaosPanel == null)
+            {
+                Transform panelTransform = transform.Find("CrowdChaosOverlay");
+                if (panelTransform != null)
+                    crowdChaosPanel = panelTransform.gameObject;
+            }
+
+            if (crowdChaosHeaderText == null)
+                crowdChaosHeaderText = FindCrowdChaosText("CrowdChaosOverlay/Header");
+
+            if (crowdChaosBodyText == null)
+                crowdChaosBodyText = FindCrowdChaosText("CrowdChaosOverlay/Body");
+
+            if (crowdChaosOptionsText == null)
+                crowdChaosOptionsText = FindCrowdChaosText("CrowdChaosOverlay/Options");
+
+            if (crowdChaosDangerText == null)
+                crowdChaosDangerText = FindCrowdChaosText("CrowdChaosOverlay/Danger");
+
+            if (crowdChaosTintOverlay == null)
+            {
+                Transform tintTransform = transform.Find("CrowdChaosOverlay/Tint");
+                if (tintTransform != null)
+                    crowdChaosTintOverlay = tintTransform.GetComponent<Image>();
+            }
+
+            if (crowdChaosPanel == null)
+                CreateFallbackCrowdChaosUi();
+        }
+
+        private TextMeshProUGUI FindCrowdChaosText(string path)
+        {
+            Transform target = transform.Find(path);
+            return target != null ? target.GetComponent<TextMeshProUGUI>() : null;
+        }
+
+        private void CreateFallbackCrowdChaosUi()
+        {
+            GameObject panel = new GameObject("CrowdChaosOverlay");
+            panel.transform.SetParent(transform, false);
+
+            RectTransform panelRect = panel.AddComponent<RectTransform>();
+            panelRect.anchorMin = Vector2.zero;
+            panelRect.anchorMax = Vector2.one;
+            panelRect.offsetMin = Vector2.zero;
+            panelRect.offsetMax = Vector2.zero;
+
+            crowdChaosPanel = panel;
+
+            GameObject tintObject = new GameObject("Tint");
+            tintObject.transform.SetParent(panel.transform, false);
+            RectTransform tintRect = tintObject.AddComponent<RectTransform>();
+            tintRect.anchorMin = Vector2.zero;
+            tintRect.anchorMax = Vector2.one;
+            tintRect.offsetMin = Vector2.zero;
+            tintRect.offsetMax = Vector2.zero;
+
+            crowdChaosTintOverlay = tintObject.AddComponent<Image>();
+            crowdChaosTintOverlay.color = new Color(0.9f, 0.2f, 0.2f, 0f);
+            crowdChaosTintOverlay.raycastTarget = false;
+            crowdChaosTintOverlay.gameObject.SetActive(false);
+
+            crowdChaosHeaderText = CreateCrowdChaosText(panel.transform, "Header", new Vector2(0f, 215f), 48, TextAlignmentOptions.Center, Color.white);
+            crowdChaosBodyText = CreateCrowdChaosText(panel.transform, "Body", new Vector2(0f, 150f), 32, TextAlignmentOptions.Center, new Color32(255, 238, 168, 255));
+            crowdChaosOptionsText = CreateCrowdChaosText(panel.transform, "Options", new Vector2(0f, 70f), 28, TextAlignmentOptions.Center, Color.white);
+            crowdChaosDangerText = CreateCrowdChaosText(panel.transform, "Danger", new Vector2(0f, 285f), 30, TextAlignmentOptions.Center, new Color32(255, 92, 92, 255));
+
+            SetCrowdChaosUiVisible(false);
+        }
+
+        private static TextMeshProUGUI CreateCrowdChaosText(
+            Transform parent,
+            string name,
+            Vector2 anchoredPosition,
+            float fontSize,
+            TextAlignmentOptions alignment,
+            Color color)
+        {
+            GameObject textObject = new GameObject(name);
+            textObject.transform.SetParent(parent, false);
+
+            RectTransform textRect = textObject.AddComponent<RectTransform>();
+            textRect.anchorMin = new Vector2(0.5f, 0.5f);
+            textRect.anchorMax = new Vector2(0.5f, 0.5f);
+            textRect.pivot = new Vector2(0.5f, 0.5f);
+            textRect.anchoredPosition = anchoredPosition;
+            textRect.sizeDelta = new Vector2(1120f, 120f);
+
+            TextMeshProUGUI text = textObject.AddComponent<TextMeshProUGUI>();
+            text.text = string.Empty;
+            text.fontSize = fontSize;
+            text.alignment = alignment;
+            text.color = color;
+            text.raycastTarget = false;
+
+            return text;
         }
 
         private void OnBackClicked()

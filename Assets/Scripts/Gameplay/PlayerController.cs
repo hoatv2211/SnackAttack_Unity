@@ -87,6 +87,7 @@ namespace SnackAttack.Gameplay
         private float ringBlinkTimer;
         private Color ringCurrentColor = Color.white;
         private bool controlsFlipped;
+        private bool forceStormIntroRun;
 
         private KeyCode moveLeftKey = KeyCode.A;
         private KeyCode moveRightKey = KeyCode.D;
@@ -121,6 +122,14 @@ namespace SnackAttack.Gameplay
         }
 
         public bool IsInvincible => activeEffects.Exists(e => e.type == SnackEffectType.Invincibility);
+
+        public void SetStormIntroRunOverride(bool enabled)
+        {
+            forceStormIntroRun = enabled;
+
+            if (!enabled && (GameManager.Instance == null || GameManager.Instance.State != GameState.Playing))
+                UpdateAnimatorLocomotion(false);
+        }
 
         private void Awake()
         {
@@ -171,7 +180,11 @@ namespace SnackAttack.Gameplay
             if (GameManager.Instance == null || GameManager.Instance.State != GameState.Playing)
             {
                 movement = Vector2.zero;
-                UpdateAnimatorLocomotion(false);
+                bool shouldRunInStormIntro = forceStormIntroRun &&
+                    GameManager.Instance != null &&
+                    GameManager.Instance.State == GameState.StormIntro;
+
+                UpdateAnimatorLocomotion(shouldRunInStormIntro);
                 UpdateAnimatorFlight(false);
                 UpdateAnimatorAirborne(false);
                 HideEffectSprites();
