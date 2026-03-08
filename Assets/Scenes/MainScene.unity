@@ -8436,7 +8436,7 @@ MonoBehaviour:
   - characterId: dash
     prefab: {fileID: 1647937521907888054, guid: 7fbe910a26ab75b419040baac8a1c4d3, type: 3}
   - characterId: snowy
-    prefab: {fileID: 1647937521907888054, guid: e49589c378db16645b641935e780bd71, type: 3}
+    prefab: {fileID: 1647937521907888054, guid: 288191d90be8c6b45ac37e2c8082ee66, type: 3}
   - characterId: prissy
     prefab: {fileID: 1647937521907888054, guid: 98e992c3d25b7a74f9540e2bfb0352d4, type: 3}
   - characterId: rex
