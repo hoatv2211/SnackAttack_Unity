@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -41,6 +43,11 @@ namespace SnackAttack.UI
         public TextMeshProUGUI generatingNameText;
         public Image generatingPreviewImage;
         public TextMeshProUGUI errorMessageText;
+
+        [Header("Test Mode")]
+        public bool isTest;
+        public string testTemplateId = "biggie";
+        public float testStepDelay = 0.08f;
 
         private Texture2D selectedPhoto;
         private string selectedPhotoPath = string.Empty;
@@ -150,6 +157,13 @@ namespace SnackAttack.UI
             if (generating) return;
 
             string dogName = dogNameInput != null ? dogNameInput.text.Trim() : string.Empty;
+
+            if (isTest)
+            {
+                StartCoroutine(GenerateFromTemplateFlow(dogName));
+                return;
+            }
+
             string apiKey = GetConfiguredApiKey();
             string photoPath = selectedPhotoPath;
 
@@ -187,39 +201,136 @@ namespace SnackAttack.UI
                 },
                 onSuccess: result =>
                 {
-                    generating = false;
-                    SetUploadState(UploadState.Generating);
-
-                    string displayName = string.IsNullOrWhiteSpace(result.displayName)
-                        ? dogName
-                        : result.displayName;
-
-                    SetStatus($"SUCCESS! {displayName} is ready.");
-                    UpdateGeneratingStatus("Avatar generation complete.");
-                    SetDoneBackVisible(true);
-
-                    if (generatingNameText != null)
-                        generatingNameText.text = displayName.ToUpperInvariant();
-
-                    Sprite generatedSprite = TryLoadSpriteFromPath(result.profilePath);
-                    if (generatedSprite != null)
-                    {
-                        if (previewImage != null)
-                            previewImage.sprite = generatedSprite;
-                        if (generatingPreviewImage != null)
-                            generatingPreviewImage.sprite = generatedSprite;
-                    }
+                    HandleGenerationSuccess(result, dogName, true);
                 },
                 onError: err =>
                 {
-                    generating = false;
-                    SetUploadState(UploadState.Error);
-                    SetDoneBackVisible(false);
-                    string message = $"Generation failed: {err}";
-                    SetStatus(message);
-                    if (errorMessageText != null)
-                        errorMessageText.text = message;
+                    HandleGenerationError($"Generation failed: {err}");
                 }));
+        }
+
+        private IEnumerator GenerateFromTemplateFlow(string dogName)
+        {
+            string displayName = string.IsNullOrWhiteSpace(dogName)
+                ? testTemplateId
+                : dogName.Trim();
+
+            if (string.IsNullOrWhiteSpace(displayName))
+                displayName = "TestDog";
+
+            string templateId = NormalizeId(testTemplateId);
+            if (string.IsNullOrWhiteSpace(templateId))
+                templateId = "biggie";
+
+            string sourceDir = Path.Combine(Application.streamingAssetsPath, "template", templateId);
+            if (!Directory.Exists(sourceDir))
+            {
+                HandleGenerationError($"Template folder not found: {sourceDir}");
+                yield break;
+            }
+
+            generating = true;
+            SetUploadState(UploadState.Generating);
+            SetDoneBackVisible(false);
+
+            if (generatingNameText != null)
+                generatingNameText.text = displayName.ToUpperInvariant();
+
+            string characterId = NormalizeId(displayName);
+            string targetDir = Path.Combine(Application.persistentDataPath, "custom_avatars", characterId);
+            Directory.CreateDirectory(targetDir);
+
+            string[] files = { "profile.png", "run.png", "eat.png", "walk.png", "boost.png" };
+
+            UpdateGeneratingStatus("Step 1/7: Loading test template...");
+            yield return new WaitForSeconds(testStepDelay);
+
+            for (int i = 0; i < files.Length; i++)
+            {
+                string fileName = files[i];
+                string src = Path.Combine(sourceDir, fileName);
+                string dst = Path.Combine(targetDir, fileName);
+
+                if (!File.Exists(src))
+                {
+                    HandleGenerationError($"Template file missing: {src}");
+                    yield break;
+                }
+
+                UpdateGeneratingStatus($"Step {Mathf.Clamp(i + 2, 2, 6)}/7: Copying {fileName}...");
+                try
+                {
+                    File.Copy(src, dst, true);
+                }
+                catch (Exception ex)
+                {
+                    HandleGenerationError($"Cannot copy template file: {ex.Message}");
+                    yield break;
+                }
+
+                yield return new WaitForSeconds(testStepDelay);
+            }
+
+            UpdateGeneratingStatus($"Step 7/7: Registering {displayName}...");
+            yield return new WaitForSeconds(testStepDelay);
+
+            AvatarGenerationResult result = new AvatarGenerationResult
+            {
+                success = true,
+                characterId = characterId,
+                displayName = displayName,
+                profilePath = Path.Combine(targetDir, "profile.png"),
+                runSpritePath = Path.Combine(targetDir, "run.png"),
+                eatSpritePath = Path.Combine(targetDir, "eat.png"),
+                walkSpritePath = Path.Combine(targetDir, "walk.png"),
+                boostSpritePath = Path.Combine(targetDir, "boost.png"),
+            };
+
+            HandleGenerationSuccess(result, displayName, false);
+        }
+
+        private void HandleGenerationSuccess(AvatarGenerationResult result, string fallbackName, bool mirrorToStreamingAssets)
+        {
+            generating = false;
+            SetUploadState(UploadState.Generating);
+
+            if (mirrorToStreamingAssets)
+                TryMirrorGeneratedAvatarToStreamingAssets(result);
+
+            RuntimeCharacterDefinition runtimeDef = RuntimeSpriteSheetLoader.BuildDefinition(result);
+            if (runtimeDef != null)
+                RuntimeCharacterRegistry.Register(runtimeDef);
+
+            string displayName = string.IsNullOrWhiteSpace(result != null ? result.displayName : string.Empty)
+                ? fallbackName
+                : result.displayName;
+
+            SetStatus($"SUCCESS! {displayName} is ready.");
+            UpdateGeneratingStatus("Avatar generation complete.");
+            SetDoneBackVisible(true);
+
+            if (generatingNameText != null)
+                generatingNameText.text = (displayName ?? string.Empty).ToUpperInvariant();
+
+            string profilePath = result != null ? result.profilePath : string.Empty;
+            Sprite generatedSprite = TryLoadSpriteFromPath(profilePath);
+            if (generatedSprite != null)
+            {
+                if (previewImage != null)
+                    previewImage.sprite = generatedSprite;
+                if (generatingPreviewImage != null)
+                    generatingPreviewImage.sprite = generatedSprite;
+            }
+        }
+
+        private void HandleGenerationError(string message)
+        {
+            generating = false;
+            SetUploadState(UploadState.Error);
+            SetDoneBackVisible(false);
+            SetStatus(message);
+            if (errorMessageText != null)
+                errorMessageText.text = message;
         }
 
         private void SetStatus(string text)
@@ -311,7 +422,7 @@ namespace SnackAttack.UI
             if (generatingStepText != null)
             {
                 int step = MapStep(status);
-                generatingStepText.text = $"STEP {step}/6";
+                generatingStepText.text = $"STEP {step}/7";
             }
         }
 
@@ -321,23 +432,30 @@ namespace SnackAttack.UI
                 return 1;
 
             string s = status.ToLowerInvariant();
+            if (s.Contains("step 1/7")) return 1;
+            if (s.Contains("step 2/7")) return 2;
+            if (s.Contains("step 3/7")) return 3;
+            if (s.Contains("step 4/7")) return 4;
+            if (s.Contains("step 5/7")) return 5;
+            if (s.Contains("step 6/7")) return 6;
+            if (s.Contains("step 7/7")) return 7;
             if (s.Contains("prepar")) return 1;
             if (s.Contains("building")) return 2;
             if (s.Contains("sending")) return 3;
             if (s.Contains("parsing")) return 4;
             if (s.Contains("saving")) return 5;
-            if (s.Contains("complete")) return 6;
+            if (s.Contains("complete")) return 7;
             return 2;
         }
 
         private static Sprite TryLoadSpriteFromPath(string path)
         {
-            if (string.IsNullOrWhiteSpace(path) || !System.IO.File.Exists(path))
+            if (string.IsNullOrWhiteSpace(path) || !File.Exists(path))
                 return null;
 
             try
             {
-                byte[] bytes = System.IO.File.ReadAllBytes(path);
+                byte[] bytes = File.ReadAllBytes(path);
                 Texture2D tex = new Texture2D(2, 2, TextureFormat.RGBA32, false);
                 if (!tex.LoadImage(bytes))
                     return null;
@@ -354,6 +472,60 @@ namespace SnackAttack.UI
         {
             if (doneBackButton != null)
                 doneBackButton.gameObject.SetActive(visible);
+        }
+
+        private static string NormalizeId(string raw)
+        {
+            if (string.IsNullOrWhiteSpace(raw))
+                return string.Empty;
+
+            string x = raw.Trim().ToLowerInvariant().Replace(" ", "_");
+            System.Text.StringBuilder sb = new System.Text.StringBuilder(x.Length);
+            foreach (char c in x)
+            {
+                if ((c >= 'a' && c <= 'z') || (c >= '0' && c <= '9') || c == '_')
+                    sb.Append(c);
+            }
+
+            return sb.ToString();
+        }
+
+        private void TryMirrorGeneratedAvatarToStreamingAssets(AvatarGenerationResult result)
+        {
+#if UNITY_EDITOR
+            if (result == null || string.IsNullOrWhiteSpace(result.characterId))
+                return;
+
+            try
+            {
+                string id = NormalizeId(result.characterId);
+                if (string.IsNullOrWhiteSpace(id))
+                    return;
+
+                string streamingRoot = Path.Combine(Application.dataPath, "StreamingAssets", "custom_avatars", id);
+                Directory.CreateDirectory(streamingRoot);
+
+                CopyIfExists(result.profilePath, Path.Combine(streamingRoot, "profile.png"));
+                CopyIfExists(result.runSpritePath, Path.Combine(streamingRoot, "run.png"));
+                CopyIfExists(result.eatSpritePath, Path.Combine(streamingRoot, "eat.png"));
+                CopyIfExists(result.walkSpritePath, Path.Combine(streamingRoot, "walk.png"));
+                CopyIfExists(result.boostSpritePath, Path.Combine(streamingRoot, "boost.png"));
+
+                UnityEditor.AssetDatabase.Refresh();
+            }
+            catch (Exception ex)
+            {
+                Debug.LogWarning("UploadAvatarScreen: Cannot mirror generated avatar to StreamingAssets: " + ex.Message);
+            }
+#endif
+        }
+
+        private static void CopyIfExists(string src, string dst)
+        {
+            if (string.IsNullOrWhiteSpace(src) || string.IsNullOrWhiteSpace(dst) || !File.Exists(src))
+                return;
+
+            File.Copy(src, dst, true);
         }
     }
 }

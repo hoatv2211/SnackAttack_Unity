@@ -125,6 +125,8 @@ namespace SnackAttack.Gameplay
         public string defaultPlayer1CharacterId = "jazzy";
         public string defaultPlayer2CharacterId = "biggie";
         public List<CharacterPrefabEntry> characterPrefabs = new List<CharacterPrefabEntry>();
+        [Tooltip("Template prefab used to spawn runtime-generated custom characters. If empty, falls back to first mapped character prefab.")]
+        public GameObject runtimeCharacterTemplatePrefab;
         [Header("VS AI Character Random")]
         [Tooltip("If enabled, P2 character is randomized from AI list each time a VS AI match starts")]
         public bool randomizeAiCharacterInVsAi = true;
@@ -216,6 +218,9 @@ namespace SnackAttack.Gameplay
 
             AutoResolveStormIntroUiByName();
             SetStormIntroOverlayVisible(false);
+
+            string path = Application.persistentDataPath;
+            Debug.Log(path);
         }
 
         private void Start()
@@ -1571,6 +1576,8 @@ namespace SnackAttack.Gameplay
 
         private void SpawnSelectedCharacters()
         {
+            RuntimeCharacterRegistry.EnsureLoadedFromDisk();
+
             GameObject gameplayRoot = GetActiveGameplayRoot();
             if (!useCharacterPrefabs || gameplayRoot == null)
                 return;
@@ -1636,7 +1643,11 @@ namespace SnackAttack.Gameplay
             if (string.IsNullOrEmpty(characterId))
                 characterId = NormalizeCharacterId(defaultCharacterId);
 
-            GameObject selectedPrefab = FindCharacterPrefab(characterId, forceAIController);
+            bool isRuntimeCharacter = RuntimeCharacterRegistry.TryGetOrLoad(characterId, out RuntimeCharacterDefinition runtimeDefinition);
+            GameObject selectedPrefab = isRuntimeCharacter
+                ? ResolveRuntimeCharacterTemplatePrefab(forceAIController)
+                : FindCharacterPrefab(characterId, forceAIController);
+
             if (selectedPrefab == null)
             {
                 Debug.LogWarning($"GameManager: No prefab mapped for character '{characterId}'.");
@@ -1661,10 +1672,16 @@ namespace SnackAttack.Gameplay
             GameObject spawned = Instantiate(selectedPrefab, spawnPosition, spawnRotation, parent);
             spawned.name = slotName;
 
-            ConfigureSpawnedPlayerController(spawned, playerIndex, forceAIController, characterId, arenaInfo);
+            ConfigureSpawnedPlayerController(spawned, playerIndex, forceAIController, characterId, arenaInfo, runtimeDefinition);
         }
 
-        private void ConfigureSpawnedPlayerController(GameObject spawned, int playerIndex, bool forceAIController, string characterId, BattleFieldArena arenaInfo)
+        private void ConfigureSpawnedPlayerController(
+            GameObject spawned,
+            int playerIndex,
+            bool forceAIController,
+            string characterId,
+            BattleFieldArena arenaInfo,
+            RuntimeCharacterDefinition runtimeDefinition)
         {
             if (spawned == null)
                 return;
@@ -1711,6 +1728,7 @@ namespace SnackAttack.Gameplay
                 aiController.ApplyArenaBounds(minX, maxX, ground, arenaTop);
                 aiController.spriteRenderer = sr;
                 aiController.animator = animator;
+                aiController.runtimeAnimationPlayer = SetupRuntimeAnimationPlayer(spawned, sr, runtimeDefinition, animator);
                 aiController.characterData = ResolveCharacterData(characterId);
                 aiController.ApplyRuntimeConfig(aiDifficulty);
                 return;
@@ -1725,9 +1743,78 @@ namespace SnackAttack.Gameplay
             playerController.playerIndex = playerIndex;
             playerController.spriteRenderer = sr;
             playerController.animator = animator;
+            playerController.runtimeAnimationPlayer = SetupRuntimeAnimationPlayer(spawned, sr, runtimeDefinition, animator);
             if (arenaInfo != null)
                 playerController.ApplyArenaBounds(arenaInfo.arenaMinX, arenaInfo.arenaMaxX, arenaInfo.groundY, arenaInfo.arenaTopY);
             playerController.ApplyRuntimeConfig();
+        }
+
+        private RuntimeSpriteAnimationPlayer SetupRuntimeAnimationPlayer(
+            GameObject spawned,
+            SpriteRenderer spriteRenderer,
+            RuntimeCharacterDefinition runtimeDefinition,
+            Animator animator)
+        {
+            if (spawned == null)
+                return null;
+
+            RuntimeSpriteAnimationPlayer runtimePlayer = spawned.GetComponent<RuntimeSpriteAnimationPlayer>();
+
+            if (runtimeDefinition == null)
+            {
+                if (runtimePlayer != null)
+                    runtimePlayer.enabled = false;
+
+                if (animator != null)
+                    animator.enabled = true;
+
+                return null;
+            }
+
+            if (runtimePlayer == null)
+                runtimePlayer = spawned.AddComponent<RuntimeSpriteAnimationPlayer>();
+
+            runtimePlayer.enabled = true;
+            runtimePlayer.Initialize(runtimeDefinition, spriteRenderer);
+
+            if (animator != null)
+                animator.enabled = false;
+
+            return runtimePlayer;
+        }
+
+        private GameObject ResolveRuntimeCharacterTemplatePrefab(bool preferAiList)
+        {
+            if (runtimeCharacterTemplatePrefab != null)
+                return runtimeCharacterTemplatePrefab;
+
+            if (preferAiList)
+            {
+                GameObject aiFallback = FindFirstPrefab(aiCharacterPrefabs);
+                if (aiFallback != null)
+                    return aiFallback;
+            }
+
+            GameObject fallback = FindFirstPrefab(characterPrefabs);
+            if (fallback != null)
+                return fallback;
+
+            return FindFirstPrefab(aiCharacterPrefabs);
+        }
+
+        private static GameObject FindFirstPrefab(List<CharacterPrefabEntry> entries)
+        {
+            if (entries == null)
+                return null;
+
+            for (int i = 0; i < entries.Count; i++)
+            {
+                CharacterPrefabEntry entry = entries[i];
+                if (entry != null && entry.prefab != null)
+                    return entry.prefab;
+            }
+
+            return null;
         }
 
         private void SetPlayerSlotActive(GameObject gameplayRoot, string slotName, bool active)

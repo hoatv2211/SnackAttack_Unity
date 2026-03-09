@@ -22,6 +22,7 @@ namespace SnackAttack.Gameplay
         public int playerIndex = 1;
         public SpriteRenderer spriteRenderer;
         public Animator animator;
+        public RuntimeSpriteAnimationPlayer runtimeAnimationPlayer;
 
         [Header("Movement")]
         public float baseSpeed = 5f;
@@ -138,6 +139,7 @@ namespace SnackAttack.Gameplay
             rb.gravityScale = 0;
             if (spriteRenderer == null) spriteRenderer = GetComponentInChildren<SpriteRenderer>();
             if (animator == null) animator = GetComponentInChildren<Animator>();
+            if (runtimeAnimationPlayer == null) runtimeAnimationPlayer = GetComponent<RuntimeSpriteAnimationPlayer>();
             restingY = groundY;
             CacheAnimatorParameters();
             EnsureEffectSpriteRenderers();
@@ -421,30 +423,45 @@ namespace SnackAttack.Gameplay
 
         private void UpdateAnimatorLocomotion(bool isMoving)
         {
+            if (runtimeAnimationPlayer != null)
+                runtimeAnimationPlayer.SetMoving(isMoving);
+
             if (animator != null && hasIsMovingParam)
                 animator.SetBool(IsMovingHash, isMoving);
         }
 
         private void UpdateAnimatorFlight(bool isFlying)
         {
+            if (runtimeAnimationPlayer != null)
+                runtimeAnimationPlayer.SetBoost(isFlying);
+
             if (animator != null && hasFlyParam)
                 animator.SetBool(FlyHash, isFlying);
         }
 
         private void UpdateAnimatorAirborne(bool isAirborne)
         {
+            if (runtimeAnimationPlayer != null)
+                runtimeAnimationPlayer.SetAirborne(isAirborne);
+
             if (animator != null && hasIsAirborneParam)
                 animator.SetBool(IsAirborneHash, isAirborne);
         }
 
         private void TriggerEatAnimation()
         {
+            if (runtimeAnimationPlayer != null)
+                runtimeAnimationPlayer.TriggerEat();
+
             if (animator != null && hasEatParam)
                 animator.SetTrigger(EatHash);
         }
 
         private void TriggerChiliAnimation()
         {
+            if (runtimeAnimationPlayer != null)
+                runtimeAnimationPlayer.TriggerChili();
+
             if (animator != null && hasChiliParam)
                 animator.SetTrigger(ChiliHash);
         }

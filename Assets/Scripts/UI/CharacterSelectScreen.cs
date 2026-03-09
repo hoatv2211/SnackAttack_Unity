@@ -2,6 +2,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using SnackAttack.Gameplay;
+using SnackAttack.Config;
+using System.Collections.Generic;
 
 namespace SnackAttack.UI
 {
@@ -17,10 +19,21 @@ namespace SnackAttack.UI
         public Button backButton;
         public Button createDogButton;
 
-        // Character card buttons (set by SceneSetupEditor)
+        [Header("Character Card Source")]
+        // Legacy arrays still used as fallback/cache source.
         public Button[] characterCardButtons;
         public Image[] characterCardBorders;
         public string[] characterIdsByCard = { "jazzy", "biggie", "dash", "snowy", "prissy", "rex" };
+        public Button characterCardPrefab;
+        public Transform characterCardsParent;
+        public bool autoUseFirstSceneCardAsPrefab = true;
+        [Header("Auto Grid")]
+        public bool useAutoGridLayout = true;
+        public int gridColumns = 3;
+        public Vector2 gridCellSize = new Vector2(220f, 260f);
+        public Vector2 gridSpacing = new Vector2(24f, 24f);
+        public RectOffset gridPadding;
+
         public TextMeshProUGUI selectionPromptText;
         public Color defaultBorderColor = new Color32(249, 203, 111, 255);
         public Color player1BorderColor = new Color32(100, 180, 255, 255);
@@ -31,29 +44,55 @@ namespace SnackAttack.UI
         private int selectedPlayer1Index = 0;
         private int selectedPlayer2Index = -1;
         private SelectionPhase selectionPhase = SelectionPhase.Player1;
+        private string[] configuredBaseIds;
+        private readonly Dictionary<string, CardVisual> baseVisualById = new Dictionary<string, CardVisual>();
+        private readonly List<Button> generatedCardButtons = new List<Button>();
+
+        private sealed class CharacterCardModel
+        {
+            public string id;
+            public string label;
+            public Sprite sprite;
+        }
+
+        private sealed class CardVisual
+        {
+            public Sprite sprite;
+            public string label;
+        }
+
+        private void Awake()
+        {
+            EnsureGridPadding();
+        }
+
+        private void OnValidate()
+        {
+            EnsureGridPadding();
+        }
+
+        private void EnsureGridPadding()
+        {
+            if (gridPadding == null)
+                gridPadding = new RectOffset(24, 24, 16, 16);
+        }
 
         private void Start()
         {
+            RuntimeCharacterRegistry.EnsureLoadedFromDisk();
             AutoWireOptionalButtons();
+            CacheConfiguredBaseIds();
+            CacheBaseVisualsFromSceneCards();
+            ResolveCardPrefab();
 
             if (startGameButton != null) startGameButton.onClick.AddListener(OnStartGameClicked);
             if (backButton != null) backButton.onClick.AddListener(OnBackClicked);
             if (createDogButton != null) createDogButton.onClick.AddListener(OnCreateDogClicked);
 
-            // Wire up character card clicks
-            if (characterCardButtons != null)
-            {
-                for (int i = 0; i < characterCardButtons.Length; i++)
-                {
-                    int idx = i;
-                    if (characterCardButtons[i] != null)
-                        characterCardButtons[i].onClick.AddListener(() => SelectCharacter(idx));
-                }
-            }
-
             Core.EventManager.StartListening("GAME_STATE_CHANGED", OnGameStateChanged);
-            // Fallback MainMenu khi GameManager chưa có → chỉ MainMenu hiển thị lúc bật Play
+            RuntimeCharacterRegistry.RegistryChanged += OnRuntimeRegistryChanged;
             UpdateVisibility(GameManager.Instance != null ? GameManager.Instance.State : GameState.MainMenu);
+            RebuildCharacterCards();
             EnsurePromptText();
             ResetSelectionFlow();
             HighlightSelected();
@@ -62,9 +101,17 @@ namespace SnackAttack.UI
         private void OnDestroy()
         {
             Core.EventManager.StopListening("GAME_STATE_CHANGED", OnGameStateChanged);
+            RuntimeCharacterRegistry.RegistryChanged -= OnRuntimeRegistryChanged;
             if (startGameButton != null) startGameButton.onClick.RemoveAllListeners();
             if (backButton != null) backButton.onClick.RemoveAllListeners();
             if (createDogButton != null) createDogButton.onClick.RemoveAllListeners();
+            ClearGeneratedCards();
+        }
+
+        private void OnRuntimeRegistryChanged()
+        {
+            RebuildCharacterCards();
+            ResetSelectionFlow();
         }
 
         private void OnCreateDogClicked()
@@ -134,7 +181,10 @@ namespace SnackAttack.UI
                 UpdateVisibility(state);
 
                 if (state == GameState.CharacterSelect)
+                {
+                    RebuildCharacterCards();
                     ResetSelectionFlow();
+                }
             }
         }
 
@@ -296,6 +346,273 @@ namespace SnackAttack.UI
 
                 if (t != null)
                     createDogButton = t.GetComponent<Button>();
+            }
+        }
+
+        private void CacheConfiguredBaseIds()
+        {
+            if (characterIdsByCard != null && characterIdsByCard.Length > 0)
+            {
+                configuredBaseIds = new string[characterIdsByCard.Length];
+                for (int i = 0; i < characterIdsByCard.Length; i++)
+                    configuredBaseIds[i] = NormalizeId(characterIdsByCard[i]);
+            }
+            else
+            {
+                configuredBaseIds = new[] { "jazzy", "biggie", "dash", "snowy", "prissy", "rex" };
+            }
+        }
+
+        private void CacheBaseVisualsFromSceneCards()
+        {
+            baseVisualById.Clear();
+
+            int count = Mathf.Min(
+                characterIdsByCard != null ? characterIdsByCard.Length : 0,
+                characterCardButtons != null ? characterCardButtons.Length : 0);
+
+            for (int i = 0; i < count; i++)
+            {
+                string id = NormalizeId(characterIdsByCard[i]);
+                if (string.IsNullOrWhiteSpace(id))
+                    continue;
+
+                Button sourceButton = characterCardButtons[i];
+                if (sourceButton == null)
+                    continue;
+
+                Image img = sourceButton.image != null ? sourceButton.image : sourceButton.GetComponent<Image>();
+                TextMeshProUGUI label = sourceButton.GetComponentInChildren<TextMeshProUGUI>(true);
+
+                baseVisualById[id] = new CardVisual
+                {
+                    sprite = img != null ? img.sprite : null,
+                    label = label != null ? label.text : id.ToUpperInvariant(),
+                };
+            }
+        }
+
+        private void ResolveCardPrefab()
+        {
+            if (characterCardPrefab == null && autoUseFirstSceneCardAsPrefab && characterCardButtons != null && characterCardButtons.Length > 0)
+                characterCardPrefab = characterCardButtons[0];
+
+            if (characterCardsParent == null && characterCardPrefab != null)
+                characterCardsParent = characterCardPrefab.transform.parent;
+
+            if (characterCardPrefab != null && characterCardPrefab.gameObject.activeSelf)
+                characterCardPrefab.gameObject.SetActive(false);
+        }
+
+        private void RebuildCharacterCards()
+        {
+            ClearGeneratedCards();
+
+            List<CharacterCardModel> models = BuildCharacterCardModels();
+            if (characterCardPrefab == null || characterCardsParent == null || models.Count == 0)
+                return;
+
+            List<Button> buttons = new List<Button>(models.Count);
+            List<Image> borders = new List<Image>(models.Count);
+            List<string> ids = new List<string>(models.Count);
+
+            for (int i = 0; i < models.Count; i++)
+            {
+                CharacterCardModel m = models[i];
+                if (m == null || string.IsNullOrWhiteSpace(m.id))
+                    continue;
+
+                Button card = Instantiate(characterCardPrefab, characterCardsParent);
+                card.gameObject.SetActive(true);
+                card.name = "Card_" + m.id;
+                ApplyCardVisual(card, m);
+
+                buttons.Add(card);
+                borders.Add(card.image != null ? card.image : card.GetComponent<Image>());
+                ids.Add(m.id);
+                generatedCardButtons.Add(card);
+            }
+
+            characterCardButtons = buttons.ToArray();
+            characterCardBorders = borders.ToArray();
+            characterIdsByCard = ids.ToArray();
+
+            ApplyAutoGridLayout(models.Count);
+            WireCharacterCardClicks();
+        }
+
+        private void ApplyAutoGridLayout(int itemCount)
+        {
+            if (!useAutoGridLayout || characterCardsParent == null)
+                return;
+
+            GridLayoutGroup grid = characterCardsParent.GetComponent<GridLayoutGroup>();
+            if (grid == null)
+                grid = characterCardsParent.gameObject.AddComponent<GridLayoutGroup>();
+
+            int safeCount = Mathf.Max(1, itemCount);
+            int columns;
+            int rows;
+
+            // Layout rule:
+            // - Up to 6 cards: 3x2
+            // - More than 6 cards: 4 columns and wrap by rows
+            if (safeCount <= 6)
+            {
+                columns = 3;
+                rows = 2;
+            }
+            else
+            {
+                columns = 4;
+                rows = Mathf.CeilToInt(safeCount / 4f);
+            }
+
+            grid.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
+            grid.constraintCount = columns;
+            grid.cellSize = gridCellSize;
+            grid.spacing = gridSpacing;
+            grid.padding = gridPadding;
+            grid.childAlignment = TextAnchor.UpperCenter;
+
+            RectTransform rt = characterCardsParent as RectTransform;
+            if (rt == null)
+                return;
+
+            float width = gridPadding.left + gridPadding.right + (columns * gridCellSize.x) + ((columns - 1) * gridSpacing.x);
+            float height = gridPadding.top + gridPadding.bottom + (rows * gridCellSize.y) + ((rows - 1) * gridSpacing.y);
+
+            Vector2 size = rt.sizeDelta;
+            size.x = width;
+            size.y = height;
+            rt.sizeDelta = size;
+        }
+
+        private List<CharacterCardModel> BuildCharacterCardModels()
+        {
+            List<CharacterCardModel> models = new List<CharacterCardModel>();
+            Dictionary<string, int> idToIndex = new Dictionary<string, int>();
+
+            if (configuredBaseIds != null)
+            {
+                for (int i = 0; i < configuredBaseIds.Length; i++)
+                {
+                    string id = NormalizeId(configuredBaseIds[i]);
+                    if (string.IsNullOrWhiteSpace(id) || idToIndex.ContainsKey(id))
+                        continue;
+
+                    CardVisual v = GetBaseVisual(id);
+                    CharacterCardModel model = new CharacterCardModel
+                    {
+                        id = id,
+                        label = v != null && !string.IsNullOrWhiteSpace(v.label) ? v.label : id.ToUpperInvariant(),
+                        sprite = v != null ? v.sprite : null,
+                    };
+
+                    idToIndex[id] = models.Count;
+                    models.Add(model);
+                }
+            }
+
+            var runtimeCharacters = RuntimeCharacterRegistry.GetAll();
+            for (int i = 0; i < runtimeCharacters.Count; i++)
+            {
+                RuntimeCharacterDefinition runtime = runtimeCharacters[i];
+                if (runtime == null || string.IsNullOrWhiteSpace(runtime.id))
+                    continue;
+
+                string id = NormalizeId(runtime.id);
+                string label = string.IsNullOrWhiteSpace(runtime.displayName)
+                    ? id.ToUpperInvariant()
+                    : runtime.displayName.ToUpperInvariant();
+
+                if (idToIndex.TryGetValue(id, out int idx))
+                {
+                    models[idx].label = label;
+                    models[idx].sprite = runtime.profileSprite != null ? runtime.profileSprite : models[idx].sprite;
+                }
+                else
+                {
+                    idToIndex[id] = models.Count;
+                    models.Add(new CharacterCardModel
+                    {
+                        id = id,
+                        label = label,
+                        sprite = runtime.profileSprite,
+                    });
+                }
+            }
+
+            return models;
+        }
+
+        private CardVisual GetBaseVisual(string id)
+        {
+            if (string.IsNullOrWhiteSpace(id))
+                return null;
+
+            baseVisualById.TryGetValue(id, out CardVisual visual);
+            return visual;
+        }
+
+        private void ApplyCardVisual(Button card, CharacterCardModel model)
+        {
+            if (card == null || model == null)
+                return;
+
+            Image img = card.image != null ? card.image : card.GetComponent<Image>();
+            if (img != null && model.sprite != null)
+                img.sprite = model.sprite;
+
+            TextMeshProUGUI label = card.GetComponentInChildren<TextMeshProUGUI>(true);
+            if (label != null)
+            {
+                string text = string.IsNullOrWhiteSpace(model.label)
+                    ? model.id.ToUpperInvariant()
+                    : model.label;
+                label.text = text;
+            }
+        }
+
+        private void ClearGeneratedCards()
+        {
+            for (int i = 0; i < generatedCardButtons.Count; i++)
+            {
+                Button b = generatedCardButtons[i];
+                if (b == null)
+                    continue;
+
+                Destroy(b.gameObject);
+            }
+
+            generatedCardButtons.Clear();
+            characterCardButtons = System.Array.Empty<Button>();
+            characterCardBorders = System.Array.Empty<Image>();
+            characterIdsByCard = System.Array.Empty<string>();
+        }
+
+        private static string NormalizeId(string raw)
+        {
+            if (string.IsNullOrWhiteSpace(raw))
+                return string.Empty;
+
+            return raw.Trim().ToLowerInvariant();
+        }
+
+        private void WireCharacterCardClicks()
+        {
+            if (characterCardButtons == null)
+                return;
+
+            for (int i = 0; i < characterCardButtons.Length; i++)
+            {
+                Button button = characterCardButtons[i];
+                if (button == null)
+                    continue;
+
+                button.onClick.RemoveAllListeners();
+                int idx = i;
+                button.onClick.AddListener(() => SelectCharacter(idx));
             }
         }
     }
