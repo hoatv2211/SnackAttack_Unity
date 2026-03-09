@@ -15,6 +15,7 @@ namespace SnackAttack.UI
 
         public Button startGameButton;
         public Button backButton;
+        public Button createDogButton;
 
         // Character card buttons (set by SceneSetupEditor)
         public Button[] characterCardButtons;
@@ -33,8 +34,11 @@ namespace SnackAttack.UI
 
         private void Start()
         {
+            AutoWireOptionalButtons();
+
             if (startGameButton != null) startGameButton.onClick.AddListener(OnStartGameClicked);
             if (backButton != null) backButton.onClick.AddListener(OnBackClicked);
+            if (createDogButton != null) createDogButton.onClick.AddListener(OnCreateDogClicked);
 
             // Wire up character card clicks
             if (characterCardButtons != null)
@@ -60,6 +64,14 @@ namespace SnackAttack.UI
             Core.EventManager.StopListening("GAME_STATE_CHANGED", OnGameStateChanged);
             if (startGameButton != null) startGameButton.onClick.RemoveAllListeners();
             if (backButton != null) backButton.onClick.RemoveAllListeners();
+            if (createDogButton != null) createDogButton.onClick.RemoveAllListeners();
+        }
+
+        private void OnCreateDogClicked()
+        {
+            Core.EventManager.TriggerEvent("PLAY_SOUND", "select");
+            if (GameManager.Instance != null)
+                GameManager.Instance.ChangeState(GameState.UploadAvatar);
         }
 
         private void SelectCharacter(int index)
@@ -272,6 +284,19 @@ namespace SnackAttack.UI
             selectionPromptText.color = new Color32(77, 43, 31, 255);
             selectionPromptText.text = "P1 SELECT CHARACTER";
             selectionPromptText.raycastTarget = false;
+        }
+
+        private void AutoWireOptionalButtons()
+        {
+            if (createDogButton == null)
+            {
+                Transform t = transform.Find("Btn_CreateDog");
+                if (t == null)
+                    t = transform.Find("MenuContainer/Btn_CreateDog");
+
+                if (t != null)
+                    createDogButton = t.GetComponent<Button>();
+            }
         }
     }
 }

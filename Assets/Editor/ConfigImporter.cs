@@ -99,6 +99,16 @@ namespace SnackAttack.EditorScripts
                 CreateAsset(so, "Assets/Resources/ConfigSO/SnackConfig.asset");
             }
 
+            // 4. Ensure OpenRouter config exists (manual key management via Inspector)
+            // Do not overwrite existing asset to avoid wiping saved API key.
+            const string openRouterPath = "Assets/Resources/ConfigSO/OpenRouterConfig.asset";
+            OpenRouterConfigSO existingOpenRouter = AssetDatabase.LoadAssetAtPath<OpenRouterConfigSO>(openRouterPath);
+            if (existingOpenRouter == null)
+            {
+                OpenRouterConfigSO openRouterConfig = ScriptableObject.CreateInstance<OpenRouterConfigSO>();
+                CreateAsset(openRouterConfig, openRouterPath);
+            }
+
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
             Debug.Log("Successfully imported JSON configs to ScriptableObjects!");

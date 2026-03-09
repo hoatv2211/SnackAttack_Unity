@@ -13,6 +13,7 @@ namespace SnackAttack.Gameplay
     {
         MainMenu,
         CharacterSelect,
+        UploadAvatar,
         Settings,
         StormIntro,
         Countdown,
@@ -2155,6 +2156,13 @@ namespace SnackAttack.Gameplay
                 return string.Empty;
 
             return characterId.Trim().ToLowerInvariant();
+        }
+
+        private void OnCreateDogClicked()
+        {
+            Core.EventManager.TriggerEvent("PLAY_SOUND", "select");
+            if (GameManager.Instance != null)
+                GameManager.Instance.ChangeState(GameState.UploadAvatar);
         }
     }
 }

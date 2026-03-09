@@ -142,6 +142,7 @@ namespace SnackAttack.EditorScripts
             configMgr.gameSettings = AssetDatabase.LoadAssetAtPath<GameSettingsSO>("Assets/Resources/ConfigSO/GameSettings.asset");
             configMgr.characterConfig = AssetDatabase.LoadAssetAtPath<CharacterConfigSO>("Assets/Resources/ConfigSO/CharacterConfig.asset");
             configMgr.snackConfig = AssetDatabase.LoadAssetAtPath<SnackConfigSO>("Assets/Resources/ConfigSO/SnackConfig.asset");
+            configMgr.openRouterConfig = AssetDatabase.LoadAssetAtPath<OpenRouterConfigSO>("Assets/Resources/ConfigSO/OpenRouterConfig.asset");
         }
 
         private static GameObject CreatePanel(string name, GameObject parent, string spriteName)

@@ -99,3 +99,7 @@ InitTestScene*.unity*
 /[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
 /.agent
 /Build_PC
+.vscode/extensions.json
+.vscode/launch.json
+.vscode/settings.json
+SnackAttack_Unity.slnx

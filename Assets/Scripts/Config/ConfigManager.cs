@@ -9,6 +9,7 @@ namespace SnackAttack.Config
         public GameSettingsSO gameSettings;
         public CharacterConfigSO characterConfig;
         public SnackConfigSO snackConfig;
+        public OpenRouterConfigSO openRouterConfig;
 
         public ControlsConfig controlsConfig { get; private set; } = new ControlsConfig();
         public AiDifficultyConfig aiDifficultyConfig { get; private set; } = new AiDifficultyConfig();
@@ -21,6 +22,7 @@ namespace SnackAttack.Config
             {
                 Instance = this;
                 DontDestroyOnLoad(gameObject);
+                AutoLoadConfigAssets();
                 LoadRuntimeJsonConfigs();
             }
             else
@@ -73,6 +75,21 @@ namespace SnackAttack.Config
                 Debug.LogError($"ConfigManager: Failed to parse {resourcePath}.json: {ex.Message}");
                 return fallback;
             }
+        }
+
+        private void AutoLoadConfigAssets()
+        {
+            if (gameSettings == null)
+                gameSettings = Resources.Load<GameSettingsSO>("ConfigSO/GameSettings");
+
+            if (characterConfig == null)
+                characterConfig = Resources.Load<CharacterConfigSO>("ConfigSO/CharacterConfig");
+
+            if (snackConfig == null)
+                snackConfig = Resources.Load<SnackConfigSO>("ConfigSO/SnackConfig");
+
+            if (openRouterConfig == null)
+                openRouterConfig = Resources.Load<OpenRouterConfigSO>("ConfigSO/OpenRouterConfig");
         }
     }
 }
